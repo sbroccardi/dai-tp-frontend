@@ -83,7 +83,8 @@ Detallado en documento x
 
 _herramientas utilizadas para crear el frontend_
 
-...
+- https://easyappicon.com/
+- 
 
 ## Versionado 📌
 
