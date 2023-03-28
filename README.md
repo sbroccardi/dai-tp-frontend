@@ -21,6 +21,11 @@ npx react-native@latest init screenspaceapp
 - [Setting up the development environment](https://reactnative.dev/docs/environment-setup)
 
 ## Running
+
+```
+npx react-native start
+```
+
 Run instructions for Android: Have an Android emulator running (quickest way to get started), or a device connected.
 ```
 cd "... /dai-tp-frontend/screenspaceapp" && npx react-native run-android
