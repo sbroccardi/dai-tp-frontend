@@ -1,15 +1,13 @@
 import React from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  View,
+  SafeAreaView, View
 } from 'react-native';
 import LoginScreen from './ui/screens/login/LoginScreen';
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView>
-        <LoginScreen />
+    <SafeAreaView style={{flex: 1}}>
+      <LoginScreen />
     </SafeAreaView>
   );
 }
