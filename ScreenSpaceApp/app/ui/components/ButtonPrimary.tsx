@@ -16,13 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 13,
     paddingHorizontal: 22,
-    //elevation: 3,
-    //gap: 11,
-    //position: 'absolute',
-    //width: '363.1',
-    //height: '53.3',
-    //left: '26pt',
-    //top: '424pt',
+    width: 300,
     backgroundColor: '#F5C249',
     borderRadius: 13
   },
@@ -32,7 +26,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 27,
     fontWeight: '500',
-    //letterSpacing: 0.25,
     color: '#16171d',
   },
 });
