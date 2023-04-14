@@ -3,6 +3,7 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { styles } from '../../styles/theme';
+import I18n from '../../../assets/localization/I18n';
 
 const LoginScreenUI = ({
 }) => {
@@ -14,11 +15,11 @@ const LoginScreenUI = ({
                 <Image style={styles.iconImage} source={require('../../../assets/images/popcorn.png')} />
             </View>
             <View style={styles.loginButtonContainer}>
-                <ButtonPrimary title='Log in with Google' onPress={() => navigation.navigate('LoginPublic')} />
+                <ButtonPrimary title={I18n.t('loginButton')} onPress={() => navigation.navigate('LoginPublic')} />
             </View>
             <View style={styles.signupContainer}>
-                <Text style={styles.signupText}>Log in as </Text>
-                <Text style={styles.signupLinkText} onPress={() => navigation.navigate('LoginPrivate')}>cinema</Text>
+                <Text style={styles.signupText}>{I18n.t('loginAs')} </Text>
+                <Text style={styles.signupLinkText} onPress={() => navigation.navigate('LoginPrivate')}>{I18n.t('cinema')}</Text>
             </View>
         </View>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BackHandler } from 'react-native';
+import { BackHandler, SafeAreaView } from 'react-native';
 import RootNavigator from './navigation/RootNavigator';
 
 function App(): JSX.Element {
@@ -9,10 +9,11 @@ function App(): JSX.Element {
     return () => BackHandler.removeEventListener('hardwareBackPress', () => true);
   }, []);
 
-  return <RootNavigator />;
-  // <SafeAreaView style={{flex: 1}}>
-  //   <LoginScreen />
-  // </SafeAreaView>
+  return (
+  <SafeAreaView style={{flex: 1}}>
+    <RootNavigator />
+  </SafeAreaView> 
+  );
 }
 
 export default App;

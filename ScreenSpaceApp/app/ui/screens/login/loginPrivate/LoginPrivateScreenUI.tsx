@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { styles } from '../../../styles/theme';
+import I18n from '../../../../assets/localization/I18n';
 
 const LoginPrivateScreenUI = ({ }) => {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -20,11 +21,11 @@ const LoginPrivateScreenUI = ({ }) => {
                 <TextInput style={styles.input} value={password} placeholder="Enter your password" keyboardType="default" />
             </View>
             <View style={styles.loginButtonContainer}>
-                <ButtonPrimary title='Log in' onPress={() => console.log('EMAIL:' + { email } + 'PASSWORD:' + { password })} />
+                <ButtonPrimary title={I18n.t('login')} onPress={() => console.log('BUTTON PRESSED!')} />
             </View>
             <View style={styles.signupContainer}>
-                <Text style={styles.signupText}>New to MyScreenSpace? </Text>
-                <Text style={styles.signupLinkText} onPress={() => navigation.navigate('SignUp')}>Create an account</Text>
+                <Text style={styles.signupText}>{I18n.t('newToScreenSpace')} </Text>
+                <Text style={styles.signupLinkText} onPress={() => navigation.navigate('SignUp')}>{I18n.t('signUp')}</Text>
             </View>
         </View>
     );
