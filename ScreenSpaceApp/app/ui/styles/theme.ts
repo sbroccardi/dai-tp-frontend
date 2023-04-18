@@ -114,6 +114,24 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 22,
         alignItems: 'center'
     },
+    buttonDanger: {
+        backgroundColor: palette.red,
+        width: 300,
+        height: 53,
+        borderRadius: 13,
+        paddingVertical: 13,
+        paddingHorizontal: 22,
+        alignItems: 'center'
+    },
+    buttonLogout: {
+        backgroundColor: palette.green,
+        width: 300,
+        height: 53,
+        borderRadius: 13,
+        paddingVertical: 13,
+        paddingHorizontal: 22,
+        alignItems: 'center'
+    },
     loginButtonContainer: {
         flex: 3,
         justifyContent: 'center'
