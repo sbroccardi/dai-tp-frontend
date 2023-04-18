@@ -14,11 +14,12 @@ const LoginPrivateScreenUI = ({ }) => {
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
-                <Image style={styles.iconImage} source={require('../../../../assets/images/popcorn.png')} />
+                <Image style={styles.iconBigImage} source={require('../../../../assets/images/popcorn.png')} />
             </View>
             <View style={styles.form}>
                 <TextInput style={styles.input} value={email} placeholder="Enter your email address" keyboardType="email-address" />
                 <TextInput style={styles.input} value={password} placeholder="Enter your password" keyboardType="default" />
+                <Text style={styles.signupLinkText} onPress={() => navigation.navigate('RecoverPassword')}>{I18n.t('forgotPassword')}</Text>
             </View>
             <View style={styles.loginButtonContainer}>
                 <ButtonPrimary title={I18n.t('login')} onPress={() => console.log('BUTTON PRESSED!')} />
