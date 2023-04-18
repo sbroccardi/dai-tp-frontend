@@ -115,13 +115,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     loginButtonContainer: {
-        flex: 2,
+        flex: 3,
         justifyContent: 'center'
-    },
-    forgotPasswordContainer: {
-        flex: 0.3,
-        flexDirection: 'row',
-        alignItems: 'center'
     },
     signupContainer: {
         flex: 0.3,

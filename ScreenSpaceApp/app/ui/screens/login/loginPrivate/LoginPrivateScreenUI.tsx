@@ -19,8 +19,6 @@ const LoginPrivateScreenUI = ({ }) => {
             <View style={styles.form}>
                 <TextInput style={styles.input} value={email} placeholder="Enter your email address" keyboardType="email-address" />
                 <TextInput style={styles.input} value={password} placeholder="Enter your password" keyboardType="default" />
-            </View>
-            <View style={styles.forgotPasswordContainer}>
                 <Text style={styles.signupLinkText} onPress={() => navigation.navigate('RecoverPassword')}>{I18n.t('forgotPassword')}</Text>
             </View>
             <View style={styles.loginButtonContainer}>
