@@ -13,7 +13,7 @@ function LoginStackNavigator() {
     return (
         <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Login" component={LoginScreen} options={{ title: '' }} />
-            <Stack.Screen name="LoginPrivate" component={LoginPrivateScreen} options={{ title: I18n.t('loginAs') }} />
+            <Stack.Screen name="LoginPrivate" component={LoginPrivateScreen} options={{ title: I18n.t('loginAs') + ' ' + I18n.t('cinema') }} />
             <Stack.Screen name="LoginPublic" component={LoginPublicScreen} options={{ title: I18n.t('loginButton') }} />
             <Stack.Screen name="RecoverPassword" component={RecoverPasswordScreen} options={{ title: I18n.t('forgotPassword') }} />
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: I18n.t('signUp') }} />

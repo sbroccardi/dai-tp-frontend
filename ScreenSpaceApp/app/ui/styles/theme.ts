@@ -89,9 +89,21 @@ export const styles = StyleSheet.create({
         flex: 3,
         justifyContent: 'center'
     },
-    iconImage: {
+    iconBigImage: {
         width: 188,
         height: 188
+    },
+    iconMediumImage: {
+        width: 116,
+        height: 116
+    },
+    iconSmallImage: {
+        width: 70,
+        height: 70
+    },
+    iconExtraSmallImage: {
+        width: 23,
+        height: 23
     },
     buttonPrimary: {
         backgroundColor: palette.yellow,
@@ -105,6 +117,11 @@ export const styles = StyleSheet.create({
     loginButtonContainer: {
         flex: 2,
         justifyContent: 'center'
+    },
+    forgotPasswordContainer: {
+        flex: 0.3,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     signupContainer: {
         flex: 0.3,

@@ -12,7 +12,7 @@ const LoginScreenUI = ({
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
-                <Image style={styles.iconImage} source={require('../../../assets/images/popcorn.png')} />
+                <Image style={styles.iconBigImage} source={require('../../../assets/images/popcorn.png')} />
             </View>
             <View style={styles.loginButtonContainer}>
                 <ButtonPrimary title={I18n.t('loginButton')} onPress={() => navigation.navigate('LoginPublic')} />
