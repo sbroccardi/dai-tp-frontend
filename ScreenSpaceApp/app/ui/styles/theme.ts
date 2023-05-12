@@ -123,9 +123,27 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 22,
         alignItems: 'center'
     },
-    buttonLogout: {
+    buttonDangerMed: {
+        backgroundColor: palette.red,
+        width: 170,
+        height: 53,
+        borderRadius: 13,
+        paddingVertical: 13,
+        paddingHorizontal: 22,
+        alignItems: 'center'
+    },
+    buttonDangerSmall: {
+        backgroundColor: palette.red,
+        width: 53,
+        height: 53,
+        borderRadius: 13,
+        paddingVertical: 13,
+        paddingHorizontal: 22,
+        alignItems: 'center'
+    },
+    buttonLogoutMed: {
         backgroundColor: palette.green,
-        width: 300,
+        width: 170,
         height: 53,
         borderRadius: 13,
         paddingVertical: 13,

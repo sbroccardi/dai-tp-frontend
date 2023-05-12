@@ -14,7 +14,7 @@ const LoginPrivateScreenUI = ({ }) => {
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
-                <Image style={styles.iconBigImage} source={require('../../../../assets/images/popcorn.png')} />
+                <Image style={styles.iconMediumImage} source={require('../../../../assets/images/popcorn.png')} />
             </View>
             <View style={styles.form}>
                 <TextInput style={styles.input} value={email} placeholder="Enter your email address" keyboardType="email-address" />
