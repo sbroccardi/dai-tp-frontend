@@ -6,7 +6,7 @@ const Stack = createNativeStackNavigator();
 
 function PublicUserStackNavigator(){
     return(
-        <Stack.Navigator initialRouteName='Movies'>
+        <Stack.Navigator>
             <Stack.Screen name='Movies' component={Movies} options={{title:'Movies'}}/>
         </Stack.Navigator>
     )

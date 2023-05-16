@@ -11,7 +11,7 @@ const MoviesUI = ({
     return(
         <View style={styles.container}>
             <View style={styles.toolbarPublicUserContainer}>
-                <ToolbarPublicUser onPress={() => navigation.goBack()}/>
+                <ToolbarPublicUser title='HardcodedName' onPress={() => navigation.goBack()}/>
             </View>
         </View>
     );
