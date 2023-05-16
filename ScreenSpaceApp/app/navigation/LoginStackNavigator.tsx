@@ -7,6 +7,7 @@ import RecoverPasswordScreen from '../ui/screens/recoverPassword/RecoverPassword
 import SignUpScreen from '../ui/screens/signUp/SignUpScreen';
 import I18n from '../assets/localization/I18n';
 import PublicUserStackNavigator from './PublicUserStackNavigator';
+import Movies from '../ui/screens/movies/Movies';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +19,7 @@ function LoginStackNavigator() {
             <Stack.Screen name="LoginPublic" component={LoginPublicScreen} options={{ title: I18n.t('loginButton') }} />
             <Stack.Screen name="RecoverPassword" component={RecoverPasswordScreen} options={{ title: I18n.t('forgotPassword') }} />
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: I18n.t('signUp') }} />
-            <Stack.Screen name="PublicUserStackNavigator" component={PublicUserStackNavigator} />
+            {/*NO DEJAR ESTA LINEA EN ESTE STACK NAVIGATOR*/}<Stack.Screen name="Movies" component={Movies} />
         </Stack.Navigator>
     );
 }
