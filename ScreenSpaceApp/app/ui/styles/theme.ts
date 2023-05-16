@@ -78,6 +78,13 @@ export const styles = StyleSheet.create({
         fontWeight: "400",
         color: palette.yellow
     },
+    toolbarPublicUserText:{
+        fontFamily: 'Poppins-Regular',
+        fontStyle: 'normal',
+        fontSize: 19,
+        fontWeight: "600",
+        color: palette.yellow
+    },
     // --- COMPONENTS ---
     container: {
         flex: 1,
@@ -159,6 +166,9 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
+    toolbarPublicUserContainer: {
+        flex: 1
+    },
     form: {
         flex: 1
     },
@@ -172,5 +182,9 @@ export const styles = StyleSheet.create({
         width: 300,
         height: 53,
         marginBottom: 20
+    },
+    toolbarPublicUser:{
+        width: 417,
+        height: 45,
     }
 });

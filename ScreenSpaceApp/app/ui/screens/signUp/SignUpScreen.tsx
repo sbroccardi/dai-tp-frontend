@@ -6,6 +6,6 @@ export default function SignUpScreen() {
     //Logic
 
     return (
-        <Text style={styles.bodyText}>Private SignUp</Text>
+        
     );
 }
