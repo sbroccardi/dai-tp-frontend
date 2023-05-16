@@ -157,6 +157,9 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 22,
         alignItems: 'center'
     },
+    leftArrowButtonColor: {
+        color:'#A7AEBF'
+    },
     loginButtonContainer: {
         flex: 3,
         justifyContent: 'center'
@@ -168,6 +171,9 @@ export const styles = StyleSheet.create({
     },
     toolbarPublicUserContainer: {
         flex: 1
+    },
+    leftArrowButtonContainer:{
+        flex:0.1
     },
     form: {
         flex: 1
@@ -184,6 +190,7 @@ export const styles = StyleSheet.create({
         marginBottom: 20
     },
     toolbarPublicUser:{
+        flexDirection:'row',
         width: 417,
         height: 45,
     }

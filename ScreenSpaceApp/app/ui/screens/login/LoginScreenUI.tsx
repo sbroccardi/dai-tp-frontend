@@ -4,6 +4,7 @@ import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { styles } from '../../styles/theme';
 import I18n from '../../../assets/localization/I18n';
+import React from 'react';
 
 const LoginScreenUI = ({
 }) => {

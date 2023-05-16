@@ -14,9 +14,7 @@ function RootNavigator() {
         <NavigationContainer theme={theme}>
             <Stack.Navigator initialRouteName="LoginStackNavigator">
                 <Stack.Screen name="LoginStackNavigator" component={LoginStackNavigator} options={{ title: '' }} />
-            </Stack.Navigator>
-            <Stack.Navigator initialRouteName="PublicUserStackNavigator">
-                <Stack.Screen name="PublicUserStackNavigator" component={PublicUserStackNavigator} options={{ title: 'PublicUserStackNavigator'}}/>
+                <Stack.Screen name="PublicUserStackNavigator" component={PublicUserStackNavigator} />
             </Stack.Navigator>
         </NavigationContainer>
     );

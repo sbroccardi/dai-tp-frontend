@@ -12,6 +12,5 @@ export default function ToolbarPublicUser(props:{onPress: any; title?:string|und
                 <Icon name='arrow-left' size={18} style={styles.leftArrowButtonColor}/>
             </Pressable>
         </View>
-    )
-    
+    )   
 }

@@ -11,7 +11,7 @@ const LoginPublicScreenUI = ({ }) => {
     return (
         <View style={styles.container}>
             <View style={styles.loginButtonContainer}>
-                <ButtonPrimary title={I18n.t('loginButton')} onPress={() => navigation.navigate('Movies')}/>
+                <ButtonPrimary title={I18n.t('loginButton')} onPress={() => navigation.navigate('PublicUserStackNavigator', {screen:'Movies'})}/>
             </View>
         </View>
     );

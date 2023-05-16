@@ -11,7 +11,7 @@ const SignUpScreenUI = ({}) => {
         <View style={styles.container}>
             {/**/}
         </View>
-    )
-}
+    );
+};
 
 export default SignUpScreenUI;
