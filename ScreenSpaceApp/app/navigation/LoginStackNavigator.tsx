@@ -19,7 +19,7 @@ function LoginStackNavigator() {
             <Stack.Screen name="LoginPublic" component={LoginPublicScreen} options={{ title: I18n.t('loginButton') }} />
             <Stack.Screen name="RecoverPassword" component={RecoverPasswordScreen} options={{ title: I18n.t('forgotPassword') }} />
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: I18n.t('signUp') }} />
-            {/*NO DEJAR ESTA LINEA EN ESTE STACK NAVIGATOR*/}<Stack.Screen name="Movies" component={Movies} />
+            {/*NO DEJAR ESTA LINEA EN ESTE STACK NAVIGATOR*/}<Stack.Screen name="Movies" component={Movies} options={/*desactivo el header del navigator*/{headerShown:false}}/>
         </Stack.Navigator>
     );
 }

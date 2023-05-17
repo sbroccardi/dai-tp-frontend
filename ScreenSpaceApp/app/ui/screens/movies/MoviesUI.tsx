@@ -12,10 +12,10 @@ const MoviesUI = ({
     return(
         <View style={styles.container}>
             <View style={styles.toolbarPublicUserContainer}>
-                <ToolbarPublicUser title='HardcodedName' onPress={() => navigation.goBack()}/>
+                <ToolbarPublicUser onPress={() => navigation.goBack()}/>
             </View>
             <View style={styles.loginButtonContainer}>
-                <ButtonPrimary onPress={''} title={'hardcode'}/>
+                <ButtonPrimary onPress={undefined} title={'hardcode'}/>
             </View>
         </View>
     );

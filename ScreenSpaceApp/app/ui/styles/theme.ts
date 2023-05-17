@@ -170,10 +170,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     toolbarPublicUserContainer: {
+        /*esto define el comportamiento de la posicion 
+        y tamaño del toolbar con respecto a los 
+        demas componentes de una pantalla, 
+        dentro de un flex que puede tener cualquier  
+        otro tipo de estructura */
         flex: 1
     },
     leftArrowButtonContainer:{
-        flex:0.1
+        flex:0.5,
     },
     form: {
         flex: 1
@@ -189,7 +194,8 @@ export const styles = StyleSheet.create({
         height: 53,
         marginBottom: 20
     },
-    toolbarPublicUser:{
+    toolbarPublicUser:{ 
+        //esto define la estructura DENTRO del componente Toolbaar
         flexDirection:'row',
         width: 417,
         height: 45,
