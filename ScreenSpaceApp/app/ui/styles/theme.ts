@@ -175,10 +175,12 @@ export const styles = StyleSheet.create({
         demas componentes de una pantalla, 
         dentro de un flex que puede tener cualquier  
         otro tipo de estructura */
-        flex: 1
+        flex: 0.5
     },
     leftArrowButtonContainer:{
-        flex:0.5,
+        flex:0.3,
+        height:200,
+        width:300
     },
     form: {
         flex: 1
