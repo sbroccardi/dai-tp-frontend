@@ -7,5 +7,7 @@ export default {
     signUp: 'Crear cuenta',
     emailAddress: 'Correo Electrónico',
     password: 'Contraseña',
-    forgotPassword: 'Olvido su contraseña?'
+    forgotPassword: 'Olvido su contraseña?',
+    haveLogin: '¿Ya tienes una cuenta?',
+    register: 'Registrarse'
 };
