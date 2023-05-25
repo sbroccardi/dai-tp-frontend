@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BackHandler, SafeAreaView } from 'react-native';
+import { NativeBaseProvider } from 'native-base';
 import RootNavigator from './navigation/RootNavigator';
 
 function App(): JSX.Element {
@@ -10,9 +11,11 @@ function App(): JSX.Element {
   }, []);
 
   return (
-  <SafeAreaView style={{flex: 1}}>
-    <RootNavigator />
-  </SafeAreaView> 
+    <SafeAreaView style={{ flex: 1 }}>
+      <NativeBaseProvider>
+        <RootNavigator />
+      </NativeBaseProvider>
+    </SafeAreaView>
   );
 }
 
