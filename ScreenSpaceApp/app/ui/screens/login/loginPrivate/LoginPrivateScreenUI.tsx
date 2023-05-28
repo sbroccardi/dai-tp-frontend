@@ -35,7 +35,7 @@ const LoginPrivateScreenUI = ({ }) => {
     };
 
     return (
-        <Center bg={'trueGray.900'} w="100%">
+        <Center w="100%">
             <Flex direction="column" >
                 <Spacer />
                 <Center>

@@ -1,5 +1,7 @@
 export default {
+    changePassword: 'Cambiar contraseña',
     cinema: 'Cine',
+    code: 'Código',
     company: 'Empresa',
     confirmPassword: 'Confirme su contraseña',
     helpPassword: 'Al menos 8 caracteres con letras mayúsculas y números.',
@@ -7,7 +9,9 @@ export default {
     emailAddress: 'Correo Electrónico',
     enterCompany: 'Ingrese su empresa',
     enterEmail: 'Ingrese su correo electrónico',
+    enterNewPassword: 'Ingrese su nueva contraseña',
     enterPassword: 'Ingrese su contraseña',
+    enterResetCode: 'Ingrese su código',
     forgotPassword: '¿Olvido su contraseña?',
     haveLogin: '¿Ya tienes una cuenta?',
     login: 'Iniciar sesión',
@@ -15,6 +19,9 @@ export default {
     loginButton: 'Iniciar sesión con Google',
     newToScreenSpace: 'Nuevo en ScreenSpace?',
     password: 'Contraseña',
-    signUp: 'Crear cuenta',
+    sendCode: 'Enviar código',
+    sendEmail: 'Enviar correo',
+    signUp: 'Registrarse',
+    uploadPortraitPhoto: 'Cargar foto de retrato',
     filters: 'Filtros'
 };

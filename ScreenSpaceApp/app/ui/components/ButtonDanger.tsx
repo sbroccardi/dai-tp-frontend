@@ -1,12 +1,11 @@
 import React from 'react';
-import { Text, Pressable } from 'react-native';
-import { styles } from '../styles/theme';
+import { Button } from 'native-base';
 
-export default function Button(props: { onPress: any; title?: string | undefined; }) {
-  const { onPress, title = 'Delete' } = props;
+export default function ButtonDanger(props: { onPress: any; title?: string | undefined; size?: string | undefined}) {
+  const { onPress, title = 'OK', size = 'lg' } = props;
   return (
-    <Pressable style={styles.buttonDanger} onPress={onPress}>
-      <Text style={styles.buttonPrimaryText}>{title}</Text>
-    </Pressable>
+    <Button colorScheme="danger" size={size} _text={{ color: 'trueGray.900', fontWeight: 'medium' }} onPress={onPress}>
+      {title}
+    </Button>
   );
 }

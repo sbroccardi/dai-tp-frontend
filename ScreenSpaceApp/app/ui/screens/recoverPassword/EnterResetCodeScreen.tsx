@@ -5,23 +5,23 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
 
-const RecoverPasswordScreen = ({
+const EnterResetCodeScreen = ({
 }) => {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-    const [formData, setData] = React.useState({ email: "" });
+    const [formData, setData] = React.useState({ code: "" });
     const [errors, setErrors] = React.useState({});
 
     const validate = () => {
-        if (formData.email === undefined) {
+        if (formData.code === undefined) {
             setErrors({
                 ...errors,
-                name: 'Email is required'
+                name: 'Code is required'
             });
             return false;
-        } else if (formData.email.length < 3) {
+        } else if (formData.code.length < 4) {
             setErrors({
                 ...errors,
-                name: 'Email is too short'
+                name: 'Code is too short'
             });
             return false;
         }
@@ -30,7 +30,7 @@ const RecoverPasswordScreen = ({
     };
 
     const onSubmit = () => {
-        validate() ? navigation.navigate('EnterResetCode') : console.log('Validation Failed');
+        validate() ? navigation.navigate('EnterNewPassword') : console.log('Validation Failed');
     };
 
     return (
@@ -38,19 +38,19 @@ const RecoverPasswordScreen = ({
             <Flex direction="column" >
                 <Center pt='12%'>
                     <FormControl isRequired>
-                        <FormControl.Label _text={{ bold: true }}>{I18n.t('email')}</FormControl.Label>
-                        <Input size="md" placeholder={I18n.t('enterEmail')} onChangeText={value => setData({ ...formData, email: value })} />
+                        <FormControl.Label _text={{ bold: true }}>{I18n.t('code')}</FormControl.Label>
+                        <Input size="md" onChangeText={value => setData({ ...formData, code: value })} />
                         <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
-                            Error Email
+                            Error Code
                         </FormControl.ErrorMessage>
                     </FormControl>
                 </Center>
                 <Center pt='8%'>
-                    <ButtonPrimary onPress={() => onSubmit} title={I18n.t('sendEmail')} />
+                    <ButtonPrimary onPress={() => onSubmit} title={I18n.t('sendCode')} />
                 </Center>
             </Flex>
         </Center>
     );
 }
 
-export default RecoverPasswordScreen;
+export default EnterResetCodeScreen;
