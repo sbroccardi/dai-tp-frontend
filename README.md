@@ -72,6 +72,15 @@ _Una serie de ejemplos paso a paso que debes ejecutar para tener un entorno de d
 ...
 
 
+## Comandos utiles
+
+Reinstalar Pods
+```Bash
+pod deintegrate
+
+pod install
+```
+
 ## Ejecutando las pruebas ⚙️
 
 ...
@@ -97,6 +106,10 @@ Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones
 
 ## Documentación
 - [Miro](https://miro.com/app/board/uXjVMbn0zvo=/)
+
+## Referencias
+- [Example to Use React Native Vector Icons](https://aboutreact.com/react-native-vector-icons/)
+- [Catalogo de iconos](https://oblador.github.io/react-native-vector-icons/)
 
 ## Autores ✒️
 
