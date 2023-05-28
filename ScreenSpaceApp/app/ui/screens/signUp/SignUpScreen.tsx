@@ -7,6 +7,6 @@ export default function SignUpScreen() {
     //Logic
 
     return (
-        <SignUpScreenUI/>
+        <SignUpScreenUI></SignUpScreenUI>
     );
 }
