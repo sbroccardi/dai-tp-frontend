@@ -9,7 +9,8 @@ const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
     return (
-        <NavigationContainer theme={theme}>
+        //<NavigationContainer theme={theme}>
+        <NavigationContainer>
             <Stack.Navigator initialRouteName="LoginStackNavigator">
                 <Stack.Screen name="LoginStackNavigator" component={LoginStackNavigator} options={{ title: '' }} />
             </Stack.Navigator>

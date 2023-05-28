@@ -1,34 +1,76 @@
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
-import ButtonPrimary from '../../../components/ButtonPrimary';
-import { useState } from 'react';
+import { Center, Flex, FormControl, Input, Image, Spacer, Text, VStack } from 'native-base';
+import React from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { styles } from '../../../styles/theme';
 import I18n from '../../../../assets/localization/I18n';
+import ButtonPrimary from '../../../components/ButtonPrimary';
 
 const LoginPrivateScreenUI = ({ }) => {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setData] = React.useState({ email: "", password: "" });
+    const [errors, setErrors] = React.useState({});
+
+    const validate = () => {
+        console.log(formData);
+
+        if (formData.email === undefined) {
+            setErrors({
+                ...errors,
+                name: 'Name is required'
+            });
+            return false;
+        } else if (formData.email.length < 3) {
+            setErrors({
+                ...errors,
+                name: 'Name is too short'
+            });
+            return false;
+        }
+
+        return true;
+    };
+
+    const onSubmit = () => {
+        validate() ? console.log('Submitted') : console.log('Validation Failed');
+    };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.iconContainer}>
-                <Image style={styles.iconMediumImage} source={require('../../../../assets/images/popcorn.png')} />
-            </View>
-            <View style={styles.form}>
-                <TextInput style={styles.input} value={email} placeholder="Enter your email address" keyboardType="email-address" />
-                <TextInput style={styles.input} value={password} placeholder="Enter your password" keyboardType="default" />
-                <Text style={styles.signupLinkText} onPress={() => navigation.navigate('RecoverPassword')}>{I18n.t('forgotPassword')}</Text>
-            </View>
-            <View style={styles.loginButtonContainer}>
-                <ButtonPrimary title={I18n.t('login')} onPress={() => console.log('BUTTON PRESSED!')} />
-            </View>
-            <View style={styles.signupContainer}>
-                <Text style={styles.signupText}>{I18n.t('newToScreenSpace')} </Text>
-                <Text style={styles.signupLinkText} onPress={() => navigation.navigate('SignUp')}>{I18n.t('signUp')}</Text>
-            </View>
-        </View>
+        <Center bg={'trueGray.900'} w="100%">
+            <Flex direction="column" >
+                <Spacer />
+                <Center>
+                    <Image alt="ScreenSpace" source={require('../../../../assets/images/popcorn.png')} width={116} height={116} />
+                </Center>
+                <Spacer />
+                <Center>
+                    <FormControl isRequired>
+                        <FormControl.Label _text={{ bold: true }}>{I18n.t('email')}</FormControl.Label>
+                        <Input size="md" placeholder={I18n.t('enterEmail')} keyboardType="email-address" onChangeText={value => setData({ ...formData, email: value })} />
+                        <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
+                            Error Email
+                        </FormControl.ErrorMessage>
+                    </FormControl>
+                    <FormControl isRequired>
+                        <FormControl.Label _text={{ bold: true }}>{I18n.t('password')}</FormControl.Label>
+                        <Input size="md" placeholder={I18n.t('enterPassword')} type="password" keyboardType="default" onChangeText={value => setData({ ...formData, password: value })} />
+                        <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
+                            Error Password
+                        </FormControl.ErrorMessage>
+                    </FormControl>
+                </Center>
+                    <Text color={'yellow.400'} onPress={() => navigation.navigate('RecoverPassword')}>{I18n.t('forgotPassword')}</Text>
+                <Spacer />
+                <Center>
+                    <ButtonPrimary onPress={() => onSubmit} title={I18n.t('login')} />
+                </Center>
+                <Spacer />
+                <Center>
+                    <Text fontWeight={'normal'} color={'gray.400'}>{I18n.t('newToScreenSpace')}
+                        <Text color={'yellow.400'} onPress={() => navigation.navigate('SignUp')}> {I18n.t('signUp')}</Text>
+                    </Text>
+                </Center>
+            </Flex>
+        </Center>
     );
 };
 
