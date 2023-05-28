@@ -9,7 +9,7 @@ const LoginScreenUI = ({
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
     return (
-        <Center bg={'trueGray.900'}>
+        <Center>
             <Flex direction="column" >
                 <Spacer />
                 <Center>

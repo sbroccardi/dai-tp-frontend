@@ -2,7 +2,7 @@
 import React from 'react';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Box, Button, Center, Flex, FormControl, Heading, Input, Pressable, Spacer, Text, View, VStack } from 'native-base';
+import { Center, Flex, FormControl, Input } from 'native-base';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ProfilePicture from '../../components/ProfilePicture';
@@ -36,14 +36,14 @@ const SignUpScreenUI = ({
     };
 
     return (
-        <Center bg={'trueGray.900'} w="100%">
+        <Center w="100%">
             <Flex direction="column" >
                 <Center pt='10%'>
                     <FormControl>
                         <ProfilePicture title={I18n.t('uploadPortraitPhoto')} onPress={() => console.log('')} />
                     </FormControl>
                 </Center>
-                <Center pt='15%'>
+                <Center pt='12%'>
                     <FormControl isRequired>
                         <FormControl.Label _text={{ bold: true }}>{I18n.t('company')}</FormControl.Label>
                         <Input size="md" placeholder={I18n.t('enterCompany')} onChangeText={value => setData({ ...formData, company: value })} />
@@ -76,8 +76,8 @@ const SignUpScreenUI = ({
                         </FormControl.ErrorMessage>
                     </FormControl>
                 </Center>
-                <Center pt='5%'>
-                    <ButtonPrimary onPress={() => onSubmit} title={I18n.t('login')} />
+                <Center pt='8%'>
+                    <ButtonPrimary onPress={() => onSubmit} title={I18n.t('signUp')} />
                 </Center>
             </Flex>
         </Center>
