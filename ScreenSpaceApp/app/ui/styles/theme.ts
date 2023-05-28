@@ -172,5 +172,17 @@ export const styles = StyleSheet.create({
         width: 300,
         height: 53,
         marginBottom: 20
-    }
+    },
+    searchBar: {
+        color: palette.grey,
+        fontSize: 18,
+        backgroundColor: palette.blackLight,
+        paddingVertical: 13,
+        paddingHorizontal: 22,
+        borderRadius: 13,
+        width: 370,
+        height: 53,
+        marginBottom: 20
+    },
+    
 });

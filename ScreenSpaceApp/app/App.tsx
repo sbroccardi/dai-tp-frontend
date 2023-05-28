@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { BackHandler, SafeAreaView } from 'react-native';
 import RootNavigator from './navigation/RootNavigator';
+import {  NativeBaseProvider } from "native-base";
+
 
 function App(): JSX.Element {
   // Disable hardware back button
@@ -11,7 +13,9 @@ function App(): JSX.Element {
 
   return (
   <SafeAreaView style={{flex: 1}}>
-    <RootNavigator />
+    <NativeBaseProvider>
+        <RootNavigator />
+    </NativeBaseProvider>
   </SafeAreaView> 
   );
 }

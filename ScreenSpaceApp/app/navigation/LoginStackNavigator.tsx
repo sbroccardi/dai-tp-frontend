@@ -6,6 +6,7 @@ import LoginPublicScreen from '../ui/screens/login/loginPublic/LoginPublicScreen
 import RecoverPasswordScreen from '../ui/screens/recoverPassword/RecoverPasswordScreen';
 import SignUpScreen from '../ui/screens/signUp/SignUpScreen';
 import I18n from '../assets/localization/I18n';
+import TestScreen from '../ui/screens/TestScreen/TestScreen';
 
 const Stack = createNativeStackNavigator();
 
