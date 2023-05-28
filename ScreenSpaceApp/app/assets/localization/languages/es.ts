@@ -23,5 +23,5 @@ export default {
     sendEmail: 'Enviar correo',
     signUp: 'Registrarse',
     uploadPortraitPhoto: 'Cargar foto de retrato',
-    filters: 'Filtros'
+    filters: 'Filtros',
 };

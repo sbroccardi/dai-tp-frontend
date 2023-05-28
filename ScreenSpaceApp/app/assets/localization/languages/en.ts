@@ -19,7 +19,7 @@ export default {
     loginButton: 'Log in with Google',
     newToScreenSpace: 'New to ScreenSpace?',
     password: 'Password',
-    filter: 'Filters'
+    filter: 'Filters',
     sendCode: 'Send code',
     sendEmail: 'Send email',
     signUp: 'Register',
