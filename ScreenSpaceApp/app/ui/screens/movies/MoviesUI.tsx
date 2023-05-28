@@ -14,9 +14,6 @@ const MoviesUI = ({
             <View style={styles.toolbarPublicUserContainer}>
                 <ToolbarPublicUser onPress={() => navigation.goBack()}/>
             </View>
-            <View style={styles.loginButtonContainer}>
-                <ButtonPrimary onPress={undefined} title={'hardcode'}/>
-            </View>
         </View>
     );
 }

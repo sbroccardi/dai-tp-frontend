@@ -83,7 +83,9 @@ export const styles = StyleSheet.create({
         fontStyle: 'normal',
         fontSize: 19,
         fontWeight: "600",
-        color: palette.yellow
+        color: palette.white,
+        flex:1,
+        paddingHorizontal:95
     },
     // --- COMPONENTS ---
     container: {
@@ -160,6 +162,10 @@ export const styles = StyleSheet.create({
     leftArrowButtonColor: {
         color:'#A7AEBF'
     },
+    leftArrowButtonContainer:{
+        
+        justifyContent: 'flex-start',
+    },
     loginButtonContainer: {
         flex: 3,
         justifyContent: 'center'
@@ -175,13 +181,10 @@ export const styles = StyleSheet.create({
         demas componentes de una pantalla, 
         dentro de un flex que puede tener cualquier  
         otro tipo de estructura */
-        flex: 0.5
+        flex: 0.15,
+        justifyContent: 'center',
     },
-    leftArrowButtonContainer:{
-        flex:0.3,
-        height:200,
-        width:300
-    },
+    
     form: {
         flex: 1
     },
@@ -199,6 +202,8 @@ export const styles = StyleSheet.create({
     toolbarPublicUser:{ 
         //esto define la estructura DENTRO del componente Toolbaar
         flexDirection:'row',
+        paddingHorizontal: 30,
+        alignContent: 'center',
         width: 417,
         height: 45,
     }

@@ -13,7 +13,7 @@ function RootNavigator() {
     return (
         //<NavigationContainer theme={theme}>
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="LoginStackNavigator">
+            <Stack.Navigator initialRouteName="LoginStackNavigator" screenOptions={{headerShown:false}}>
                 <Stack.Screen name="LoginStackNavigator" component={LoginStackNavigator} options={{ title: '' }} />
             </Stack.Navigator>
         </NavigationContainer>

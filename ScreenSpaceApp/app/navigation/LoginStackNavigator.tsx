@@ -13,13 +13,13 @@ const Stack = createNativeStackNavigator();
 
 function LoginStackNavigator() {
     return (
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Movies" screenOptions={{headerShown:false}}>
             <Stack.Screen name="Login" component={LoginScreen} options={{ title: '' }} />
             <Stack.Screen name="LoginPrivate" component={LoginPrivateScreen} options={{ title: I18n.t('loginAs') + ' ' + I18n.t('cinema') }} />
             <Stack.Screen name="LoginPublic" component={LoginPublicScreen} options={{ title: I18n.t('loginButton') }} />
             <Stack.Screen name="RecoverPassword" component={RecoverPasswordScreen} options={{ title: I18n.t('forgotPassword') }} />
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: I18n.t('signUp') }} />
-            {/*NO DEJAR ESTA LINEA EN ESTE STACK NAVIGATOR*/}<Stack.Screen name="Movies" component={Movies} options={/*desactivo el header del navigator*/{headerShown:false}}/>
+            {/*NO DEJAR ESTA LINEA EN ESTE STACK NAVIGATOR*/}<Stack.Screen name="Movies" component={Movies} />
         </Stack.Navigator>
     );
 }

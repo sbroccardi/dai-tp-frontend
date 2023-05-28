@@ -4,12 +4,12 @@ import { styles } from '../styles/theme';
 import { Button, IconButton } from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-export default function ToolbarPublicUser(props:{onPress: any; title?:string|undefined}){
-    const {onPress, title="ToolbarTitle"} = props;
+export default function ToolbarPublicUser(props:{onPressLeft: any; onPressRight: any; title?:string|undefined}){
+    const {onPressLeft, onPressRight, title="ToolbarTitle"} = props;
     
     return(
         <View style={styles.toolbarPublicUser}>
-            <Pressable style={styles.leftArrowButtonContainer} onPress={onPress}>
+            <Pressable style={styles.leftArrowButtonContainer}>
                 <Icon name='arrowleft' size={30} color="white"/>
             </Pressable>
             <Text style={styles.toolbarPublicUserText}>
@@ -17,4 +17,3 @@ export default function ToolbarPublicUser(props:{onPress: any; title?:string|und
             </Text>
         </View>
     )   
-}

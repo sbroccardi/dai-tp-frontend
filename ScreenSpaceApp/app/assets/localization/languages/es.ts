@@ -16,4 +16,5 @@ export default {
     newToScreenSpace: 'Nuevo en ScreenSpace?',
     password: 'Contraseña',
     signUp: 'Crear cuenta',
+    filters: 'Filtros'
 };
