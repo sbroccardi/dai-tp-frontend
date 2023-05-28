@@ -10,8 +10,10 @@ _Estas instrucciones permiten obtener una copia del proyecto en funcionamiento e
 * [NodeJS](https://nodejs.org/es/)
 * [Watchman](https://facebook.github.io/watchman/)
 * [JDK11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
-* [ReactNative](https://reactnative.dev/)
 * [Android Studio](https://developer.android.com/studio/)
+* [ReactNative](https://reactnative.dev/)
+* [NativeBase](https://docs.nativebase.io/)
+* [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
 
 ### Creating a new application
 ```bash
@@ -72,6 +74,15 @@ _Una serie de ejemplos paso a paso que debes ejecutar para tener un entorno de d
 ...
 
 
+## Comandos utiles
+
+Reinstalar Pods
+```Bash
+pod deintegrate
+
+pod install
+```
+
 ## Ejecutando las pruebas ⚙️
 
 ...
@@ -97,6 +108,10 @@ Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones
 
 ## Documentación
 - [Miro](https://miro.com/app/board/uXjVMbn0zvo=/)
+
+## Referencias
+- [Example to Use React Native Vector Icons](https://aboutreact.com/react-native-vector-icons/)
+- [Catalogo de iconos](https://oblador.github.io/react-native-vector-icons/)
 
 ## Autores ✒️
 
