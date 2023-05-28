@@ -12,6 +12,8 @@ _Estas instrucciones permiten obtener una copia del proyecto en funcionamiento e
 * [JDK11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
 * [ReactNative](https://reactnative.dev/)
 * [Android Studio](https://developer.android.com/studio/)
+* [NativeBase](https://docs.nativebase.io/)
+* [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
 
 ### Creating a new application
 ```bash

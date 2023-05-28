@@ -16,4 +16,5 @@ export default {
     newToScreenSpace: 'New to ScreenSpace?',
     password: 'Password',
     signUp: 'Create an account',
+    uploadPortraitPhoto: 'Upload portrait photo',
 };

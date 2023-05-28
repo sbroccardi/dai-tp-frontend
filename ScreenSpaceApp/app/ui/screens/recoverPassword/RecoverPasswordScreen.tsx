@@ -6,6 +6,6 @@ export default function RecoverPasswordScreen() {
     //Logic
 
     return (
-        <Text style={styles.bodyText}>Recover password</Text>
+        <Text style={styles.bodyText}>TODO</Text>
     );
 }

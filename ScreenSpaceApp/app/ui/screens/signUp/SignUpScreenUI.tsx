@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Box, Button, Center, Flex, FormControl, Heading, Input, Pressable, Spacer, Text, View, VStack } from 'native-base';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import ProfilePicture from '../../components/ProfilePicture';
 
 const SignUpScreenUI = ({
 }) => {
@@ -38,15 +38,12 @@ const SignUpScreenUI = ({
     return (
         <Center bg={'trueGray.900'} w="100%">
             <Flex direction="column" >
-                <Spacer  />
-                <Center>
+                <Center pt='10%'>
                     <FormControl>
-                        <Center>
-                        <Box bg="gray.800" p="6" rounded="lg">
-                            <Icon name="user" size={40} color="#F0F2F3" />
-                        </Box>
-                        </Center>
+                        <ProfilePicture title={I18n.t('uploadPortraitPhoto')} onPress={() => console.log('')} />
                     </FormControl>
+                </Center>
+                <Center pt='15%'>
                     <FormControl isRequired>
                         <FormControl.Label _text={{ bold: true }}>{I18n.t('company')}</FormControl.Label>
                         <Input size="md" placeholder={I18n.t('enterCompany')} onChangeText={value => setData({ ...formData, company: value })} />
@@ -71,7 +68,7 @@ const SignUpScreenUI = ({
                             Error Password
                         </FormControl.ErrorMessage>
                     </FormControl>
-                    <FormControl isRequired>
+                    <FormControl isRequired pt='5%'>
                         <FormControl.Label _text={{ bold: true }}>{I18n.t('confirmPassword')}</FormControl.Label>
                         <Input size="md" placeholder={I18n.t('enterPassword')} type="password" onChangeText={value => setData({ ...formData, confirmPassword: value })} />
                         <FormControl.ErrorMessage _text={{ fontSize: 'xs' }} >
@@ -79,7 +76,7 @@ const SignUpScreenUI = ({
                         </FormControl.ErrorMessage>
                     </FormControl>
                 </Center>
-                <Center>
+                <Center pt='5%'>
                     <ButtonPrimary onPress={() => onSubmit} title={I18n.t('login')} />
                 </Center>
             </Flex>

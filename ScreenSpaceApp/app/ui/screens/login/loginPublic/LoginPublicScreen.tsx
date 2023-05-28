@@ -7,6 +7,6 @@ export default function LoginPublicScreen() {
     //Logic
 
     return (
-        <Text style={styles.bodyText}>{I18n.t('loginButton')}</Text>
+        <Text style={styles.bodyText}>TODO</Text>
     );
 }

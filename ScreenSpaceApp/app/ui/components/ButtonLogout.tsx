@@ -1,12 +1,11 @@
 import React from 'react';
-import { Text, Pressable } from 'react-native';
-import { styles } from '../styles/theme';
+import { Button } from 'native-base';
 
-export default function Button(props: { onPress: any; title?: string | undefined; }) {
-  const { onPress, title = 'Log out' } = props;
+export default function ButtonLogout(props: { onPress: any; title?: string | undefined; size?: string | undefined}) {
+  const { onPress, title = 'OK', size = 'md' } = props;
   return (
-    <Pressable style={styles.buttonLogoutMed} onPress={onPress}>
-      <Text style={styles.buttonPrimaryText}>{title}</Text>
-    </Pressable>
+    <Button colorScheme="success" size={size} _text={{ color: 'trueGray.900', fontWeight: 'medium' }} onPress={onPress}>
+      {title}
+    </Button>
   );
 }
