@@ -139,7 +139,9 @@ export const styles = StyleSheet.create({
         fontWeight: "600",
         color: palette.white,
         flex:1,
-        paddingHorizontal:95
+        paddingHorizontal:80,
+        paddingTop:9,
+        justifyContent:'center'
     },
     // --- COMPONENTS ---
     container: {
@@ -216,9 +218,9 @@ export const styles = StyleSheet.create({
     leftArrowButtonColor: {
         color:'#A7AEBF'
     },
-    leftArrowButtonContainer:{
-        
+    leftButtonContainer:{
         justifyContent: 'flex-start',
+        alignContent:'flex-start'
     },
     loginButtonContainer: {
         flex: 3,

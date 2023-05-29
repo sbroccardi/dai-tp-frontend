@@ -9,9 +9,9 @@ export default function ToolbarPublicUser(props:{onPress: any; title?:string|und
     
     return(
         <View style={styles.toolbarPublicUser}>
-            <Pressable style={styles.leftArrowButtonContainer} onPress={onPress}>
-                <Icon name='arrowleft' size={30} color="white"/>
-            </Pressable>
+            <Button style={styles.leftButtonContainer} onPress={onPress} borderRadius='20' variant='ghost' colorScheme="white" >
+                <Icon name='arrowleft' size={20} color="white"/>
+            </Button>
             <Text style={styles.toolbarPublicUserText}>
                 {title}
             </Text>

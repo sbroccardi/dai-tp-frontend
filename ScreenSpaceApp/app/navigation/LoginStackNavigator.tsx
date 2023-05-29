@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 
 function LoginStackNavigator() {
     return (
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown:false}}>
             <Stack.Screen name="Login" component={LoginScreen} options={{ title: '' }} />
             <Stack.Screen name="LoginPrivate" component={LoginPrivateScreen} options={{ title: I18n.t('loginAs') + ' ' + I18n.t('cinema') }} />
             <Stack.Screen name="LoginPublic" component={LoginPublicScreen} options={{ title: I18n.t('loginButton') }} />

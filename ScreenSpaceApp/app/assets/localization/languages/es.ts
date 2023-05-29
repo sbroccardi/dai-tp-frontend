@@ -23,5 +23,6 @@ export default {
     sendEmail: 'Enviar correo',
     signUp: 'Registrarse',
     uploadPortraitPhoto: 'Cargar foto de retrato',
+    movies:'Películas',
     filters: 'Filtros'
 };
