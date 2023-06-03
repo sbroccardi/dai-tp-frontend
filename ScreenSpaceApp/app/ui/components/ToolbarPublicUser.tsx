@@ -9,7 +9,7 @@ export default function ToolbarPublicUser(props:{onPress: any; title?:string|und
     
     return(
         <View style={styles.toolbarPublicUser}>
-            <Button style={styles.leftButtonContainer} onPress={onPress} borderRadius='20' variant='ghost' colorScheme="white" >
+            <Button style={styles.toolbarButtonContainer} onPress={onPress} borderRadius='20' variant='ghost' colorScheme="white" >
                 <Icon name='arrowleft' size={20} color="white"/>
             </Button>
             <Text style={styles.toolbarPublicUserText}>

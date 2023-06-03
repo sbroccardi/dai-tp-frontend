@@ -218,7 +218,7 @@ export const styles = StyleSheet.create({
     leftArrowButtonColor: {
         color:'#A7AEBF'
     },
-    leftButtonContainer:{
+    toolbarButtonContainer:{
         justifyContent: 'flex-start',
         alignContent:'flex-start'
     },

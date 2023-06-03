@@ -9,14 +9,14 @@ export default function HomeToolbarPublicUser(props:{onPressLeft: any; onPressRi
     
     return(
         <View style={styles.toolbarPublicUser}>
-            <Button style={styles.leftButtonContainer} onPress={onPressLeft} variant='ghost' colorScheme="white" >
-                <Icon name='user' size={20} color="white"/>
+            <Button style={styles.toolbarButtonContainer} onPress={onPressLeft} variant='ghost' colorScheme="white" >
+                <Icon name='user' size={30} color="white"/>
             </Button>
             <Text style={styles.toolbarPublicUserText}>
                 {title}
             </Text>
-            <Button style={styles.leftButtonContainer} onPress={onPressLeft} variant='ghost' colorScheme="white" >
-                <Icon name='filter' size={20} color="white"/>
+            <Button style={styles.toolbarButtonContainer} onPress={onPressRight} variant='ghost' colorScheme="white" >
+                <Icon name='filter' size={30} color="white"/>
             </Button>
         </View>
     )   
