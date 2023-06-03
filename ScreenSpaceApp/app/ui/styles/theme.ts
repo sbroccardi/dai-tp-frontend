@@ -143,6 +143,17 @@ export const styles = StyleSheet.create({
         paddingTop:9,
         justifyContent:'center'
     },
+    toolbarPrivateUserText:{
+        fontFamily: 'Poppins-Regular',
+        fontStyle: 'normal',
+        fontSize: 19,
+        fontWeight: "600",
+        color: palette.white,
+        flex:1,
+        paddingHorizontal:80,
+        paddingTop:9,
+        justifyContent:'center'
+    },
     // --- COMPONENTS ---
     container: {
         flex: 1,
@@ -259,6 +270,13 @@ export const styles = StyleSheet.create({
         //esto define la estructura DENTRO del componente Toolbaar
         flexDirection:'row',
         paddingHorizontal: 30,
+        alignContent: 'center',
+        width: 417,
+        height: 45,
+    },
+    toolbarPrivateUser:{
+        flexDirection:'row',
+        paddingHorizontal: 80,
         alignContent: 'center',
         width: 417,
         height: 45,
