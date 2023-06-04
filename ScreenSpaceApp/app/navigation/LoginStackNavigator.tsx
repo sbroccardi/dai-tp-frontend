@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import LoginScreen from '../ui/screens/login/LoginScreen';
 import LoginPrivateScreen from '../ui/screens/login/loginPrivate/LoginPrivateScreen';
@@ -14,18 +14,47 @@ import Movies from '../ui/screens/movies/Movies';
 const Stack = createNativeStackNavigator();
 
 function LoginStackNavigator() {
-    return (
-        <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={LoginScreen} options={{ title: '' }} />
-            <Stack.Screen name="LoginPrivate" component={LoginPrivateScreen} options={{ title: I18n.t('loginAs') + ' ' + I18n.t('cinema') }} />
-            <Stack.Screen name="LoginPublic" component={LoginPublicScreen} options={{ title: I18n.t('loginButton') }} />
-            <Stack.Screen name="RecoverPassword" component={RecoverPasswordScreen} options={{ title: I18n.t('forgotPassword') }} />
-            <Stack.Screen name="EnterResetCode" component={EnterResetCodeScreen} options={{ title: I18n.t('enterResetCode') }} />
-            <Stack.Screen name="EnterNewPassword" component={EnterNewPasswordScreen} options={{ title: I18n.t('enterNewPassword') }} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: I18n.t('signUp') }} />
-            {/*NO DEJAR ESTA LINEA EN ESTE STACK NAVIGATOR*/}<Stack.Screen name="Movies" component={Movies} />
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{title: ''}}
+      />
+      <Stack.Screen
+        name="LoginPrivate"
+        component={LoginPrivateScreen}
+        options={{title: I18n.t('loginAs') + ' ' + I18n.t('cinema')}}
+      />
+      <Stack.Screen
+        name="LoginPublic"
+        component={LoginPublicScreen}
+        options={{title: I18n.t('loginButton')}}
+      />
+      <Stack.Screen
+        name="RecoverPassword"
+        component={RecoverPasswordScreen}
+        options={{title: I18n.t('forgotPassword')}}
+      />
+      <Stack.Screen
+        name="EnterResetCode"
+        component={EnterResetCodeScreen}
+        options={{title: I18n.t('enterResetCode')}}
+      />
+      <Stack.Screen
+        name="EnterNewPassword"
+        component={EnterNewPasswordScreen}
+        options={{title: I18n.t('enterNewPassword')}}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{title: I18n.t('signUp')}}
+      />
+      {/*NO DEJAR ESTA LINEA EN ESTE STACK NAVIGATOR*/}
+      <Stack.Screen name="Movies" component={Movies} />
+    </Stack.Navigator>
+  );
 }
 
 export default LoginStackNavigator;
