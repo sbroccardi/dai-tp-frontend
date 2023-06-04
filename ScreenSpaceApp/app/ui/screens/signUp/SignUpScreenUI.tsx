@@ -3,6 +3,8 @@ import React from 'react';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Center, Flex, FormControl, Input, VStack, useToast} from 'native-base';
+import DocumentPicker from 'react-native-document-picker';
+import ky from 'ky';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ProfilePicture from '../../components/ProfilePicture';
@@ -17,6 +19,7 @@ const SignUpScreenUI = ({}) => {
     confirmPassword: '',
   });
   const [errors, setErrors] = React.useState({});
+  const [singleFile, setSingleFile] = React.useState(null);
 
   const validate = () => {
     setErrors({});
@@ -72,6 +75,50 @@ const SignUpScreenUI = ({}) => {
     }
   };
 
+  const selectFile = async () => {
+    //Opening Document Picker for selection of one file
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+        //There can me more options as well
+        // DocumentPicker.types.allFiles
+        // DocumentPicker.types.images
+        // DocumentPicker.types.plainText
+        // DocumentPicker.types.audio
+        // DocumentPicker.types.pdf
+      });
+      //Printing the log realted to the file
+      console.log('res : ' + JSON.stringify(res));
+      // console.log('URI : ' + res.uri);
+      // console.log('Type : ' + res.type);
+      // console.log('File Name : ' + res.name);
+      // console.log('File Size : ' + res.size);
+      //Setting the state to show single file attributes
+      //setSingleFile(res);
+      const data = new FormData();
+      data.append('name', 'Image Upload');
+      data.append('file_attachment', res);
+      const response = await ky.post('http://localhost:3000/api/uploadAvatar', {
+        body: data,
+      });
+      console.log(response);
+    } catch (err) {
+      //Handling any exception (If any)
+      if (DocumentPicker.isCancel(err)) {
+        //If user canceled the document selection
+      } else {
+        //For Unknown Error
+        throw err;
+      }
+      toast.show({
+        description: JSON.stringify(err),
+        title: 'Unknown Error',
+        duration: 3000,
+        placement: 'top',
+      });
+    }
+  };
+
   return (
     <VStack
       space={4}
@@ -84,7 +131,7 @@ const SignUpScreenUI = ({}) => {
             <FormControl>
               <ProfilePicture
                 title={I18n.t('uploadPortraitPhoto')}
-                onPress={() => console.log('Upload!')}
+                onPress={selectFile}
               />
             </FormControl>
           </Center>
