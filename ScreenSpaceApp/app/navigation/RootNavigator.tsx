@@ -4,22 +4,79 @@ import React from 'react';
 
 import {reactNavigationTheme} from '../ui/styles/theme';
 
-import LoginStackNavigator from './LoginStackNavigator';
-import PublicUserStackNavigator from './PublicUserStackNavigator';
+import I18n from '../assets/localization/I18n';
+
+import LoginScreen from '../ui/screens/login/LoginScreen';
+import LoginPrivateScreen from '../ui/screens/login/loginPrivate/LoginPrivateScreen';
+import LoginPublicScreen from '../ui/screens/login/loginPublic/LoginPublicScreen';
+import RecoverPasswordScreen from '../ui/screens/recoverPassword/RecoverPasswordScreen';
+import SignUpScreen from '../ui/screens/signUp/SignUpScreen';
+import EnterResetCodeScreen from '../ui/screens/recoverPassword/EnterResetCodeScreen';
+import EnterNewPasswordScreen from '../ui/screens/recoverPassword/EnterNewPasswordScreen';
+
+import Movies from '../ui/screens/movies/Movies';
 
 const Stack = createNativeStackNavigator();
+const isLoggedIn = false;
+const isPrivate = true;
 
 function RootNavigator() {
   return (
     <NavigationContainer theme={reactNavigationTheme}>
-      <Stack.Navigator
-        initialRouteName="LoginStackNavigator"
-        screenOptions={{headerShown: false}}>
-        <Stack.Screen
-          name="LoginStackNavigator"
-          component={LoginStackNavigator}
-          options={{title: ''}}
-        />
+      <Stack.Navigator>
+        {isLoggedIn ? (
+          // Screens for logged in users
+          isPrivate ? (
+            // Screens for private users
+            <Stack.Group>
+              <Stack.Screen name="Movies" component={Movies} />
+            </Stack.Group>
+          ) : (
+            // Screens for public users
+            <Stack.Group>
+              <Stack.Screen name="Movies" component={Movies} />
+            </Stack.Group>
+          )
+        ) : (
+          // Auth screens
+          <Stack.Group>
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{title: ''}}
+            />
+            <Stack.Screen
+              name="LoginPrivate"
+              component={LoginPrivateScreen}
+              options={{title: I18n.t('loginAs') + ' ' + I18n.t('cinema')}}
+            />
+            <Stack.Screen
+              name="LoginPublic"
+              component={LoginPublicScreen}
+              options={{title: I18n.t('loginButton')}}
+            />
+            <Stack.Screen
+              name="RecoverPassword"
+              component={RecoverPasswordScreen}
+              options={{title: I18n.t('forgotPassword')}}
+            />
+            <Stack.Screen
+              name="EnterResetCode"
+              component={EnterResetCodeScreen}
+              options={{title: I18n.t('enterResetCode')}}
+            />
+            <Stack.Screen
+              name="EnterNewPassword"
+              component={EnterNewPasswordScreen}
+              options={{title: I18n.t('enterNewPassword')}}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUpScreen}
+              options={{title: I18n.t('signUp')}}
+            />
+          </Stack.Group>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
