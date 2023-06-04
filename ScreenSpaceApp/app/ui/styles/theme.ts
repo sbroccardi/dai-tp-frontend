@@ -132,6 +132,15 @@ export const styles = StyleSheet.create({
         fontWeight: "400",
         color: palette.yellow
     },
+    toolbarPublicUserText:{
+        fontFamily: 'Poppins-Regular',
+        fontStyle: 'normal',
+        fontSize: 19,
+        fontWeight: "600",
+        color: palette.white,
+        flex:1,
+        paddingHorizontal:95
+    },
     // --- COMPONENTS ---
     container: {
         flex: 1,
@@ -204,6 +213,13 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 22,
         alignItems: 'center'
     },
+    leftArrowButtonColor: {
+        color:'#A7AEBF'
+    },
+    leftArrowButtonContainer:{
+        
+        justifyContent: 'flex-start',
+    },
     loginButtonContainer: {
         flex: 3,
         justifyContent: 'center'
@@ -213,6 +229,16 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
+    toolbarPublicUserContainer: {
+        /*esto define el comportamiento de la posicion 
+        y tamaño del toolbar con respecto a los 
+        demas componentes de una pantalla, 
+        dentro de un flex que puede tener cualquier  
+        otro tipo de estructura */
+        flex: 0.15,
+        justifyContent: 'center',
+    },
+    
     form: {
         flex: 1
     },
@@ -226,5 +252,25 @@ export const styles = StyleSheet.create({
         width: 300,
         height: 53,
         marginBottom: 20
+    },
+    toolbarPublicUser:{ 
+        //esto define la estructura DENTRO del componente Toolbaar
+        flexDirection:'row',
+        paddingHorizontal: 30,
+        alignContent: 'center',
+        width: 417,
+        height: 45,
+    },
+    searchBar: {
+        color: palette.grey,
+        fontSize: 18,
+        backgroundColor: palette.blackLight,
+        paddingVertical: 13,
+        paddingHorizontal: 22,
+        borderRadius: 13,
+        width: 370,
+        height: 53,
+        marginBottom: 20
     }
 });
+    
