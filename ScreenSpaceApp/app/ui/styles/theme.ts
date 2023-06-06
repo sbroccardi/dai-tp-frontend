@@ -161,6 +161,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: palette.black
     },
+    cardScreeningContainer:{
+        //CAMBIAR ESTO SEGUN CONVENGA
+        flex:1,
+        justifyContent:'center'
+    },
     iconContainer: {
         flex: 3,
         justifyContent: 'center'
