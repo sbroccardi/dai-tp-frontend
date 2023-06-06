@@ -1,56 +1,93 @@
 import React from 'react';
-import { Center, Flex, FormControl, Input } from 'native-base';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {
+  Center,
+  FormControl,
+  Heading,
+  Input,
+  VStack,
+  useToast,
+} from 'native-base';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
 
-const RecoverPasswordScreen = ({
-}) => {
-    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-    const [formData, setData] = React.useState({ email: "" });
-    const [errors, setErrors] = React.useState({});
+const RecoverPasswordScreen = ({}) => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const toast = useToast();
+  const [formData, setData] = React.useState({email: ''});
+  const [errors, setErrors] = React.useState({});
 
-    const validate = () => {
-        if (formData.email === undefined) {
-            setErrors({
-                ...errors,
-                name: 'Email is required'
-            });
-            return false;
-        } else if (formData.email.length < 3) {
-            setErrors({
-                ...errors,
-                name: 'Email is too short'
-            });
-            return false;
-        }
+  const validate = () => {
+    setErrors({});
 
-        return true;
-    };
+    // Email
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})$/;
 
-    const onSubmit = () => {
-        validate() ? navigation.navigate('EnterResetCode') : console.log('Validation Failed');
-    };
+    if (formData.email.length === 0) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        email: 'Email is required',
+      }));
+      return false;
+    } else if (!emailRegex.test(formData.email)) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        email: 'Email is not valid',
+      }));
+      return false;
+    }
 
-    return (
-        <Center w="100%">
-            <Flex direction="column" >
-                <Center pt='12%'>
-                    <FormControl isRequired>
-                        <FormControl.Label _text={{ bold: true }}>{I18n.t('email')}</FormControl.Label>
-                        <Input size="md" placeholder={I18n.t('enterEmail')} onChangeText={value => setData({ ...formData, email: value })} />
-                        <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
-                            Error Email
-                        </FormControl.ErrorMessage>
-                    </FormControl>
-                </Center>
-                <Center pt='8%'>
-                    <ButtonPrimary onPress={() => onSubmit} title={I18n.t('sendEmail')} />
-                </Center>
-            </Flex>
-        </Center>
-    );
-}
+    return true;
+  };
+
+  const onSubmit = () => {
+    if (validate()) {
+      navigation.navigate('EnterResetCode');
+    } else {
+      console.log(errors);
+
+      toast.show({
+        description: Object.values(errors).join('\n'),
+        title: 'Error',
+        duration: 3000,
+        placement: 'top',
+      });
+    }
+  };
+
+  return (
+    <VStack
+      space={4}
+      alignItems="center"
+      justifyContent="space-around"
+      height="100%">
+      <Center>
+        <Heading size="xl" mb="4">
+          {I18n.t('enterEmail')}
+        </Heading>
+      </Center>
+      <Center w="90%">
+        <FormControl isRequired>
+          <FormControl.Label _text={{bold: true}}>
+            {I18n.t('email')}
+          </FormControl.Label>
+          <Input
+            size="md"
+            placeholder={I18n.t('enterEmail')}
+            onChangeText={value => setData({...formData, email: value})}
+          />
+          <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            Error Email
+          </FormControl.ErrorMessage>
+        </FormControl>
+      </Center>
+      <Center w="100%">
+        <ButtonPrimary onPress={onSubmit} title={I18n.t('sendEmail')} />
+      </Center>
+    </VStack>
+  );
+};
 
 export default RecoverPasswordScreen;

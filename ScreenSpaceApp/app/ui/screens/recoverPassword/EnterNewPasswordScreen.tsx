@@ -1,63 +1,117 @@
 import React from 'react';
-import { Center, Flex, FormControl, Input } from 'native-base';
+import {
+  Center,
+  FormControl,
+  Heading,
+  Input,
+  VStack,
+  useToast,
+} from 'native-base';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
 
-const EnterNewPasswordScreen = ({
-}) => {
-    const [formData, setData] = React.useState({ password: "", confirmPassword: "" });
-    const [errors, setErrors] = React.useState({});
+const EnterNewPasswordScreen = ({}) => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const toast = useToast();
+  const [formData, setData] = React.useState({
+    password: '',
+    confirmPassword: '',
+  });
+  const [errors, setErrors] = React.useState({});
 
-    const validate = () => {
-        if (formData.password === undefined || formData.confirmPassword === undefined) {
-            setErrors({
-                ...errors,
-                name: 'Password is required'
-            });
-            return false;
-        } else if (formData.password.length < 8 || formData.confirmPassword.length < 8) {
-            setErrors({
-                ...errors,
-                name: 'Password is too short'
-            });
-            return false;
-        }
+  const validate = () => {
+    setErrors({});
 
-        return true;
-    };
+    // Password
+    if (
+      formData.password.length === 0 ||
+      formData.confirmPassword.length === 0
+    ) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        name: 'Password is required',
+      }));
+      return false;
+    } else if (
+      formData.password.length < 8 ||
+      formData.confirmPassword.length < 8
+    ) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        name: 'Password is too short',
+      }));
+      return false;
+    }
 
-    const onSubmit = () => {
-        validate() ? console.log('Submitted') : console.log('Validation Failed');
-    };
+    return true;
+  };
 
-    return (
-        <Center w="100%">
-            <Flex direction="column" >
-                <Center pt='12%'>
-                    <FormControl isRequired>
-                        <FormControl.Label _text={{ bold: true }}>{I18n.t('password')}</FormControl.Label>
-                        <Input size="md" type="password" onChangeText={value => setData({ ...formData, password: value })} />
-                        <FormControl.HelperText _text={{ fontSize: 'xs' }}>
-                            {I18n.t('helpPassword')}
-                        </FormControl.HelperText>
-                        <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
-                            Error Password
-                        </FormControl.ErrorMessage>
-                    </FormControl>
-                    <FormControl isRequired>
-                        <FormControl.Label _text={{ bold: true }}>{I18n.t('confirmPassword')}</FormControl.Label>
-                        <Input size="md" type="password" onChangeText={value => setData({ ...formData, confirmPassword: value })} />
-                        <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
-                            Error Password
-                        </FormControl.ErrorMessage>
-                    </FormControl>
-                </Center>
-                <Center pt='8%'>
-                    <ButtonPrimary onPress={() => onSubmit} title={I18n.t('changePassword')} />
-                </Center>
-            </Flex>
-        </Center>
-    );
-}
+  const onSubmit = () => {
+    if (validate()) {
+      navigation.navigate('LoginPrivate');
+    } else {
+      console.log(errors);
+
+      toast.show({
+        description: Object.values(errors).join('\n'),
+        title: 'Error',
+        duration: 3000,
+        placement: 'top',
+      });
+    }
+  };
+
+  return (
+    <VStack
+      space={4}
+      alignItems="center"
+      justifyContent="space-around"
+      height="100%">
+      <Center>
+        <Heading size="xl" mb="4">
+          {I18n.t('enterNewPassword')}
+        </Heading>
+      </Center>
+      <Center w="90%">
+        <FormControl isRequired>
+          <FormControl.Label _text={{bold: true}}>
+            {I18n.t('password')}
+          </FormControl.Label>
+          <Input
+            size="md"
+            type="password"
+            onChangeText={value => setData({...formData, password: value})}
+          />
+          <FormControl.HelperText _text={{fontSize: 'xs'}}>
+            {I18n.t('helpPassword')}
+          </FormControl.HelperText>
+          <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            Error Password
+          </FormControl.ErrorMessage>
+        </FormControl>
+        <FormControl isRequired>
+          <FormControl.Label _text={{bold: true}}>
+            {I18n.t('confirmPassword')}
+          </FormControl.Label>
+          <Input
+            size="md"
+            type="password"
+            onChangeText={value =>
+              setData({...formData, confirmPassword: value})
+            }
+          />
+          <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            Error Password
+          </FormControl.ErrorMessage>
+        </FormControl>
+      </Center>
+      <Center w="100%">
+        <ButtonPrimary onPress={onSubmit} title={I18n.t('changePassword')} />
+      </Center>
+    </VStack>
+  );
+};
 
 export default EnterNewPasswordScreen;
