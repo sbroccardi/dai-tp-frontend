@@ -1,19 +1,39 @@
 import React from "react";
-import { Pressable } from "react-native";
-import { Surface } from "@react-native-material/core";
-import { Text } from "react-native-svg";
+import { Alert } from "react-native";
+import { HStack, Surface, VStack, Pressable } from "@react-native-material/core";
+import { Box, Image} from "native-base";
+import {Button as BotonMaterial} from "@react-native-material/core";
+import { Text } from 'react-native';
+import { palette, styles } from "../styles/theme";
+import { Button } from "native-base";
 
 
-const CardAuditorium=()=>{
+const CardAuditorium=(props:{auditoriumName?:string|undefined, auditoriumSize?:string|undefined, auditoriumAvailability?:string|undefined})=>{
+    const {auditoriumName='undefined', auditoriumSize='undefined', auditoriumAvailability='undefined'} = props;
     return(
-        <Pressable>
-            <Surface
-            elevation={2}
-            category="medium"
-            style={{}}>
-                <Text>test</Text>
-            </Surface>
+        <Surface style={{
+            backgroundColor:palette.blackLight,
+            borderRadius:12,
+            padding:4
+            }}>
+        <Pressable onPress={()=>{/*TEMP*/console.log('BP!')}} pressEffect="ripple" style={styles.cardAuditorium}>
+            <HStack  m={4} spacing={19}>
+                <VStack p={4} spacing={30}>
+                    <Box display="flex" flexDirection="row">
+                        <Image style={styles.iconExtraSmallImage} source={require('../../assets/images/popcorn.png')} alt="popcorn.png"/>
+                        <Box style={styles.auditoriumNameContainer}><Text style={styles.bodyText}>{auditoriumName}</Text></Box>
+                    </Box>
+                    <Box style={styles.auditoriumSizeContainer}>
+                        <Text style={styles.bodyText}>{auditoriumSize}</Text>
+                    </Box>
+                </VStack>
+
+                <VStack pl={30}>
+                    <BotonMaterial disabled variant="outlined" title={auditoriumAvailability} color={palette.white}/>
+                </VStack>
+            </HStack>
         </Pressable>
+        </Surface>
     )
 }
 

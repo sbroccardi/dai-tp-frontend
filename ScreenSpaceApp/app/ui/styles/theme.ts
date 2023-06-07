@@ -1,4 +1,4 @@
-import { extendTheme } from 'native-base';
+import { Center, extendTheme } from 'native-base';
 import { StyleSheet } from 'react-native';
 
 export const palette = {
@@ -161,8 +161,22 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: palette.black
     },
-    cardScreeningContainer:{
+    auditoriumSizeContainer:{
+        paddingLeft:0
+    },
+    auditoriumNameContainer:{
+        paddingLeft:10
+    },
+    cardAuditorium:{
         //CAMBIAR ESTO SEGUN CONVENGA
+        width:367,
+        height:120,
+        padding:10,
+        backgroundColor:palette.blackLight,
+        borderRadius:30,
+        justifyContent:'flex-start'
+    },
+    cardAuditoriumContainer: {
         flex:1,
         justifyContent:'center'
     },

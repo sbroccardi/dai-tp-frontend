@@ -19,8 +19,8 @@ const MoviesUI = ({
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     return(
         <View style={styles.container}>
-            <View style={styles.cardScreeningContainer}>
-                <CardMovie movie={'s'} age={'s'} rating={0} />
+            <View style={styles.cardAuditoriumContainer}>
+                <CardAuditorium auditoriumName='SALA 7' auditoriumSize='12 rows of 7 seats' auditoriumAvailability='Available'/>
             </View>
         </View>
     );
