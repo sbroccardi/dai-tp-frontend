@@ -6,8 +6,10 @@ import { View } from 'react-native';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import CardAuditorium from '../../components/CardAuditorium';
+import CardCinema from '../../components/CardCinema';
 import CardMovie from '../../components/CardMovie';
 import CardScreening from '../../components/CardScreening';
+import Comment from '../../components/Comment';
 import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import HomeToolbarPublicUser from '../../components/HomeToolbarPublicUser';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
@@ -16,11 +18,12 @@ import { styles } from '../../styles/theme';
 
 const MoviesUI = ({
 }) => {
+    /*TEMP*/const loremComment = '"Oppenheimer" es una cautivante exploración del hombre detrás de la bomba atómica, que nos recuerda las consecuencias de jugar con el poder nuclear.';
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     return(
         <View style={styles.container}>
             <View style={styles.cardAuditoriumContainer}>
-                <CardAuditorium auditoriumName='SALA 7' auditoriumSize='12 rows of 7 seats' auditoriumAvailability='Available'/>
+                <Comment userName='Lionel Messi' commentDate='27/04/2023' commentContent={loremComment} rate='5'/>
             </View>
         </View>
     );

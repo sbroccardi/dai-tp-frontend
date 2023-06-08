@@ -16,7 +16,7 @@ const CardAuditorium=(props:{auditoriumName?:string|undefined, auditoriumSize?:s
             borderRadius:12,
             padding:4
             }}>
-        <Pressable onPress={()=>{/*TEMP*/console.log('BP!')}} pressEffect="ripple" style={styles.cardAuditorium}>
+        <Pressable onPress={()=>{/*TEMP*/console.log('BP!')}} pressEffect="ripple" style={styles.cardAuditorium} pressEffectColor={palette.white}>
             <HStack  m={4} spacing={19}>
                 <VStack p={4} spacing={30}>
                     <Box display="flex" flexDirection="row">
@@ -27,7 +27,6 @@ const CardAuditorium=(props:{auditoriumName?:string|undefined, auditoriumSize?:s
                         <Text style={styles.bodyText}>{auditoriumSize}</Text>
                     </Box>
                 </VStack>
-
                 <VStack pl={30}>
                     <BotonMaterial disabled variant="outlined" title={auditoriumAvailability} color={palette.white}/>
                 </VStack>

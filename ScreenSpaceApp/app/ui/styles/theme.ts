@@ -118,6 +118,13 @@ export const styles = StyleSheet.create({
         fontWeight: "400",
         color: palette.white
     },
+    commentText: {
+        fontFamily: 'Poppins-Regular',
+        fontStyle: 'normal',
+        fontSize: 13,
+        fontWeight: "400",
+        color: palette.white
+    },
     signupText: {
         fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
@@ -164,6 +171,13 @@ export const styles = StyleSheet.create({
     auditoriumSizeContainer:{
         paddingLeft:0
     },
+    commentDateContainer:{ 
+        paddingLeft:0,
+        flex:0.5
+    },
+    ratingContainer:{
+        flex:1
+    },
     auditoriumNameContainer:{
         paddingLeft:10
     },
@@ -176,7 +190,21 @@ export const styles = StyleSheet.create({
         borderRadius:30,
         justifyContent:'flex-start'
     },
-    cardAuditoriumContainer: {
+    commentContentContainer:{
+        
+    },
+    commentCard:{
+        //CAMBIAR ESTO SEGUN CONVENGA
+        width:367,
+        height:181,
+        padding:5,
+        backgroundColor:palette.blackLight,
+        borderRadius:30,
+        justifyContent:'flex-start',
+        display:'flex',
+        flexDirection:'column'
+    },
+    /*TEMP*/cardAuditoriumContainer: {
         flex:1,
         justifyContent:'center'
     },
