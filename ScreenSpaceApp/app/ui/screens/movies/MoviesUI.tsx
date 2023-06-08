@@ -18,13 +18,9 @@ import { styles } from '../../styles/theme';
 
 const MoviesUI = ({
 }) => {
-    /*TEMP*/const loremComment = '"Oppenheimer" es una cautivante exploración del hombre detrás de la bomba atómica, que nos recuerda las consecuencias de jugar con el poder nuclear.';
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     return(
         <View style={styles.container}>
-            <View style={styles.cardAuditoriumContainer}>
-                <Comment userName='Lionel Messi' commentDate='27/04/2023' commentContent={loremComment} rate='5'/>
-            </View>
         </View>
     );
 }

@@ -1,4 +1,5 @@
 import { Center, extendTheme } from 'native-base';
+import { background } from 'native-base/lib/typescript/theme/styled-system';
 import { StyleSheet } from 'react-native';
 
 export const palette = {
@@ -176,7 +177,7 @@ export const styles = StyleSheet.create({
         flex:0.5
     },
     ratingContainer:{
-        flex:1
+        
     },
     auditoriumNameContainer:{
         paddingLeft:10
@@ -191,7 +192,7 @@ export const styles = StyleSheet.create({
         justifyContent:'flex-start'
     },
     commentContentContainer:{
-        
+        flex:0.5
     },
     commentCard:{
         //CAMBIAR ESTO SEGUN CONVENGA
@@ -199,12 +200,11 @@ export const styles = StyleSheet.create({
         height:181,
         padding:5,
         backgroundColor:palette.blackLight,
-        borderRadius:30,
         justifyContent:'flex-start',
         display:'flex',
         flexDirection:'column'
     },
-    /*TEMP*/cardAuditoriumContainer: {
+    /*TEMP*/cardContainer: {
         flex:1,
         justifyContent:'center'
     },
