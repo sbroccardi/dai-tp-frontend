@@ -1,6 +1,7 @@
 import { AspectRatio, Box, Center, HStack, Heading, Image, Pressable, Stack, Text } from "native-base";
 import React from "react";
 import { useState } from 'react';
+import { styles } from "../styles/theme";
 
 
 const CardMovie = (props: {movie: string, age: string, rating: number}) => {
@@ -22,13 +23,13 @@ const CardMovie = (props: {movie: string, age: string, rating: number}) => {
             <Stack p="4" space={3}>
             <Stack space={2} marginBottom="1">
               <Heading size="md" color="#FFFFFF" marginBottom="2" ml="-1">
-                <Text fontSize="14">{props.movie}</Text>
+                <Text style={styles.bodyText}>{props.movie}</Text>
               </Heading>
               <Box borderColor="#FFFFFF" borderWidth="1" paddingTop="1" paddingBottom="0.5" paddingRight="0.5" maxW="10" display="flex" alignItems="center">
               <Text fontSize="xs" _light={{
               color: "#FFFFFF"
             }} _dark={{
-              color: "violet.400"
+              color: "#FFFFFF"
             }} fontWeight="50" ml="-0.5" mt="-1">
                 {props.age}
               </Text>
