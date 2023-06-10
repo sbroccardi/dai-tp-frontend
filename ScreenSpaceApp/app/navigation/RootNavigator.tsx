@@ -29,12 +29,12 @@ function RootNavigator() {
           isPrivate ? (
             // Screens for private users
             <Stack.Group>
-              <Stack.Screen name="Movies" component={Movies} />
+              {/*stack screen*/}
             </Stack.Group>
           ) : (
             // Screens for public users
             <Stack.Group>
-              <Stack.Screen name="Movies" component={Movies} />
+              
             </Stack.Group>
           )
         ) : (
@@ -75,6 +75,10 @@ function RootNavigator() {
               component={SignUpScreen}
               options={{title: I18n.t('signUp')}}
             />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="Movies" 
+            component={Movies} />
           </Stack.Group>
         )}
       </Stack.Navigator>

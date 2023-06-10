@@ -1,4 +1,5 @@
-import { extendTheme } from 'native-base';
+import { Center, extendTheme } from 'native-base';
+import { background } from 'native-base/lib/typescript/theme/styled-system';
 import { StyleSheet } from 'react-native';
 
 export const palette = {
@@ -118,6 +119,13 @@ export const styles = StyleSheet.create({
         fontWeight: "400",
         color: palette.white
     },
+    commentText: {
+        fontFamily: 'Poppins-Regular',
+        fontStyle: 'normal',
+        fontSize: 13,
+        fontWeight: "400",
+        color: palette.white
+    },
     signupText: {
         fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
@@ -139,7 +147,20 @@ export const styles = StyleSheet.create({
         fontWeight: "600",
         color: palette.white,
         flex:1,
-        paddingHorizontal:95
+        paddingHorizontal:80,
+        paddingTop:9,
+        justifyContent:'center'
+    },
+    toolbarPrivateUserText:{
+        fontFamily: 'Poppins-Regular',
+        fontStyle: 'normal',
+        fontSize: 19,
+        fontWeight: "600",
+        color: palette.white,
+        flex:1,
+        paddingHorizontal:80,
+        paddingTop:9,
+        justifyContent:'center'
     },
     // --- COMPONENTS ---
     container: {
@@ -147,6 +168,45 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: palette.black
+    },
+    auditoriumSizeContainer:{
+        paddingLeft:0
+    },
+    commentDateContainer:{ 
+        paddingLeft:0,
+        flex:0.5
+    },
+    ratingContainer:{
+        
+    },
+    auditoriumNameContainer:{
+        paddingLeft:10
+    },
+    cardAuditorium:{
+        //CAMBIAR ESTO SEGUN CONVENGA
+        width:367,
+        height:120,
+        padding:10,
+        backgroundColor:palette.blackLight,
+        borderRadius:30,
+        justifyContent:'flex-start'
+    },
+    commentContentContainer:{
+        flex:0.5
+    },
+    commentCard:{
+        //CAMBIAR ESTO SEGUN CONVENGA
+        width:367,
+        height:181,
+        padding:5,
+        backgroundColor:palette.blackLight,
+        justifyContent:'flex-start',
+        display:'flex',
+        flexDirection:'column'
+    },
+    /*TEMP*/cardContainer: {
+        flex:1,
+        justifyContent:'center'
     },
     iconContainer: {
         flex: 3,
@@ -216,9 +276,9 @@ export const styles = StyleSheet.create({
     leftArrowButtonColor: {
         color:'#A7AEBF'
     },
-    leftArrowButtonContainer:{
-        
+    toolbarButtonContainer:{
         justifyContent: 'flex-start',
+        alignContent:'flex-start'
     },
     loginButtonContainer: {
         flex: 3,
@@ -257,6 +317,13 @@ export const styles = StyleSheet.create({
         //esto define la estructura DENTRO del componente Toolbaar
         flexDirection:'row',
         paddingHorizontal: 30,
+        alignContent: 'center',
+        width: 417,
+        height: 45,
+    },
+    toolbarPrivateUser:{
+        flexDirection:'row',
+        paddingHorizontal: 80,
         alignContent: 'center',
         width: 417,
         height: 45,
