@@ -8,15 +8,15 @@ import { Select } from "native-base";
 
 
 
-const DropdownMenu = () => {
+const DropdownMenu = (params: {proposito: string}) => {
 
   const [service, setService] = React.useState("");
 
   return (
     
     <Center>
-          <Box maxW="300">
-        <Select selectedValue={service} minWidth="200" accessibilityLabel="Choose Service" placeholder="Choose Service" _selectedItem={{
+        <Box maxW="300">
+        <Select selectedValue={service} minWidth="310" accessibilityLabel="Select" borderRadius="12" placeholder="Choose Service" _selectedItem={{
         bg: "teal.600",
         endIcon: <CheckIcon size="5" />
       }} mt={1} onValueChange={itemValue => setService(itemValue)}>
