@@ -25,5 +25,10 @@ export default {
   signUp: 'Register',
   uploadPortraitPhoto: 'Upload portrait photo',
   filters: 'Filters',
-  movies: 'Movies'
+  movies: 'Movies',
+  username: 'Username',
+  logout: 'Log out',
+  delete: 'Delete',
+  save: 'Save',
+  fullname: 'Full Name'
 };

@@ -13,6 +13,9 @@ import RecoverPasswordScreen from '../ui/screens/recoverPassword/RecoverPassword
 import SignUpScreen from '../ui/screens/signUp/SignUpScreen';
 import EnterResetCodeScreen from '../ui/screens/recoverPassword/EnterResetCodeScreen';
 import EnterNewPasswordScreen from '../ui/screens/recoverPassword/EnterNewPasswordScreen';
+import ProfilePrivateScreen from '../ui/screens/profile/profilePrivate/ProfilePrivateScreen';
+import ProfilePublicScreen from '../ui/screens/profile/profilePublic/ProfilePublicScreen';
+import FiltersScreen from '../ui/screens/filters/FiltersScreen';
 
 import Movies from '../ui/screens/movies/Movies';
 
@@ -29,7 +32,6 @@ function RootNavigator() {
           isPrivate ? (
             // Screens for private users
             <Stack.Group>
-              {/*stack screen*/}
             </Stack.Group>
           ) : (
             // Screens for public users

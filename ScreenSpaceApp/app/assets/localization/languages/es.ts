@@ -24,5 +24,6 @@ export default {
   signUp: 'Registrarse',
   uploadPortraitPhoto: 'Cargar foto de retrato',
   filters: 'Filtros',
-  movies: 'Peliculas'
+  movies: 'Peliculas',
+  usuario: 'Usuario'
 };
