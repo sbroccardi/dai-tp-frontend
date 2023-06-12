@@ -30,7 +30,7 @@ const CardScreeningPrivate = (props: {cinema: string, auditorium: string, date: 
             <Box marginRight="5"><Pressable><Delete name="trash" size={25} color="#FFFFFF"/></Pressable></Box>
           </Box>
           <Box display="flex" flexDirection="row" marginTop="2">
-            <Image style={styles.iconExtraSmallImage} source={require('../../assets/images/popcorn.png')} /><Text style={styles.labelText} marginBottom="2" marginTop="2" marginLeft="2">{props.auditorium}</Text>
+            <Image style={styles.iconExtraSmallImage} source={require('../../assets/images/popcorn.png')} alt='popcorn.png'/><Text style={styles.labelText} marginBottom="2" marginTop="2" marginLeft="2">{props.auditorium}</Text>
           </Box>
           <Box display="flex" flexDirection="row" marginTop="2">
             <Icon2 name='calendar' size={25} color='#FFFFFF'/><Text style={styles.labelText} marginBottom="2" marginTop="2" marginLeft="2">{props.date}</Text>

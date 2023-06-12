@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-      "jsx": "react"
-  },
-  "compilerOptions": {
-      "jsx": "react"
+      "jsx": "react",
+      "module": "es2022"
   },
   "extends": "@tsconfig/react-native/tsconfig.json"
 }
