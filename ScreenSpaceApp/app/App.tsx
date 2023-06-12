@@ -3,6 +3,7 @@ import {BackHandler, SafeAreaView} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import RootNavigator from './navigation/RootNavigator';
 import {nativeBaseTheme} from './ui/styles/theme';
+import {UserProvider} from './UserContext';
 
 function App(): JSX.Element {
   // Disable hardware back button
@@ -15,7 +16,9 @@ function App(): JSX.Element {
   return (
     <SafeAreaView style={{flex: 1}}>
       <NativeBaseProvider theme={nativeBaseTheme}>
-        <RootNavigator />
+        <UserProvider>
+          <RootNavigator />
+        </UserProvider>
       </NativeBaseProvider>
     </SafeAreaView>
   );
