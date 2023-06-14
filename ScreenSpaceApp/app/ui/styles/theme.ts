@@ -338,6 +338,12 @@ export const styles = StyleSheet.create({
         width: 370,
         height: 53,
         marginBottom: 20
-    }
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        paddingHorizontal: 2,
+        justifyContent: 'space-between'
+        
+      },
 });
     

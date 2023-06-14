@@ -23,12 +23,6 @@ import {
   const ProfilePrivateScreenUI = ({}) => {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     const toast = useToast();
-    const styles2 = StyleSheet.create({
-      buttonsContainer: {
-        flexDirection: 'row',
-        letterSpacing: 20
-      },
-    });
     const selectFile = async () => {
       //Opening Document Picker for selection of one file
       try {
@@ -75,31 +69,27 @@ import {
 
     return(
       <VStack
-      space={4}
+      space={6}
       alignItems="center"
       justifyContent="space-around"
       height="100%"
       >
       <Center w="100%" pt={50}>
+        
       </Center>
       <Text style = {styles.headerText}> Avatar </Text>
       <ProfilePicture title={I18n.t('uploadPortraitPhoto')} onPress={selectFile} />
       <Center w={'90%'}>
-        <FormControl isRequired>
-          <FormControl.Label _text={{bold: true}}>
+        <FormControl isRequired >
             {I18n.t('username')}
-          </FormControl.Label>
           <Input
             size="md"
             keyboardType="email-address"
             inputMode="email"
             placeholder={I18n.t('username')}
           />
-        </FormControl>
-        <FormControl isRequired pt={5}>
-          <FormControl.Label _text={{bold: true}}>
+          {"\n"}
             {I18n.t('emailAddress')}
-          </FormControl.Label>
           <Input
             size="md"
             keyboardType="email-address"
@@ -108,20 +98,16 @@ import {
           />
         </FormControl>
       </Center>
+      <ButtonPrimary onPress={() => navigation.navigate('Login')} title ={I18n.t('save')} width='90%'  />
       <Center w={'50%'}>
-        <View style={styles2.buttonsContainer} >
-          <ButtonLogout onPress={() => navigation.navigate('Login')} title={I18n.t('logout')} />
+       <View style={styles.buttonsContainer} >
           <ButtonDanger onPress={() => navigation.navigate('Login')} title={I18n.t('delete')} />
+          <ButtonLogout onPress={() => navigation.navigate('Login')} title={I18n.t('logout')} />
         </View>
-        <View  >
-        <ButtonPrimary onPress={() => navigation.navigate('Login')} title ={I18n.t('save')} width='300%'  />
-        </View>
-        
-       
       </Center>
-      <Center w={'50%'}>
-      </Center>
+      <FooterMenu selected={2}/>
     </VStack>
+    
   );
 };
   

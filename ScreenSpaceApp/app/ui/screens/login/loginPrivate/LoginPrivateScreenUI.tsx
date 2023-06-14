@@ -58,7 +58,7 @@ const LoginPrivateScreenUI = ({}) => {
 
   const onSubmit = () => {
     if (validate()) {
-      navigation.navigate('ProfilePrivate');
+      navigation.navigate('Movies');
     } else {
       console.log(errors);
 

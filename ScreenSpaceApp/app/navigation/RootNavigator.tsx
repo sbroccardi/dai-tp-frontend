@@ -80,7 +80,12 @@ function RootNavigator() {
             <Stack.Screen
             options={{headerShown:false}} 
             name="Movies" 
-            component={Movies} />
+            component={Movies}
+             />
+            <Stack.Screen
+            name="ProfilePrivate"
+            component={ProfilePrivateScreen}
+            options={{title: 'Profile'}}/>
           </Stack.Group>
         )}
       </Stack.Navigator>
