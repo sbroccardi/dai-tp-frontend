@@ -18,6 +18,19 @@ import ProfilePublicScreen from '../ui/screens/profile/profilePublic/ProfilePubl
 import FiltersScreen from '../ui/screens/filters/FiltersScreen';
 
 import Movies from '../ui/screens/movies/Movies';
+import ConfirmDeleteAccountScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreenUI';
+import ConfirmDeleteAccountScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreen';
+import ConfirmDeleteAuditoriumScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumScreenUI';
+import ConfirmDeleteAuditoriumScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumScreen';
+import ConfirmDeleteCinemaScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaScreen';
+import ConfirmDeleteScreeningScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteScreening/ConfirmDeleteScreeningScreen';
+import CreateAuditoriumScreen from '../ui/screens/CreateAuditorium/CreateAuditoriumScreen';
+import CreateCinemaScreen from '../ui/screens/createCinema/CreateCinemaScreen';
+import ListAuditoriumScreenUI from '../ui/screens/ListAuditorium/ListAuditoriumScreenUI';
+import ListAuditoriumScreen from '../ui/screens/ListAuditorium/ListAuditoriumScreen';
+import PrivateMoviesScreen from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreen';
+import PrivateScreeningsScreenUI from '../ui/screens/PrivateSreenings/PrivateScreeningsScreenUI';
+import PrivateScreeningsScreen from '../ui/screens/PrivateSreenings/PrivateScreeningsScreen';
 
 const Stack = createNativeStackNavigator();
 const isLoggedIn = false;
@@ -80,7 +93,53 @@ function RootNavigator() {
             <Stack.Screen
             options={{headerShown:false}} 
             name="Movies" 
-            component={Movies} />
+            component={Movies} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ConfirmDeleteAccount" 
+            component={ConfirmDeleteAccountScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ConfirmDeleteAuditorium" 
+            component={ConfirmDeleteAuditoriumScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ConfirmDeleteCinema" 
+            component={ConfirmDeleteCinemaScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ConfirmDeleteScreening" 
+            component={ConfirmDeleteScreeningScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="CreateAuditorium" 
+            component={CreateAuditoriumScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="CreateCinema" 
+            component={CreateCinemaScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ListAuditorium" 
+            component={ListAuditoriumScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="PrivateMovies" 
+            component={PrivateMoviesScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="PrivateScreenings" 
+            component={PrivateScreeningsScreen} 
+            />
           </Stack.Group>
         )}
       </Stack.Navigator>
