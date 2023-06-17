@@ -23,6 +23,7 @@ import {
   const ProfilePrivateScreenUI = ({}) => {
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     const toast = useToast();
+    const [formData, setData] = React.useState({email: '', username: ''});
     const selectFile = async () => {
       //Opening Document Picker for selection of one file
       try {
@@ -87,6 +88,8 @@ import {
             keyboardType="email-address"
             inputMode="email"
             placeholder={I18n.t('username')}
+            backgroundColor={'#21242D'}
+            onChangeText={value => setData({...formData, email: value})}
           />
           {"\n"}
             {I18n.t('emailAddress')}
@@ -95,13 +98,15 @@ import {
             keyboardType="email-address"
             inputMode="email"
             placeholder={I18n.t('emailAddress')}
+            backgroundColor={'#21242D'}
+            onChangeText={value => setData({...formData, username: value})}
           />
         </FormControl>
       </Center>
       <ButtonPrimary onPress={() => navigation.navigate('Login')} title ={I18n.t('save')} width='90%'  />
       <Center w={'50%'}>
        <View style={styles.buttonsContainer} >
-          <ButtonDanger onPress={() => navigation.navigate('Login')} title={I18n.t('delete')} />
+          <ButtonDanger onPress={() => navigation.navigate('Login')} title={I18n.t('delete')}width='90%'/>
           <ButtonLogout onPress={() => navigation.navigate('Login')} title={I18n.t('logout')} />
         </View>
       </Center>

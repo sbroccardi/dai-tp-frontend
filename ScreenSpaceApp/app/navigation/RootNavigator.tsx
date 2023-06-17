@@ -16,6 +16,8 @@ import EnterNewPasswordScreen from '../ui/screens/recoverPassword/EnterNewPasswo
 import ProfilePrivateScreen from '../ui/screens/profile/profilePrivate/ProfilePrivateScreen';
 import ProfilePublicScreen from '../ui/screens/profile/profilePublic/ProfilePublicScreen';
 import FiltersScreen from '../ui/screens/filters/FiltersScreen';
+import UpdateAuditoriumScreen from '../ui/screens/auditorium/UpdateAuditoriumScreen';
+import UpdateCinemaScreen from '../ui/screens/cinema/UpdateCinemaScreen';
 
 import Movies from '../ui/screens/movies/Movies';
 
@@ -41,6 +43,7 @@ function RootNavigator() {
           )
         ) : (
           // Auth screens
+          
           <Stack.Group>
             <Stack.Screen
               name="Login"
@@ -82,10 +85,21 @@ function RootNavigator() {
             name="Movies" 
             component={Movies}
              />
-            <Stack.Screen
+             <Stack.Screen
             name="ProfilePrivate"
             component={ProfilePrivateScreen}
             options={{title: 'Profile'}}/>
+            <Stack.Screen
+            name="UpdateAuditorium"
+            component={UpdateAuditoriumScreen}
+            options={{title: I18n.t('UpdateAuditorium')}}
+            />
+            <Stack.Screen
+            name="UpdateCinema"
+            component={UpdateCinemaScreen}
+            options={{title: I18n.t('updateCinema')}}
+            />
+         
           </Stack.Group>
         )}
       </Stack.Navigator>

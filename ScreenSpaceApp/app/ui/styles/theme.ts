@@ -345,5 +345,11 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between'
         
       },
+    switchcontainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
+      },
 });
     
