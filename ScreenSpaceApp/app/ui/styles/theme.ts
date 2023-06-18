@@ -342,7 +342,7 @@ export const styles = StyleSheet.create({
     buttonsContainer: {
         flexDirection: 'row',
         paddingHorizontal: 2,
-        justifyContent: 'space-between'
+        justifyContent: 'center',
         
       },
     switchcontainer: {

@@ -67,7 +67,7 @@ import {
         <OpenMapsButton address={formData.address} />
       </Center>
       <Center w={'100%'}>
-      <ButtonDanger onPress={() => navigation.navigate('Login')} title={I18n.t('delete')} width='80%' />
+      <ButtonDanger onPress={() => navigation.navigate('ConfirmDeleteCinema')} title={I18n.t('delete')} width='80%' />
       </Center>
       <Center w={'100%'}>
       <ButtonPrimary onPress={() => console.log(formData.address)} title ={I18n.t('save')} width='80%' />

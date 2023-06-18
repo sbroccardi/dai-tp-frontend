@@ -18,7 +18,6 @@ import ProfilePublicScreen from '../ui/screens/profile/profilePublic/ProfilePubl
 import FiltersScreen from '../ui/screens/filters/FiltersScreen';
 import UpdateAuditoriumScreen from '../ui/screens/auditorium/UpdateAuditoriumScreen';
 import UpdateCinemaScreen from '../ui/screens/cinema/UpdateCinemaScreen';
-
 import Movies from '../ui/screens/movies/Movies';
 import ConfirmDeleteAccountScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreenUI';
 import ConfirmDeleteAccountScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreen';
@@ -98,7 +97,7 @@ function RootNavigator() {
             name="Movies" 
             component={Movies}
              />
-             <Stack.Screen
+            <Stack.Screen
             name="ProfilePrivate"
             component={ProfilePrivateScreen}
             options={{title: 'Profile'}}/>
@@ -111,6 +110,21 @@ function RootNavigator() {
             name="UpdateCinema"
             component={UpdateCinemaScreen}
             options={{title: I18n.t('updateCinema')}}
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ConfirmDeleteAccount" 
+            component={ConfirmDeleteAccountScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ConfirmDeleteAuditorium" 
+            component={ConfirmDeleteAuditoriumScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="ConfirmDeleteCinema" 
+            component={ConfirmDeleteCinemaScreen} 
             />
          
           </Stack.Group>

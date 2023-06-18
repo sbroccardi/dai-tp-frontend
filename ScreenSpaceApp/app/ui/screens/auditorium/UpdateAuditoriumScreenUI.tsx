@@ -81,9 +81,9 @@ import {
         value={isEnabled}
       />
       </View>
-      <ButtonDanger onPress={() => navigation.navigate('Login')} title={I18n.t('delete')} width='150px' />
+      <ButtonDanger onPress={() => navigation.navigate('ConfirmDeleteAuditorium')} title={I18n.t('delete')} width='150px' />
     </View>
-    <ButtonPrimary onPress={() => console.log(formData.name)} title ={I18n.t('save')} width='90%'  />
+     <ButtonPrimary onPress={() => console.log(formData.name)} title ={I18n.t('save')} width='90%'  />
       </VStack>
       
     );

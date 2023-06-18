@@ -69,8 +69,9 @@ import {
     };
 
     return(
+      
       <VStack
-      space={6}
+      space={8}
       alignItems="center"
       justifyContent="space-around"
       height="100%"
@@ -106,11 +107,12 @@ import {
       <ButtonPrimary onPress={() => navigation.navigate('Login')} title ={I18n.t('save')} width='90%'  />
       <Center w={'50%'}>
        <View style={styles.buttonsContainer} >
-          <ButtonDanger onPress={() => navigation.navigate('Login')} title={I18n.t('delete')}width='90%'/>
+          <ButtonDanger onPress={() => navigation.navigate('ConfirmDeleteAccount')} title={I18n.t('delete')}width='65%'/>
           <ButtonLogout onPress={() => navigation.navigate('Login')} title={I18n.t('logout')} />
         </View>
       </Center>
       <FooterMenu selected={2}/>
+      
     </VStack>
     
   );

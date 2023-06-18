@@ -9,10 +9,9 @@ export default function ButtonLogout(props: {
   const {onPress, title = 'OK', size = 'lg'} = props;
   return (
     <Button
-      marginRight={5}
       colorScheme="success"
       size={size}
-      w={'90%'}
+      w={'65%'}
       _text={{color: 'white', fontWeight: 'medium'}}
       onPress={onPress}>
       {title}

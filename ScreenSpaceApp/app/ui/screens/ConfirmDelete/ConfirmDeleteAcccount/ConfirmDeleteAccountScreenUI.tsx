@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
 import { Box, Center, Text, VStack, View } from 'native-base';
 import React from 'react';
 import { styles } from '../../../styles/theme';
@@ -7,9 +7,10 @@ import ButtonDanger from '../../../components/ButtonDanger';
 import I18n from '../../../../assets/localization/I18n';
 import WarningMessage from '../../../components/WarningMessage';
 import ToolbarPrivateUser from '../../../components/ToolbarPrivateUser';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export default function ConfirmDeleteAccountScreenUI() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     return (
         <VStack>
             <Center w="100%" marginBottom="80" marginTop="20">
@@ -18,10 +19,10 @@ export default function ConfirmDeleteAccountScreenUI() {
                 </Text>
             </Center>
             <Center w="100%" marginBottom="10" marginLeft="-2">
-                <ButtonDanger onPress={undefined} title='Delete' />
+                <ButtonDanger onPress={() => navigation.navigate('Login')} title='Delete' />
             </Center>
             <Center w="100%">
-                <ButtonPrimary onPress={undefined} title="Cancel" />
+                <ButtonPrimary onPress={() => navigation.navigate('ProfilePrivate')} title="Cancel" />
             </Center>
         </VStack>
     );
