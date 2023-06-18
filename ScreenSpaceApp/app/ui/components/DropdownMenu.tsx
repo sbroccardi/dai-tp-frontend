@@ -16,7 +16,7 @@ const DropdownMenu = (params: {proposito: string}) => {
     
     <Center>
         <Box maxW="300">
-        <Select selectedValue={service} minWidth="310" accessibilityLabel="Select" borderRadius="12" placeholder="Choose Service" _selectedItem={{
+        <Select selectedValue={service} minWidth="310" accessibilityLabel="Select" borderRadius="12" placeholder={`Choose ${params.proposito}`} _selectedItem={{
         bg: "teal.600",
         endIcon: <CheckIcon size="5" />
       }} mt={1} onValueChange={itemValue => setService(itemValue)}>

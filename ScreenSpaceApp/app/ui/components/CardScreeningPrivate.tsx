@@ -14,7 +14,7 @@ const CardScreeningPrivate = (props: {cinema: string, auditorium: string, date: 
 
   return (
     <Pressable>
-        <Box alignItems="center" marginBottom={7}>
+        <Box alignItems="center" marginBottom={2}>
         <Box maxW="362" maxH="400" box-sizing="border-box" rounded="lg" overflow="hidden" _dark={{
         borderColor: "#21242D",
         backgroundColor: "#21242D"

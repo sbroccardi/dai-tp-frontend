@@ -20,6 +20,19 @@ import UpdateAuditoriumScreen from '../ui/screens/auditorium/UpdateAuditoriumScr
 import UpdateCinemaScreen from '../ui/screens/cinema/UpdateCinemaScreen';
 
 import Movies from '../ui/screens/movies/Movies';
+import ConfirmDeleteAccountScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreenUI';
+import ConfirmDeleteAccountScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreen';
+import ConfirmDeleteAuditoriumScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumScreenUI';
+import ConfirmDeleteAuditoriumScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumScreen';
+import ConfirmDeleteCinemaScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaScreen';
+import ConfirmDeleteScreeningScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteScreening/ConfirmDeleteScreeningScreen';
+import CreateAuditoriumScreen from '../ui/screens/CreateAuditorium/CreateAuditoriumScreen';
+import CreateCinemaScreen from '../ui/screens/createCinema/CreateCinemaScreen';
+import ListAuditoriumScreenUI from '../ui/screens/ListAuditorium/ListAuditoriumScreenUI';
+import ListAuditoriumScreen from '../ui/screens/ListAuditorium/ListAuditoriumScreen';
+import PrivateMoviesScreen from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreen';
+import PrivateScreeningsScreenUI from '../ui/screens/PrivateSreenings/PrivateScreeningsScreenUI';
+import PrivateScreeningsScreen from '../ui/screens/PrivateSreenings/PrivateScreeningsScreen';
 
 const Stack = createNativeStackNavigator();
 const isLoggedIn = false;

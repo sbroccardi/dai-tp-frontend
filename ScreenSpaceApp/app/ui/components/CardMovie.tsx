@@ -2,13 +2,14 @@ import { AspectRatio, Box, Center, HStack, Heading, Image, Pressable, Stack, Tex
 import React from "react";
 import { useState } from 'react';
 import { styles } from "../styles/theme";
+import StarRating from "react-native-star-rating-widget";
 
 
 const CardMovie = (props: {movie: string, age: string, rating: number}) => {
   
     return (
       <Pressable>
-        <Box alignItems="center" marginBottom={7}>
+        <Box alignItems="center" marginBottom={0}>
         <Box maxW="365" maxH="119" box-sizing="border-box" rounded="lg" overflow="hidden" _dark={{
         borderColor: "#21242D",
         backgroundColor: "#21242D"
@@ -37,11 +38,7 @@ const CardMovie = (props: {movie: string, age: string, rating: number}) => {
             </Stack>
             <HStack alignItems="center" space={4} justifyContent="space-between">
               <HStack alignItems="center">
-                <Text color="#FFFFFF" _dark={{
-                color: "warmGray.200"
-              }} fontWeight="400">
-                  {props.rating}
-                </Text>
+                  <StarRating rating={props.rating} style={{}} starSize={20} onChange={()=>{}}/>
               </HStack>
             </HStack>
           </Stack>
