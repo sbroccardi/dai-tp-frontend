@@ -17,12 +17,12 @@ import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import ToolbarPublicUser from '../../components/ToolbarPublicUser';
 import { styles } from '../../styles/theme';
 
-const movies = await ky.get('http://[::1]:3000/users').json();
-console.log(movies);
+const data = await ky.get('http://[::1]:3000/movies/').json();
+console.log(JSON.stringify(data));
 
 const MoviesUI = ({
 }) => {
-
+    
     const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     return(
         <View style={styles.container}>
