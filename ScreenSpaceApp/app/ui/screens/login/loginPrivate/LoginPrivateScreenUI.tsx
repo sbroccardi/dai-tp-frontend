@@ -13,6 +13,7 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 
+
 const LoginPrivateScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
@@ -57,7 +58,7 @@ const LoginPrivateScreenUI = ({}) => {
 
   const onSubmit = () => {
     if (validate()) {
-      navigation.navigate('Movies');
+      navigation.navigate('ProfilePrivate');
     } else {
       console.log(errors);
 
