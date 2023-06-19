@@ -7,18 +7,20 @@ import {
   VStack,
   useToast,
 } from 'native-base';
-import React from 'react';
+import React, {useContext} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
+import ky from 'ky';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonPrimary from '../../../components/ButtonPrimary';
+import {UserContext} from '../../../../UserContext';
 
-
-const LoginPrivateScreenUI = ({}) => {
+const LoginPrivateScreenUI = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [formData, setData] = React.useState({email: '', password: ''});
   const [errors, setErrors] = React.useState({});
+  const {setUser} = useContext(UserContext);
 
   const validate = () => {
     setErrors({});
@@ -53,12 +55,14 @@ const LoginPrivateScreenUI = ({}) => {
       return false;
     }
 
+    setUser({type: 'privado', ...formData});
     return true;
   };
 
   const onSubmit = () => {
     if (validate()) {
-      navigation.navigate('ProfilePrivate');
+      //navigation.navigate('PrivateMovies');
+      signIn();
     } else {
       console.log(errors);
 
@@ -69,6 +73,17 @@ const LoginPrivateScreenUI = ({}) => {
         placement: 'top',
       });
     }
+  };
+
+  const signIn = async () => {
+    console.log({email: formData.email, password: formData.password});
+    const response = await ky.post(
+      'http://192.168.0.63:3000/auths/loginPrivate',
+      {
+        json: {email: formData.email, password: formData.password},
+      },
+    );
+    console.log(response);
   };
 
   return (

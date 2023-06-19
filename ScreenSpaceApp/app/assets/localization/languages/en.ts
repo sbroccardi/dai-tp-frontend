@@ -40,5 +40,11 @@ export default {
   logout: 'Log out',
   delete: 'Delete',
   save: 'Save',
-  fullname: 'Full Name'
+  fullname: 'Full Name',
+  UpdateAuditorium: 'Update Auditorium',
+  name: 'Name',
+  rows: 'Rows',
+  seatsRows: 'Seats in each row',
+  updateCinema: 'Update Cinema',
+  address: 'Address'
 };
