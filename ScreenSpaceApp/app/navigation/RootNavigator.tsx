@@ -31,6 +31,7 @@ import ListAuditoriumScreen from '../ui/screens/ListAuditorium/ListAuditoriumScr
 import PrivateMoviesScreen from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreen';
 import PrivateScreeningsScreenUI from '../ui/screens/PrivateSreenings/PrivateScreeningsScreenUI';
 import PrivateScreeningsScreen from '../ui/screens/PrivateSreenings/PrivateScreeningsScreen';
+import CreateScreening from '../ui/screens/CreateScreening/CreateScreening';
 
 const Stack = createNativeStackNavigator();
 const isLoggedIn = false;
@@ -139,6 +140,11 @@ function RootNavigator() {
             options={{headerShown:false}} 
             name="PrivateScreenings" 
             component={PrivateScreeningsScreen} 
+            />
+            <Stack.Screen
+            options={{headerShown:false}} 
+            name="CreateScreening" 
+            component={CreateScreening}
             />
           </Stack.Group>
         )}

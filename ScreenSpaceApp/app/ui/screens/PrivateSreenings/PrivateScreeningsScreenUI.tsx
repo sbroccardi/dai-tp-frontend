@@ -31,7 +31,7 @@ export default function PrivateScreeningsScreenUI() {
                 />
                 </Center>
                 <Center>
-                    <DropdownMenu proposito={'Cinema'} />
+                    <DropdownMenu purpose={'Cinema'} />
                 </Center>
                 <Center>
                     <CardScreeningPrivate cinema='jajaja' auditorium='jajajaj' date='jajajaj' />

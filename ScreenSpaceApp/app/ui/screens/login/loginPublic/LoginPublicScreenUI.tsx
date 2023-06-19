@@ -13,7 +13,7 @@ const LoginPublicScreenUI = ({}) => {
       <View style={styles.loginButtonContainer}>
         <ButtonPrimary
           title={I18n.t('loginButton')}
-          onPress={() => navigation.navigate('Movies')}
+          onPress={() => navigation.navigate('CreateScreening')}
         />
       </View>
     </View>

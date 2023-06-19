@@ -17,9 +17,6 @@ import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import ToolbarPublicUser from '../../components/ToolbarPublicUser';
 import { styles } from '../../styles/theme';
 
-const data = await ky.get('http://[::1]:3000/movies/').json();
-console.log(JSON.stringify(data));
-
 const MoviesUI = ({
 }) => {
     
