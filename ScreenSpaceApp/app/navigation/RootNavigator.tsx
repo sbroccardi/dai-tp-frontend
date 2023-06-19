@@ -13,8 +13,25 @@ import RecoverPasswordScreen from '../ui/screens/recoverPassword/RecoverPassword
 import SignUpScreen from '../ui/screens/signUp/SignUpScreen';
 import EnterResetCodeScreen from '../ui/screens/recoverPassword/EnterResetCodeScreen';
 import EnterNewPasswordScreen from '../ui/screens/recoverPassword/EnterNewPasswordScreen';
-
+import ProfilePrivateScreen from '../ui/screens/profile/profilePrivate/ProfilePrivateScreen';
+import ProfilePublicScreen from '../ui/screens/profile/profilePublic/ProfilePublicScreen';
+import FiltersScreen from '../ui/screens/filters/FiltersScreen';
+import UpdateAuditoriumScreen from '../ui/screens/auditorium/UpdateAuditoriumScreen';
+import UpdateCinemaScreen from '../ui/screens/cinema/UpdateCinemaScreen';
 import Movies from '../ui/screens/movies/Movies';
+import ConfirmDeleteAccountScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreenUI';
+import ConfirmDeleteAccountScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteAcccount/ConfirmDeleteAccountScreen';
+import ConfirmDeleteAuditoriumScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumScreenUI';
+import ConfirmDeleteAuditoriumScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumScreen';
+import ConfirmDeleteCinemaScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaScreen';
+import ConfirmDeleteScreeningScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteScreening/ConfirmDeleteScreeningScreen';
+import CreateAuditoriumScreen from '../ui/screens/CreateAuditorium/CreateAuditoriumScreen';
+import CreateCinemaScreen from '../ui/screens/createCinema/CreateCinemaScreen';
+import ListAuditoriumScreenUI from '../ui/screens/ListAuditorium/ListAuditoriumScreenUI';
+import ListAuditoriumScreen from '../ui/screens/ListAuditorium/ListAuditoriumScreen';
+import PrivateMoviesScreen from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreen';
+import PrivateScreeningsScreenUI from '../ui/screens/PrivateSreenings/PrivateScreeningsScreenUI';
+import PrivateScreeningsScreen from '../ui/screens/PrivateSreenings/PrivateScreeningsScreen';
 import {UserContext} from '../UserContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -28,14 +45,11 @@ function RootNavigator() {
     <NavigationContainer theme={reactNavigationTheme}>
       {!user ? (
         <Stack.Navigator>
-          <Stack.Group>
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{title: ''}}
-            />
-          </Stack.Group>
-          {/* PRIVATE */}
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{title: ''}}
+          />
           <Stack.Group>
             <Stack.Screen
               name="LoginPrivate"
@@ -63,7 +77,6 @@ function RootNavigator() {
               options={{title: I18n.t('signUp')}}
             />
           </Stack.Group>
-          {/* PUBLIC */}
           <Stack.Group>
             <Stack.Screen
               name="LoginPublic"
@@ -77,7 +90,41 @@ function RootNavigator() {
         </Stack.Navigator>
       ) : user.type === 'privado' ? (
         <Tab.Navigator>
-          <Stack.Screen name="PrivateMovies" component={Movies} />
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="Movies"
+            component={Movies}
+          />
+          <Stack.Screen
+            name="ProfilePrivate"
+            component={ProfilePrivateScreen}
+            options={{title: 'Profile'}}
+          />
+          <Stack.Screen
+            name="UpdateAuditorium"
+            component={UpdateAuditoriumScreen}
+            options={{title: I18n.t('UpdateAuditorium')}}
+          />
+          <Stack.Screen
+            name="UpdateCinema"
+            component={UpdateCinemaScreen}
+            options={{title: I18n.t('updateCinema')}}
+          />
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="ConfirmDeleteAccount"
+            component={ConfirmDeleteAccountScreen}
+          />
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="ConfirmDeleteAuditorium"
+            component={ConfirmDeleteAuditoriumScreen}
+          />
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="ConfirmDeleteCinema"
+            component={ConfirmDeleteCinemaScreen}
+          />
         </Tab.Navigator>
       ) : (
         <Tab.Navigator>

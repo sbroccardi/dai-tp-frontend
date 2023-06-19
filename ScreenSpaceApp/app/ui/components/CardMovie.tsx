@@ -1,13 +1,15 @@
 import { AspectRatio, Box, Center, HStack, Heading, Image, Pressable, Stack, Text } from "native-base";
 import React from "react";
 import { useState } from 'react';
+import { styles } from "../styles/theme";
+import StarRating from "react-native-star-rating-widget";
 
 
 const CardMovie = (props: {movie: string, age: string, rating: number}) => {
   
     return (
       <Pressable>
-        <Box alignItems="center" marginBottom={7}>
+        <Box alignItems="center" marginBottom={0}>
         <Box maxW="365" maxH="119" box-sizing="border-box" rounded="lg" overflow="hidden" _dark={{
         borderColor: "#21242D",
         backgroundColor: "#21242D"
@@ -22,13 +24,13 @@ const CardMovie = (props: {movie: string, age: string, rating: number}) => {
             <Stack p="4" space={3}>
             <Stack space={2} marginBottom="1">
               <Heading size="md" color="#FFFFFF" marginBottom="2" ml="-1">
-                <Text fontSize="14">{props.movie}</Text>
+                <Text style={styles.bodyText}>{props.movie}</Text>
               </Heading>
               <Box borderColor="#FFFFFF" borderWidth="1" paddingTop="1" paddingBottom="0.5" paddingRight="0.5" maxW="10" display="flex" alignItems="center">
               <Text fontSize="xs" _light={{
               color: "#FFFFFF"
             }} _dark={{
-              color: "violet.400"
+              color: "#FFFFFF"
             }} fontWeight="50" ml="-0.5" mt="-1">
                 {props.age}
               </Text>
@@ -36,11 +38,7 @@ const CardMovie = (props: {movie: string, age: string, rating: number}) => {
             </Stack>
             <HStack alignItems="center" space={4} justifyContent="space-between">
               <HStack alignItems="center">
-                <Text color="#FFFFFF" _dark={{
-                color: "warmGray.200"
-              }} fontWeight="400">
-                  {props.rating}
-                </Text>
+                  <StarRating rating={props.rating} style={{}} starSize={20} onChange={()=>{}}/>
               </HStack>
             </HStack>
           </Stack>
