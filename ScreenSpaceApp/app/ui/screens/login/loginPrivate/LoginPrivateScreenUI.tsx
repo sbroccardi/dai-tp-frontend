@@ -10,6 +10,7 @@ import {
 import React, {useContext} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
+import ky from 'ky';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import {UserContext} from '../../../../UserContext';
@@ -60,7 +61,8 @@ const LoginPrivateScreenUI = () => {
 
   const onSubmit = () => {
     if (validate()) {
-      navigation.navigate('PrivateMovies');
+      //navigation.navigate('PrivateMovies');
+      signIn();
     } else {
       console.log(errors);
 
@@ -71,6 +73,14 @@ const LoginPrivateScreenUI = () => {
         placement: 'top',
       });
     }
+  };
+
+  const signIn = async () => {
+    console.log({email: formData.email, password: formData.password});
+    const response = await ky.post('http://localhost:3000/auths/loginPrivate', {
+      json: {email: formData.email, password: formData.password},
+    });
+    console.log(response);
   };
 
   return (

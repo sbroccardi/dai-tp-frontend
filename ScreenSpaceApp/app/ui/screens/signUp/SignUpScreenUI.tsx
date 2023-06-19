@@ -3,7 +3,9 @@ import React from 'react';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Center, Flex, FormControl, Input, VStack, useToast} from 'native-base';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, {
+  DocumentPickerResponse,
+} from 'react-native-document-picker';
 import ky from 'ky';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -12,26 +14,28 @@ import ProfilePicture from '../../components/ProfilePicture';
 const SignUpScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
-  const [formData, setData] = React.useState({
+  const [data, setData] = React.useState({
     company: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
   const [errors, setErrors] = React.useState({});
+  const [imageIsLoading, setImageIsLoading] = React.useState({});
+  const [imageUrl, setImageUrl] = React.useState('');
   const [singleFile, setSingleFile] = React.useState(null);
 
   const validate = () => {
     setErrors({});
 
     // Company
-    if (formData.company.length === 0) {
+    if (data.company.length === 0) {
       setErrors(prevErrors => ({
         ...prevErrors,
         company: 'Company is required',
       }));
       return false;
-    } else if (formData.company.length < 3) {
+    } else if (data.company.length < 3) {
       setErrors(prevErrors => ({
         ...prevErrors,
         company: 'Company is too short',
@@ -43,13 +47,13 @@ const SignUpScreenUI = ({}) => {
     const emailRegex =
       /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})$/;
 
-    if (formData.email.length === 0) {
+    if (data.email.length === 0) {
       setErrors(prevErrors => ({
         ...prevErrors,
         email: 'Email is required',
       }));
       return false;
-    } else if (!emailRegex.test(formData.email)) {
+    } else if (!emailRegex.test(data.email)) {
       setErrors(prevErrors => ({
         ...prevErrors,
         email: 'Email is not valid',
@@ -62,7 +66,8 @@ const SignUpScreenUI = ({}) => {
 
   const onSubmit = () => {
     if (validate()) {
-      navigation.navigate('Movies');
+      //navigation.navigate('Movies');
+      signUp();
     } else {
       console.log(errors);
 
@@ -75,10 +80,25 @@ const SignUpScreenUI = ({}) => {
     }
   };
 
+  const signUp = async () => {
+    const response = await ky.post('http://192.168.0.63:3000/users', {
+      json: {
+        avatar: imageUrl,
+        fullname: '',
+        company: data.company,
+        address: '',
+        email: data.email,
+        password: data.password,
+        refreshToken: '',
+      },
+    });
+    console.log(response);
+  };
+
   const selectFile = async () => {
     //Opening Document Picker for selection of one file
     try {
-      const res = await DocumentPicker.pick({
+      const results = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
         //There can me more options as well
         // DocumentPicker.types.allFiles
@@ -88,20 +108,17 @@ const SignUpScreenUI = ({}) => {
         // DocumentPicker.types.pdf
       });
       //Printing the log realted to the file
-      console.log('res : ' + JSON.stringify(res));
+      console.log('res : ' + JSON.stringify(results));
       // console.log('URI : ' + res.uri);
       // console.log('Type : ' + res.type);
       // console.log('File Name : ' + res.name);
       // console.log('File Size : ' + res.size);
       //Setting the state to show single file attributes
       //setSingleFile(res);
-      const data = new FormData();
-      data.append('name', 'Image Upload');
-      data.append('file_attachment', res);
-      const response = await ky.post('http://localhost:3000/api/uploadAvatar', {
-        body: data,
-      });
-      console.log(response);
+      console.log(
+        `URI: ${results[0].uri}\nType: ${results[0].type}\nName: ${results[0].name}\nSize: ${results[0].size}`,
+      );
+      handleUploadImage(results[0]);
     } catch (err) {
       //Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
@@ -119,6 +136,39 @@ const SignUpScreenUI = ({}) => {
     }
   };
 
+  const handleUploadImage = async (newImage: DocumentPickerResponse) => {
+    console.log('started: ', newImage.uri);
+    setImageIsLoading(true);
+
+    const formData = new FormData();
+    formData.append('file', {
+      uri: newImage.uri,
+      type: newImage.type,
+      name: newImage.name,
+    });
+    formData.append('upload_preset', 'default-unsigned-preset');
+    formData.append(
+      'public_id',
+      data.email
+        ? data.email.replace('@', '_at_')
+        : newImage.name?.split('.')[0],
+    );
+
+    try {
+      const response = await ky.post(
+        'https://api.cloudinary.com/v1_1/sbroccardi/image/upload',
+        {body: formData},
+      );
+      const data = await response.json();
+      console.log(data);
+      setImageUrl(data.url);
+    } catch (error) {
+      console.error('Upload failed', error);
+    } finally {
+      setImageIsLoading(false);
+    }
+  };
+
   return (
     <VStack
       space={4}
@@ -132,6 +182,7 @@ const SignUpScreenUI = ({}) => {
               <ProfilePicture
                 title={I18n.t('uploadPortraitPhoto')}
                 onPress={selectFile}
+                imgUrl={imageUrl}
               />
             </FormControl>
           </Center>
@@ -143,7 +194,7 @@ const SignUpScreenUI = ({}) => {
               <Input
                 size="md"
                 placeholder={I18n.t('enterCompany')}
-                onChangeText={value => setData({...formData, company: value})}
+                onChangeText={value => setData({...data, company: value})}
               />
               <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
                 Error Company
@@ -158,7 +209,7 @@ const SignUpScreenUI = ({}) => {
                 keyboardType="email-address"
                 inputMode="email"
                 placeholder={I18n.t('enterEmail')}
-                onChangeText={value => setData({...formData, email: value})}
+                onChangeText={value => setData({...data, email: value})}
               />
               <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
                 Error Email
@@ -172,7 +223,7 @@ const SignUpScreenUI = ({}) => {
                 size="md"
                 placeholder={I18n.t('enterPassword')}
                 type="password"
-                onChangeText={value => setData({...formData, password: value})}
+                onChangeText={value => setData({...data, password: value})}
               />
               <FormControl.HelperText _text={{fontSize: 'xs'}}>
                 {I18n.t('helpPassword')}
@@ -190,7 +241,7 @@ const SignUpScreenUI = ({}) => {
                 placeholder={I18n.t('enterPassword')}
                 type="password"
                 onChangeText={value =>
-                  setData({...formData, confirmPassword: value})
+                  setData({...data, confirmPassword: value})
                 }
               />
               <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>

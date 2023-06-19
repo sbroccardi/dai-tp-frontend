@@ -35,6 +35,7 @@ function RootNavigator() {
               options={{title: ''}}
             />
           </Stack.Group>
+          {/* PRIVATE */}
           <Stack.Group>
             <Stack.Screen
               name="LoginPrivate"
@@ -62,11 +63,15 @@ function RootNavigator() {
               options={{title: I18n.t('signUp')}}
             />
           </Stack.Group>
+          {/* PUBLIC */}
           <Stack.Group>
             <Stack.Screen
               name="LoginPublic"
               component={LoginPublicScreen}
-              options={{title: I18n.t('loginButton')}}
+              options={{
+                title: I18n.t('loginButton'),
+                animationTypeForReplace: !user ? 'pop' : 'push',
+              }}
             />
           </Stack.Group>
         </Stack.Navigator>
