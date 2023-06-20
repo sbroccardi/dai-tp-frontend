@@ -3,9 +3,9 @@ import React from 'react';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 
 const ListCinemaUI = () => {
-    return(
+    return (
         <VStack>
-            <ToolbarPrivateUser />
+            <ToolbarPrivateUser onPress={undefined} />
         </VStack>
     )
 }
