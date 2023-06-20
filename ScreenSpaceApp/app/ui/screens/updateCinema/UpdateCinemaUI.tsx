@@ -17,7 +17,7 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import {styles} from '../../styles/theme';
 import OpenMapsButton from '../../components/OpenMapsButton';
 
-const UpdateCinemaScreenUI = ({}) => {
+const UpdateCinemaUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [isEnabled, setIsEnabled] = useState(false);
@@ -81,4 +81,4 @@ const UpdateCinemaScreenUI = ({}) => {
   );
 };
 
-export default UpdateCinemaScreenUI;
+export default UpdateCinemaUI;

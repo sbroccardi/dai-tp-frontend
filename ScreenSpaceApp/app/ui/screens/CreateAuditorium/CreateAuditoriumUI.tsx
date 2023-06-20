@@ -1,18 +1,19 @@
-import { Center, FormControl, Image, Input, Text, VStack, useToast } from 'native-base';
+import {Center, FormControl, Image, Input, VStack, useToast} from 'native-base';
 import React from 'react';
-import { styles } from '../../styles/theme';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-export default function CreateAuditoriumScreenUI () {
-    
-    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+export default function CreateAuditoriumUI() {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
-  const [formData, setData] = React.useState({nameAuditorium: '', rows: '', seats: ''});
+  const [formData, setData] = React.useState({
+    nameAuditorium: '',
+    rows: '',
+    seats: '',
+  });
   const [errors, setErrors] = React.useState({});
 
   const validate = () => {
@@ -61,7 +62,7 @@ export default function CreateAuditoriumScreenUI () {
       justifyContent="space-around"
       height="100%">
       <Center w="100%">
-          <ToolbarPrivateUser title="Create Auditorium" onPress={undefined} />
+        <ToolbarPrivateUser title="Create Auditorium" onPress={undefined} />
       </Center>
       <Center w="100%" pt={50}>
         <Image
@@ -81,7 +82,9 @@ export default function CreateAuditoriumScreenUI () {
             keyboardType="email-address"
             inputMode="email"
             placeholder={I18n.t('enterNameAuditorium')}
-            onChangeText={value => setData({...formData, nameAuditorium: value})}
+            onChangeText={value =>
+              setData({...formData, nameAuditorium: value})
+            }
           />
           <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
             Error Name
@@ -121,7 +124,6 @@ export default function CreateAuditoriumScreenUI () {
       <Center w={'100%'}>
         <ButtonPrimary onPress={undefined} title={I18n.t('save')} />
       </Center>
-      
     </VStack>
   );
 }

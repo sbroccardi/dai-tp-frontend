@@ -1,17 +1,25 @@
-import { Center, FormControl, Image, Input, Pressable, Text, VStack, useToast } from 'native-base';
+import {
+  Center,
+  FormControl,
+  Image,
+  Input,
+  Pressable,
+  Text,
+  VStack,
+  useToast,
+} from 'native-base';
 import React from 'react';
-import { styles } from '../../styles/theme';
+import {styles} from '../../styles/theme';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function CreateCinemaScreenUI () {
-    
-    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+export default function CreateCinemaUI() {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [formData, setData] = React.useState({name: '', location: ''});
   const [errors, setErrors] = React.useState({});
@@ -62,7 +70,7 @@ export default function CreateCinemaScreenUI () {
       justifyContent="space-around"
       height="100%">
       <Center>
-          <HomeToolbarPrivateUser title='Create cinema' />
+        <HomeToolbarPrivateUser title="Create cinema" />
       </Center>
       <Center w="100%" pt={50}>
         <Image
@@ -98,7 +106,11 @@ export default function CreateCinemaScreenUI () {
             type="text"
             keyboardType="default"
             onChangeText={value => setData({...formData, location: value})}
-            InputRightElement={<Pressable marginRight="5"><Icon name="add-location-alt" size={15} color="#FFFFFF" /></Pressable>}
+            InputRightElement={
+              <Pressable marginRight="5">
+                <Icon name="add-location-alt" size={15} color="#FFFFFF" />
+              </Pressable>
+            }
           />
           <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
             Error Adress
@@ -108,7 +120,6 @@ export default function CreateCinemaScreenUI () {
       <Center w={'100%'}>
         <ButtonPrimary onPress={undefined} title={I18n.t('save')} />
       </Center>
-      
     </VStack>
   );
 }
