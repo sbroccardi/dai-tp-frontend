@@ -17,6 +17,7 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function CreateCinemaUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -64,6 +65,7 @@ export default function CreateCinemaUI() {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <VStack
       space={4}
       alignItems="center"
@@ -121,5 +123,6 @@ export default function CreateCinemaUI() {
         <ButtonPrimary onPress={undefined} title={I18n.t('save')} />
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 }

@@ -12,6 +12,7 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const EnterResetCodeScreen = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -77,6 +78,7 @@ const EnterResetCodeScreen = ({}) => {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <VStack
       space={4}
       alignItems="center"
@@ -117,6 +119,7 @@ const EnterResetCodeScreen = ({}) => {
         <ButtonPrimary onPress={onSubmit} title={I18n.t('confirmCode')} />
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 

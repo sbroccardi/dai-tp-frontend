@@ -5,6 +5,7 @@ import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function CreateAuditoriumUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -56,6 +57,7 @@ export default function CreateAuditoriumUI() {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <VStack
       space={4}
       alignItems="center"
@@ -125,5 +127,6 @@ export default function CreateAuditoriumUI() {
         <ButtonPrimary onPress={undefined} title={I18n.t('save')} />
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 }

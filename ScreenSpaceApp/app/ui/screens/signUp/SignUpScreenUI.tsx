@@ -11,6 +11,7 @@ import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ProfilePicture from '../../components/ProfilePicture';
 import {Config} from 'react-native-config';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SignUpScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -170,6 +171,7 @@ const SignUpScreenUI = ({}) => {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <VStack
       space={4}
       alignItems="center"
@@ -255,6 +257,7 @@ const SignUpScreenUI = ({}) => {
         <ButtonPrimary onPress={onSubmit} title={I18n.t('signUp')} />
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 
