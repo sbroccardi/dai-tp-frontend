@@ -6,6 +6,7 @@ import {
   Text,
   VStack,
   useToast,
+  KeyboardAvoidingView,
 } from 'native-base';
 import React, {useContext} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -14,6 +15,7 @@ import ky from 'ky';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import {UserContext} from '../../../../UserContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const LoginPrivateScreenUI = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -78,7 +80,7 @@ const LoginPrivateScreenUI = () => {
   const signIn = async () => {
     console.log({email: formData.email, password: formData.password});
     const response = await ky.post(
-      'http://192.168.0.63:3000/auths/loginPrivate',
+      `${Config.API_BASE_URL}/auths/loginPrivate`,
       {
         json: {email: formData.email, password: formData.password},
       },
@@ -87,7 +89,8 @@ const LoginPrivateScreenUI = () => {
   };
 
   return (
-    <VStack
+    <KeyboardAwareScrollView>
+      <VStack
       space={4}
       alignItems="center"
       justifyContent="space-around"
@@ -153,6 +156,7 @@ const LoginPrivateScreenUI = () => {
         </Text>
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 

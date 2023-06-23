@@ -1,4 +1,4 @@
-import {Center, VStack} from 'native-base';
+import {Center, ScrollView, VStack} from 'native-base';
 import React from 'react';
 import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
@@ -20,13 +20,28 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({navigation}) => {
         <SearchBar />
       </Center>
       <Center>
-        <CardMovie movieID="1" />
-      </Center>
-      <Center>
-        <CardMovie movieID="2" />
-      </Center>
-      <Center>
-        <CardMovie movieID="3" />
+        <ScrollView maxH="450">
+            <VStack space={3} alignItems="center" height="100%">
+              <Center>
+                <CardMovie movieID="1" />
+              </Center>
+              <Center>
+                <CardMovie movieID="2" />
+              </Center>
+              <Center>
+                <CardMovie movieID="3" />
+              </Center>
+              <Center>
+                <CardMovie movieID="3" />
+              </Center>
+              <Center>
+                <CardMovie movieID="3" />
+              </Center>
+              <Center>
+                <CardMovie movieID="3" />
+              </Center>
+            </VStack>
+        </ScrollView>
       </Center>
       <Center width="100%">
         <ButtonPrimary

@@ -15,6 +15,7 @@ import I18n from '../../../assets/localization/I18n';
 import ButtonDanger from '../../components/ButtonDanger';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import {styles} from '../../styles/theme';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const UpdateAuditoriumUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -24,6 +25,7 @@ const UpdateAuditoriumUI = ({}) => {
   const [formData, setData] = React.useState({name: '', rows: '', seats: ''});
 
   return (
+    <KeyboardAwareScrollView>
     <VStack
       space={4}
       alignItems="center"
@@ -98,6 +100,7 @@ const UpdateAuditoriumUI = ({}) => {
         width="90%"
       />
     </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 

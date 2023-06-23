@@ -16,6 +16,7 @@ import ButtonDanger from '../../components/ButtonDanger';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import {styles} from '../../styles/theme';
 import OpenMapsButton from '../../components/OpenMapsButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const UpdateCinemaUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -25,6 +26,7 @@ const UpdateCinemaUI = ({}) => {
   const [formData, setData] = React.useState({name: '', address: ''});
 
   return (
+    <KeyboardAwareScrollView>
     <VStack
       space={4}
       alignItems="center"
@@ -78,6 +80,7 @@ const UpdateCinemaUI = ({}) => {
         />
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 
