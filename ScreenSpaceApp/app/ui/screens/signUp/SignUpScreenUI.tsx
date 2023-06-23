@@ -10,6 +10,7 @@ import ky from 'ky';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ProfilePicture from '../../components/ProfilePicture';
+import {Config} from 'react-native-config';
 
 const SignUpScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -81,7 +82,7 @@ const SignUpScreenUI = ({}) => {
   };
 
   const signUp = async () => {
-    const response = await ky.post('http://192.168.0.63:3000/users', {
+    const response = await ky.post(`${Config.API_BASE_URL}/users`, {
       json: {
         avatar: imageUrl,
         fullname: '',
@@ -155,10 +156,9 @@ const SignUpScreenUI = ({}) => {
     );
 
     try {
-      const response = await ky.post(
-        'https://api.cloudinary.com/v1_1/sbroccardi/image/upload',
-        {body: formData},
-      );
+      const response = await ky.post(`${Config.CLOUDINARY_URL}`, {
+        body: formData,
+      });
       const data = await response.json();
       console.log(data);
       setImageUrl(data.url);
