@@ -46,7 +46,9 @@ import {
         const data = new FormData();
         data.append('name', 'Image Upload');
         data.append('file_attachment', res);
-        const response = await ky.post('http://localhost:3000/api/uploadAvatar', {
+      const response = await ky.post(
+        `${Config.API_BASE_URL}/api/uploadAvatar`,
+        {
           body: data,
         });
         console.log(response);
