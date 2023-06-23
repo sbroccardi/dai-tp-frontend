@@ -124,7 +124,7 @@ function RootNavigator() {
   function ProfileStack({navigation}) {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="MoviesList" component={ProfilePrivateScreen} />
+        <Stack.Screen name="My Profile" component={ProfilePrivateScreen} />
         <Stack.Screen
           name="ConfirmDelete"
           component={ConfirmDeleteProfileScreen}
@@ -134,7 +134,7 @@ function RootNavigator() {
   }
 
   return (
-    <NavigationContainer theme={reactNavigationTheme}>
+    <NavigationContainer theme={reactNavigationTheme} >
       {!user ? (
         <Stack.Navigator>
           <Stack.Screen
@@ -228,6 +228,7 @@ function RootNavigator() {
             component={ConfirmDeleteCinemaScreen}
           /> */}
         </Tab.Navigator>
+        
       ) : (
         <Tab.Navigator>
           <Stack.Screen name="PublicMovies" component={Movies} />

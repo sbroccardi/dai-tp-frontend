@@ -17,28 +17,22 @@ const ProfilePrivateScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const user = useContext(UserContext);
-  console.log(user.user.token)
-  const [formData, setData] = React.useState({email: '', username: ''});
+  const {setUser} = useContext(UserContext);
+  const [formData, setData] = React.useState({email: '', username: '',img: ' '});
+  const [mail, setMail] = React.useState('');
+  const [username, setUsername] = React.useState('');
+
+  const salir = () => {
+    setUser(null);
+  };
   const selectFile = async () => {
-    //Opening Document Picker for selection of one file
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
-        //There can me more options as well
-        // DocumentPicker.types.allFiles
-        // DocumentPicker.types.images
-        // DocumentPicker.types.plainText
-        // DocumentPicker.types.audio
-        // DocumentPicker.types.pdf
+    
       });
-      //Printing the log realted to the file
       console.log('res : ' + JSON.stringify(res));
-      // console.log('URI : ' + res.uri);
-      // console.log('Type : ' + res.type);
-      // console.log('File Name : ' + res.name);
-      // console.log('File Size : ' + res.size);
-      //Setting the state to show single file attributes
-      //setSingleFile(res);
+  
       const data = new FormData();
       data.append('name', 'Image Upload');
       data.append('file_attachment', res);
@@ -47,11 +41,10 @@ const ProfilePrivateScreenUI = ({}) => {
       });
       console.log(response);
     } catch (err) {
-      //Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
-        //If user canceled the document selection
+      
       } else {
-        //For Unknown Error
+  
         throw err;
       }
       toast.show({
@@ -61,8 +54,55 @@ const ProfilePrivateScreenUI = ({}) => {
         placement: 'top',
       });
     }
-  };
+  }
+  const traerDatos = async () => {
+    const authToken = user.user.token;
+    const respuesta = await ky.get(`http://192.168.0.92:3000/users/${user.user.id}` , {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    });
+    const responseBody = await respuesta.json();
+    setData({...formData, email: responseBody.email, username: responseBody.fullname,img:responseBody.avatar})
+  }
+  const updatearDatos = async () => {
+    let data = {
+      email: mail,
+      fullname: username
+    };
+    if (username == '' && mail!== ''){
+      data = {
+        email: mail,
+        fullname: formData.username
+      }; 
+    }
+    if (username !== '' && mail== ''){
+      data = {
+        email: formData.email,
+        fullname: username,
+      }; 
+    }
+    if (username !== '' && mail !== ''){
+      data = {
+        email: mail,
+        fullname: username,
+      }; 
+    }
+    const authToken = user.user.token;
+    const respuesta = await ky.put('http://192.168.0.92:3000/users' , {
+      json:data,
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    });
+    traerDatos()
 
+  }
+  
+  if (formData.email == ''){
+    traerDatos()
+  }
+  
   return (
     <VStack
       space={8}
@@ -74,44 +114,65 @@ const ProfilePrivateScreenUI = ({}) => {
       <ProfilePicture
         title={I18n.t('uploadPortraitPhoto')}
         onPress={selectFile}
+        imgUrl={formData.img}
       />
       <Center w={'90%'}>
         <FormControl isRequired>
           {I18n.t('username')}
+          {username == '' &&(
           <Input
             size="md"
             keyboardType="email-address"
             inputMode="email"
-            placeholder={I18n.t('username')}
+            placeholder={formData.username}
             backgroundColor={'#21242D'}
-            onChangeText={value => setData({...formData, email: value})}
-          />
+            onChangeText={value => setUsername(value)}
+          />)}
+          {username !== '' &&(
+          <Input
+            size="md"
+            keyboardType="email-address"
+            inputMode="email"
+            placeholder={formData.username}
+            backgroundColor={'#21242D'}
+            onChangeText={value => setUsername(value)}
+          />)}
           {'\n'}
           {I18n.t('emailAddress')}
+          {mail !== '' &&(
           <Input
             size="md"
             keyboardType="email-address"
             inputMode="email"
-            placeholder={I18n.t('emailAddress')}
+            placeholder={formData.email}
             backgroundColor={'#21242D'}
-            onChangeText={value => setData({...formData, username: value})}
-          />
+            onChangeText={value => setMail(value)}
+          />)}
+          {mail == '' &&(
+          <Input
+            size="md"
+            keyboardType="email-address"
+            inputMode="email"
+            placeholder={formData.email}
+            backgroundColor={'#21242D'}
+            onChangeText={value => setMail(value)}
+          />)}
         </FormControl>
       </Center>
       <ButtonPrimary
-        onPress={() => navigation.navigate('Login')}
+        onPress={updatearDatos}
         title={I18n.t('save')}
         width="90%"
       />
       <Center w={'50%'}>
         <View style={styles.buttonsContainer}>
           <ButtonDanger
-            onPress={() => navigation.navigate('ConfirmDeleteAccount')}
+            onPress={() => navigation.navigate('ConfirmDelete')}
             title={I18n.t('delete')}
             width="65%"
           />
           <ButtonLogout
-            onPress={() => navigation.navigate('Login')}
+            onPress={salir}
             title={I18n.t('logout')}
           />
         </View>

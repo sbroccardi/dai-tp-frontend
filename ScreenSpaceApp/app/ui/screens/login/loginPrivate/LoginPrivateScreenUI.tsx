@@ -83,7 +83,7 @@ const LoginPrivateScreenUI = () => {
       },
     );
     const responseBody = await response.json();
-    setUser({token:responseBody.accessToken,type: 'privado', ...formData});
+    setUser({token:responseBody.accessToken,type: 'privado', ...formData,id:responseBody.id});
   };
 
   return (
