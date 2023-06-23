@@ -16,15 +16,15 @@ import EnterNewPasswordScreen from '../ui/screens/recoverPassword/EnterNewPasswo
 import Movies from '../ui/screens/movies/Movies';
 import {UserContext} from '../UserContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ConfirmDeleteProfileScreen from '../ui/screens/confirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreen';
+import ConfirmDeleteProfileScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreen';
 import ProfilePrivateScreen from '../ui/screens/profile/profilePrivate/ProfilePrivateScreen';
 import CinemaList from '../ui/screens/cinemaList/CinemaList';
 import AuditoriumList from '../ui/screens/auditoriumList/AuditoriumList';
 import CreateAuditorium from '../ui/screens/CreateAuditorium/CreateAuditorium';
-import ConfirmDeleteAuditorium from '../ui/screens/confirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditorium';
+import ConfirmDeleteAuditorium from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditorium';
 import UpdateAuditorium from '../ui/screens/updateAuditorium/UpdateAuditorium';
 import CreateCinema from '../ui/screens/createCinema/CreateCinema';
-import ConfirmDeleteCinema from '../ui/screens/confirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinema';
+import ConfirmDeleteCinema from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinema';
 import UpdateCinema from '../ui/screens/updateCinema/UpdateCinema';
 import PrivateMoviesListScreenUI from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreenUI';
 import CreateScreeningUI from '../ui/screens/CreateScreening/CreateScreeningUI';
@@ -124,7 +124,7 @@ function RootNavigator() {
   function ProfileStack({navigation}) {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="MoviesList" component={ProfilePrivateScreen} />
+        <Stack.Screen name="My Profile" component={ProfilePrivateScreen} />
         <Stack.Screen
           name="ConfirmDelete"
           component={ConfirmDeleteProfileScreen}
@@ -134,7 +134,7 @@ function RootNavigator() {
   }
 
   return (
-    <NavigationContainer theme={reactNavigationTheme}>
+    <NavigationContainer theme={reactNavigationTheme} >
       {!user ? (
         <Stack.Navigator>
           <Stack.Screen
@@ -228,6 +228,7 @@ function RootNavigator() {
             component={ConfirmDeleteCinemaScreen}
           /> */}
         </Tab.Navigator>
+        
       ) : (
         <Tab.Navigator>
           <Stack.Screen name="PublicMovies" component={Movies} />

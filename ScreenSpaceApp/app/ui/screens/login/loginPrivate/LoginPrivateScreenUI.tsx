@@ -78,14 +78,14 @@ const LoginPrivateScreenUI = () => {
   };
 
   const signIn = async () => {
-    console.log({email: formData.email, password: formData.password});
     const response = await ky.post(
       `${Config.API_BASE_URL}/auths/loginPrivate`,
       {
         json: {email: formData.email, password: formData.password},
       },
     );
-    console.log(response);
+    const responseBody = await response.json();
+    setUser({token:responseBody.accessToken,type: 'privado', ...formData,id:responseBody.id});
   };
 
   return (

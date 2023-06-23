@@ -1,27 +1,42 @@
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {Center, Text, VStack} from 'native-base';
-import React from 'react';
+import React,{useContext}from 'react';
 import {styles} from '../../../styles/theme';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ButtonDanger from '../../../components/ButtonDanger';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {UserContext} from '../../../../UserContext';
+import ky from 'ky';
+
 
 export default function ConfirmDeleteProfileScreenUI() {
+  const {setUser} = useContext(UserContext);
+  const user = useContext(UserContext);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
+  const salir = async () => {
+    const authToken = user.user.token;
+    const respuesta = await ky.delete(`http://192.168.0.92:3000/users/` , {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    });
+    setUser(null);
+  };
   return (
     <VStack>
       <Center w="100%" marginBottom="80" marginTop="20">
         <Text style={styles.headerText}>Are you sure?</Text>
       </Center>
-      <Center w="100%" marginBottom="10" marginLeft="-2">
+      <Center w="100%" marginBottom="10" marginLeft="-1">
         <ButtonDanger
-          onPress={() => navigation.navigate('Login')}
+          onPress={salir}
           title="Delete"
         />
       </Center>
       <Center w="100%">
         <ButtonPrimary
-          onPress={() => navigation.navigate('ProfilePrivate')}
+          onPress={() => navigation.navigate('My Profile')}
           title="Cancel"
         />
       </Center>
