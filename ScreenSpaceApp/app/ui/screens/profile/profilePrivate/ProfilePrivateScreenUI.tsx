@@ -1,5 +1,5 @@
 import {Center, FormControl, Input, VStack, useToast} from 'native-base';
-import React from 'react';
+import React,{useContext}from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {View, Text} from 'react-native';
@@ -11,10 +11,13 @@ import ProfilePicture from '../../../components/ProfilePicture';
 import DocumentPicker from 'react-native-document-picker';
 import ky from 'ky';
 import {styles} from '../../../styles/theme';
+import {UserContext} from '../../../../UserContext';
 
 const ProfilePrivateScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
+  const user = useContext(UserContext);
+  console.log(user.user.token)
   const [formData, setData] = React.useState({email: '', username: ''});
   const selectFile = async () => {
     //Opening Document Picker for selection of one file
