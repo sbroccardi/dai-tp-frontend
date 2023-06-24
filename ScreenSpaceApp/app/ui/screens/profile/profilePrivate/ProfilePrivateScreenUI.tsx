@@ -1,5 +1,5 @@
 import {Center, FormControl, Input, VStack, useToast} from 'native-base';
-import React,{useContext}from 'react';
+import React, {useContext} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {View, Text} from 'react-native';
@@ -11,6 +11,7 @@ import ProfilePicture from '../../../components/ProfilePicture';
 import DocumentPicker from 'react-native-document-picker';
 import ky from 'ky';
 import {styles} from '../../../styles/theme';
+import {Config} from 'react-native-config';
 import {UserContext} from '../../../../UserContext';
 
 const ProfilePrivateScreenUI = ({}) => {
@@ -18,7 +19,11 @@ const ProfilePrivateScreenUI = ({}) => {
   const toast = useToast();
   const user = useContext(UserContext);
   const {setUser} = useContext(UserContext);
-  const [formData, setData] = React.useState({email: '', username: '',img: ' '});
+  const [formData, setData] = React.useState({
+    email: '',
+    username: '',
+    img: ' ',
+  });
   const [mail, setMail] = React.useState('');
   const [username, setUsername] = React.useState('');
 
@@ -29,10 +34,9 @@ const ProfilePrivateScreenUI = ({}) => {
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
-    
       });
       console.log('res : ' + JSON.stringify(res));
-  
+
       const data = new FormData();
       data.append('name', 'Image Upload');
       data.append('file_attachment', res);
@@ -42,9 +46,7 @@ const ProfilePrivateScreenUI = ({}) => {
       console.log(response);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
-      
       } else {
-  
         throw err;
       }
       toast.show({
@@ -54,55 +56,62 @@ const ProfilePrivateScreenUI = ({}) => {
         placement: 'top',
       });
     }
-  }
+  };
   const traerDatos = async () => {
     const authToken = user.user.token;
-    const respuesta = await ky.get(`http://192.168.0.92:3000/users/${user.user.id}` , {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    });
+    const respuesta = await ky.get(
+      `${Config.API_BASE_URL}/users/${user.user.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
     const responseBody = await respuesta.json();
-    setData({...formData, email: responseBody.email, username: responseBody.fullname,img:responseBody.avatar})
-  }
+    setData({
+      ...formData,
+      email: responseBody.email,
+      username: responseBody.fullname,
+      img: responseBody.avatar,
+    });
+  };
   const updatearDatos = async () => {
     let data = {
       email: mail,
-      fullname: username
+      fullname: username,
     };
-    if (username == '' && mail!== ''){
+    if (username === '' && mail !== '') {
       data = {
         email: mail,
-        fullname: formData.username
-      }; 
+        fullname: formData.username,
+      };
     }
-    if (username !== '' && mail== ''){
+    if (username !== '' && mail === '') {
       data = {
         email: formData.email,
         fullname: username,
-      }; 
+      };
     }
-    if (username !== '' && mail !== ''){
+    if (username !== '' && mail !== '') {
       data = {
         email: mail,
         fullname: username,
-      }; 
+      };
     }
     const authToken = user.user.token;
-    const respuesta = await ky.put('http://192.168.0.92:3000/users' , {
-      json:data,
+    const respuesta = await ky.put(`${Config.API_BASE_URL}/users`, {
+      json: data,
       headers: {
-        Authorization: `Bearer ${authToken}`
-      }
+        Authorization: `Bearer ${authToken}`,
+      },
     });
-    traerDatos()
+    traerDatos();
+  };
 
+  if (formData.email === '') {
+    traerDatos();
   }
-  
-  if (formData.email == ''){
-    traerDatos()
-  }
-  
+
   return (
     <VStack
       space={8}
@@ -119,44 +128,48 @@ const ProfilePrivateScreenUI = ({}) => {
       <Center w={'90%'}>
         <FormControl isRequired>
           {I18n.t('username')}
-          {username == '' &&(
-          <Input
-            size="md"
-            keyboardType="email-address"
-            inputMode="email"
-            placeholder={formData.username}
-            backgroundColor={'#21242D'}
-            onChangeText={value => setUsername(value)}
-          />)}
-          {username !== '' &&(
-          <Input
-            size="md"
-            keyboardType="email-address"
-            inputMode="email"
-            placeholder={formData.username}
-            backgroundColor={'#21242D'}
-            onChangeText={value => setUsername(value)}
-          />)}
+          {username === '' && (
+            <Input
+              size="md"
+              keyboardType="email-address"
+              inputMode="email"
+              placeholder={formData.username}
+              backgroundColor={'#21242D'}
+              onChangeText={value => setUsername(value)}
+            />
+          )}
+          {username !== '' && (
+            <Input
+              size="md"
+              keyboardType="email-address"
+              inputMode="email"
+              placeholder={formData.username}
+              backgroundColor={'#21242D'}
+              onChangeText={value => setUsername(value)}
+            />
+          )}
           {'\n'}
           {I18n.t('emailAddress')}
-          {mail !== '' &&(
-          <Input
-            size="md"
-            keyboardType="email-address"
-            inputMode="email"
-            placeholder={formData.email}
-            backgroundColor={'#21242D'}
-            onChangeText={value => setMail(value)}
-          />)}
-          {mail == '' &&(
-          <Input
-            size="md"
-            keyboardType="email-address"
-            inputMode="email"
-            placeholder={formData.email}
-            backgroundColor={'#21242D'}
-            onChangeText={value => setMail(value)}
-          />)}
+          {mail !== '' && (
+            <Input
+              size="md"
+              keyboardType="email-address"
+              inputMode="email"
+              placeholder={formData.email}
+              backgroundColor={'#21242D'}
+              onChangeText={value => setMail(value)}
+            />
+          )}
+          {mail === '' && (
+            <Input
+              size="md"
+              keyboardType="email-address"
+              inputMode="email"
+              placeholder={formData.email}
+              backgroundColor={'#21242D'}
+              onChangeText={value => setMail(value)}
+            />
+          )}
         </FormControl>
       </Center>
       <ButtonPrimary
@@ -171,10 +184,7 @@ const ProfilePrivateScreenUI = ({}) => {
             title={I18n.t('delete')}
             width="65%"
           />
-          <ButtonLogout
-            onPress={salir}
-            title={I18n.t('logout')}
-          />
+          <ButtonLogout onPress={salir} title={I18n.t('logout')} />
         </View>
       </Center>
     </VStack>

@@ -11,7 +11,7 @@ import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ProfilePicture from '../../components/ProfilePicture';
 import {Config} from 'react-native-config';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SignUpScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -83,6 +83,7 @@ const SignUpScreenUI = ({}) => {
   };
 
   const signUp = async () => {
+    console.log(Config.API_BASE_URL);
     const response = await ky.post(`${Config.API_BASE_URL}/users`, {
       json: {
         avatar: imageUrl,
@@ -172,91 +173,91 @@ const SignUpScreenUI = ({}) => {
 
   return (
     <KeyboardAwareScrollView>
-    <VStack
-      space={4}
-      alignItems="center"
-      justifyContent="space-around"
-      height="100%">
-      <Center w="100%">
-        <Flex direction="column">
-          <Center pt="5%">
-            <FormControl>
-              <ProfilePicture
-                title={I18n.t('uploadPortraitPhoto')}
-                onPress={selectFile}
-                imgUrl={imageUrl}
-              />
-            </FormControl>
-          </Center>
-          <Center pt="10%">
-            <FormControl isRequired>
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('company')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                placeholder={I18n.t('enterCompany')}
-                onChangeText={value => setData({...data, company: value})}
-              />
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Company
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('email')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                keyboardType="email-address"
-                inputMode="email"
-                placeholder={I18n.t('enterEmail')}
-                onChangeText={value => setData({...data, email: value})}
-              />
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Email
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('password')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                placeholder={I18n.t('enterPassword')}
-                type="password"
-                onChangeText={value => setData({...data, password: value})}
-              />
-              <FormControl.HelperText _text={{fontSize: 'xs'}}>
-                {I18n.t('helpPassword')}
-              </FormControl.HelperText>
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Password
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired pt="5%">
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('confirmPassword')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                placeholder={I18n.t('enterPassword')}
-                type="password"
-                onChangeText={value =>
-                  setData({...data, confirmPassword: value})
-                }
-              />
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Password
-              </FormControl.ErrorMessage>
-            </FormControl>
-          </Center>
-        </Flex>
-      </Center>
-      <Center w="100%">
-        <ButtonPrimary onPress={onSubmit} title={I18n.t('signUp')} />
-      </Center>
-    </VStack>
+      <VStack
+        space={4}
+        alignItems="center"
+        justifyContent="space-around"
+        height="100%">
+        <Center w="100%">
+          <Flex direction="column">
+            <Center pt="5%">
+              <FormControl>
+                <ProfilePicture
+                  title={I18n.t('uploadPortraitPhoto')}
+                  onPress={selectFile}
+                  imgUrl={imageUrl}
+                />
+              </FormControl>
+            </Center>
+            <Center pt="10%">
+              <FormControl isRequired>
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('company')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  placeholder={I18n.t('enterCompany')}
+                  onChangeText={value => setData({...data, company: value})}
+                />
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Company
+                </FormControl.ErrorMessage>
+              </FormControl>
+              <FormControl isRequired>
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('email')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  keyboardType="email-address"
+                  inputMode="email"
+                  placeholder={I18n.t('enterEmail')}
+                  onChangeText={value => setData({...data, email: value})}
+                />
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Email
+                </FormControl.ErrorMessage>
+              </FormControl>
+              <FormControl isRequired>
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('password')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  placeholder={I18n.t('enterPassword')}
+                  type="password"
+                  onChangeText={value => setData({...data, password: value})}
+                />
+                <FormControl.HelperText _text={{fontSize: 'xs'}}>
+                  {I18n.t('helpPassword')}
+                </FormControl.HelperText>
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Password
+                </FormControl.ErrorMessage>
+              </FormControl>
+              <FormControl isRequired pt="5%">
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('confirmPassword')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  placeholder={I18n.t('enterPassword')}
+                  type="password"
+                  onChangeText={value =>
+                    setData({...data, confirmPassword: value})
+                  }
+                />
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Password
+                </FormControl.ErrorMessage>
+              </FormControl>
+            </Center>
+          </Flex>
+        </Center>
+        <Center w="100%">
+          <ButtonPrimary onPress={onSubmit} title={I18n.t('signUp')} />
+        </Center>
+      </VStack>
     </KeyboardAwareScrollView>
   );
 };

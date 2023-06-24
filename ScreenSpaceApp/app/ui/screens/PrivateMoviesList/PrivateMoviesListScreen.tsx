@@ -1,7 +1,6 @@
-import {Box} from 'native-base';
 import React from 'react';
 import PrivateMoviesScreenUI from './PrivateMoviesListScreenUI';
 
-export default function PrivateMoviesScreen() {
-  return <PrivateMoviesScreenUI />;
+export default function PrivateMoviesScreen({navigation}) {
+  return <PrivateMoviesScreenUI navigation={navigation} />;
 }

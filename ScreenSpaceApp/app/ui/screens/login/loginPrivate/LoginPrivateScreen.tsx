@@ -3,6 +3,5 @@ import LoginPrivateScreenUI from './LoginPrivateScreenUI';
 
 export default function LoginPrivateScreen() {
   //Logic
-
   return <LoginPrivateScreenUI />;
 }

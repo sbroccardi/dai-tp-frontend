@@ -31,7 +31,7 @@ export default {
   confirmCode: 'Confirmar código',
   sendEmail: 'Enviar correo',
   signUp: 'Registrarse',
-  save : 'Guardar',
+  save: 'Guardar',
   uploadPortraitPhoto: 'Cargar foto de retrato',
   filters: 'Filtros',
   movies: 'Peliculas',

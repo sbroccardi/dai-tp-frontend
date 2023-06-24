@@ -11,7 +11,7 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const RecoverPasswordScreen = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -60,35 +60,35 @@ const RecoverPasswordScreen = ({}) => {
 
   return (
     <KeyboardAwareScrollView>
-    <VStack
-      space={4}
-      alignItems="center"
-      justifyContent="space-around"
-      height="100%">
-      <Center>
-        <Heading size="xl" mb="4">
-          {I18n.t('enterEmail')}
-        </Heading>
-      </Center>
-      <Center w="90%">
-        <FormControl isRequired>
-          <FormControl.Label _text={{bold: true}}>
-            {I18n.t('email')}
-          </FormControl.Label>
-          <Input
-            size="md"
-            placeholder={I18n.t('enterEmail')}
-            onChangeText={value => setData({...formData, email: value})}
-          />
-          <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-            Error Email
-          </FormControl.ErrorMessage>
-        </FormControl>
-      </Center>
-      <Center w="100%">
-        <ButtonPrimary onPress={onSubmit} title={I18n.t('sendEmail')} />
-      </Center>
-    </VStack>
+      <VStack
+        space={4}
+        alignItems="center"
+        justifyContent="space-around"
+        height="100%">
+        <Center>
+          <Heading size="xl" mb="4">
+            {I18n.t('enterEmail')}
+          </Heading>
+        </Center>
+        <Center w="90%">
+          <FormControl isRequired>
+            <FormControl.Label _text={{bold: true}}>
+              {I18n.t('email')}
+            </FormControl.Label>
+            <Input
+              size="md"
+              placeholder={I18n.t('enterEmail')}
+              onChangeText={value => setData({...formData, email: value})}
+            />
+            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+              Error Email
+            </FormControl.ErrorMessage>
+          </FormControl>
+        </Center>
+        <Center w="100%">
+          <ButtonPrimary onPress={onSubmit} title={I18n.t('sendEmail')} />
+        </Center>
+      </VStack>
     </KeyboardAwareScrollView>
   );
 };

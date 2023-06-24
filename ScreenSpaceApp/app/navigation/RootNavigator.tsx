@@ -6,26 +6,26 @@ import {reactNavigationTheme} from '../ui/styles/theme';
 
 import I18n from '../assets/localization/I18n';
 
-import LoginScreen from '../ui/screens/login/LoginScreen';
-import LoginPrivateScreen from '../ui/screens/login/loginPrivate/LoginPrivateScreen';
-import LoginPublicScreen from '../ui/screens/login/loginPublic/LoginPublicScreen';
-import RecoverPasswordScreen from '../ui/screens/recoverPassword/RecoverPasswordScreen';
-import SignUpScreen from '../ui/screens/signUp/SignUpScreen';
-import EnterResetCodeScreen from '../ui/screens/recoverPassword/EnterResetCodeScreen';
-import EnterNewPasswordScreen from '../ui/screens/recoverPassword/EnterNewPasswordScreen';
-import Movies from '../ui/screens/movies/Movies';
+import LoginScreen from '../ui/screens/Login/LoginScreen';
+import LoginPrivateScreen from '../ui/screens/Login/LoginPrivate/LoginPrivateScreen';
+import LoginPublicScreen from '../ui/screens/Login/LoginPublic/LoginPublicScreen';
+import RecoverPasswordScreen from '../ui/screens/RecoverPassword/RecoverPasswordScreen';
+import SignUpScreen from '../ui/screens/SignUp/SignUpScreen';
+import EnterResetCodeScreen from '../ui/screens/RecoverPassword/EnterResetCodeScreen';
+import EnterNewPasswordScreen from '../ui/screens/RecoverPassword/EnterNewPasswordScreen';
+import Movies from '../ui/screens/Movies/Movies';
 import {UserContext} from '../UserContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ConfirmDeleteProfileScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreen';
-import ProfilePrivateScreen from '../ui/screens/profile/profilePrivate/ProfilePrivateScreen';
-import CinemaList from '../ui/screens/cinemaList/CinemaList';
-import AuditoriumList from '../ui/screens/auditoriumList/AuditoriumList';
+import ProfilePrivateScreen from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreen';
+import CinemaList from '../ui/screens/CinemaList/CinemaList';
+import AuditoriumList from '../ui/screens/AuditoriumList/AuditoriumList';
 import CreateAuditorium from '../ui/screens/CreateAuditorium/CreateAuditorium';
 import ConfirmDeleteAuditorium from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditorium';
-import UpdateAuditorium from '../ui/screens/updateAuditorium/UpdateAuditorium';
-import CreateCinema from '../ui/screens/createCinema/CreateCinema';
+import UpdateAuditorium from '../ui/screens/UpdateAuditorium/UpdateAuditorium';
+import CreateCinema from '../ui/screens/CreateCinema/CreateCinema';
 import ConfirmDeleteCinema from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinema';
-import UpdateCinema from '../ui/screens/updateCinema/UpdateCinema';
+import UpdateCinema from '../ui/screens/UpdateCinema/UpdateCinema';
 import PrivateMoviesListScreenUI from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreenUI';
 import CreateScreeningUI from '../ui/screens/CreateScreening/CreateScreeningUI';
 import ListScreeningUIPrivate from '../ui/screens/ListScreeningPrivate/ListScreeningUIPrivate';
@@ -134,7 +134,7 @@ function RootNavigator() {
   }
 
   return (
-    <NavigationContainer theme={reactNavigationTheme} >
+    <NavigationContainer theme={reactNavigationTheme}>
       {!user ? (
         <Stack.Navigator>
           <Stack.Screen
@@ -228,7 +228,6 @@ function RootNavigator() {
             component={ConfirmDeleteCinemaScreen}
           /> */}
         </Tab.Navigator>
-        
       ) : (
         <Tab.Navigator>
           <Stack.Screen name="PublicMovies" component={Movies} />

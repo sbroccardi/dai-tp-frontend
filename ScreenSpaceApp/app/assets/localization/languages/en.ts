@@ -43,8 +43,7 @@ export default {
   fullname: 'Full Name',
   UpdateAuditorium: 'Update Auditorium',
   name: 'Name',
-  rows: 'Rows',
   seatsRows: 'Seats in each row',
   updateCinema: 'Update Cinema',
-  address: 'Address'
+  address: 'Address',
 };
