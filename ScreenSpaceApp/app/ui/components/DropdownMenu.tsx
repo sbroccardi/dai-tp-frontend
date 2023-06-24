@@ -1,38 +1,45 @@
-import React from "react";
-import { useState } from 'react';
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Center, CheckIcon, Image, Pressable, Text, View } from "native-base";
-import { NativeBaseProvider, Box } from "native-base";
-import { Select } from "native-base";
+import React from 'react';
+import {Box, Center, CheckIcon, Select} from 'native-base';
 
-
-
-
-const DropdownMenu = () => {
-
-  const [service, setService] = React.useState("");
-
+const DropdownMenu = (params: {
+  purpose: string;
+  disabled: any;
+  options: string[];
+  onChange: any;
+  valueSelected?: string;
+}) => {
+  const valueSelected = params.valueSelected ?? '';
+  const [service, setService] = React.useState(valueSelected);
+  const onChange = params.onChange;
+  const renderOptions = () => {
+    const elements = [];
+    for (let count = 0; count < params.options.length; count++) {
+      const opt = params.options[count];
+      elements.push(<Select.Item key={count} label={opt} value={opt} />);
+    }
+    return elements;
+  };
   return (
-    
     <Center>
-          <Box maxW="300">
-        <Select selectedValue={service} minWidth="200" accessibilityLabel="Choose Service" placeholder="Choose Service" _selectedItem={{
-        bg: "teal.600",
-        endIcon: <CheckIcon size="5" />
-      }} mt={1} onValueChange={itemValue => setService(itemValue)}>
-          <Select.Item label="UX Research" value="ux" />
-          <Select.Item label="Web Development" value="web" />
-          <Select.Item label="Cross Platform Development" value="cross" />
-          <Select.Item label="UI Designing" value="ui" />
-          <Select.Item label="Backend Development" value="backend" />
+      <Box maxW="300">
+        <Select
+          selectedValue={service}
+          isDisabled={params.disabled}
+          minWidth="310"
+          accessibilityLabel="Select"
+          borderRadius="12"
+          placeholder={`Select ${params.purpose}`}
+          _selectedItem={{
+            bg: 'teal.600',
+            endIcon: <CheckIcon size="5" />,
+          }}
+          mt={1}
+          onValueChange={onChange}>
+          {renderOptions()}
         </Select>
       </Box>
     </Center>
-    
   );
-
- 
-
 };
-  
-  export default DropdownMenu;
+
+export default DropdownMenu;
