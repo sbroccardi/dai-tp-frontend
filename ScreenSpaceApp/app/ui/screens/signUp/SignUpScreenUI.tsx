@@ -25,8 +25,11 @@ const SignUpScreenUI = ({}) => {
   const [errors, setErrors] = React.useState({});
   const [imageIsLoading, setImageIsLoading] = React.useState({});
   const [imageUrl, setImageUrl] = React.useState('');
-  const [singleFile, setSingleFile] = React.useState(null);
+  const [imageFile, setImageFile] = React.useState<DocumentPickerResponse[]>(
+    [],
+  );
 
+  //        ---= VALIDATION =---
   const validate = () => {
     setErrors({});
 
@@ -66,9 +69,11 @@ const SignUpScreenUI = ({}) => {
     return true;
   };
 
+  //        ---= SUBMIT =---
   const onSubmit = () => {
+    console.log('!! VALIDATING');
     if (validate()) {
-      //navigation.navigate('Movies');
+      console.log(`!! VALIDATE OK, SUBMITING TO ${Config.API_BASE_URL}/users`);    
       signUp();
     } else {
       console.log(errors);
@@ -83,7 +88,6 @@ const SignUpScreenUI = ({}) => {
   };
 
   const signUp = async () => {
-    console.log(Config.API_BASE_URL);
     const response = await ky.post(`${Config.API_BASE_URL}/users`, {
       json: {
         avatar: imageUrl,
@@ -96,6 +100,7 @@ const SignUpScreenUI = ({}) => {
       },
     });
     console.log(response);
+    navigation.goBack();
   };
 
   const selectFile = async () => {
@@ -111,61 +116,58 @@ const SignUpScreenUI = ({}) => {
         // DocumentPicker.types.pdf
       });
       //Printing the log realted to the file
-      console.log('res : ' + JSON.stringify(results));
-      // console.log('URI : ' + res.uri);
-      // console.log('Type : ' + res.type);
-      // console.log('File Name : ' + res.name);
-      // console.log('File Size : ' + res.size);
-      //Setting the state to show single file attributes
-      //setSingleFile(res);
-      console.log(
-        `URI: ${results[0].uri}\nType: ${results[0].type}\nName: ${results[0].name}\nSize: ${results[0].size}`,
-      );
-      handleUploadImage(results[0]);
+      //console.log('res : ' + JSON.stringify(results));
+      //handleUploadImage(results[0]);
+      console.log(`!! FILE PRELOAD ${JSON.stringify(results)}`);
+      setImageFile(results);
+      //handleUploadImage(imageFile);
+      handleUploadImage(results);
     } catch (err) {
       //Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
         //If user canceled the document selection
+        setImageUrl('');
+        setImageFile([]);
       } else {
         //For Unknown Error
         throw err;
       }
-      toast.show({
+      /*       toast.show({
         description: JSON.stringify(err),
         title: 'Unknown Error',
         duration: 3000,
         placement: 'top',
-      });
+      }); */
     }
   };
 
-  const handleUploadImage = async (newImage: DocumentPickerResponse) => {
-    console.log('started: ', newImage.uri);
+  const handleUploadImage = async (newImage: DocumentPickerResponse[]) => {
+    let image = newImage[0];
+    console.log('!! UPLOAD started ', image.uri);
     setImageIsLoading(true);
 
     const formData = new FormData();
     formData.append('file', {
-      uri: newImage.uri,
-      type: newImage.type,
-      name: newImage.name,
+      uri: image.uri,
+      type: image.type,
+      name: image.name,
     });
     formData.append('upload_preset', 'default-unsigned-preset');
     formData.append(
       'public_id',
-      data.email
-        ? data.email.replace('@', '_at_')
-        : newImage.name?.split('.')[0],
+      data.email ? data.email.replace('@', '_at_') : image.name?.split('.')[0],
     );
 
     try {
+      console.log(`!! SUBMITING TO ${Config.CLOUDINARY_URL} => ${formData}`);
       const response = await ky.post(`${Config.CLOUDINARY_URL}`, {
         body: formData,
       });
       const data = await response.json();
-      console.log(data);
+      console.log('!! UPLOAD success ', data);
       setImageUrl(data.url);
     } catch (error) {
-      console.error('Upload failed', error);
+      console.error('!! UPLOAD failed ', error);
     } finally {
       setImageIsLoading(false);
     }
