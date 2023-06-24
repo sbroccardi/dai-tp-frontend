@@ -6,9 +6,9 @@ import {reactNavigationTheme} from '../ui/styles/theme';
 
 import I18n from '../assets/localization/I18n';
 
-import LoginScreen from '../ui/screens/Login/LoginScreen';
-import LoginPrivateScreen from '../ui/screens/Login/LoginPrivate/LoginPrivateScreen';
-import LoginPublicScreen from '../ui/screens/Login/LoginPublic/LoginPublicScreen';
+import LoginScreen from '../ui/screens/login/LoginScreen';
+import LoginPrivateScreen from '../ui/screens/login/LoginPrivate/LoginPrivateScreen';
+import LoginPublicScreen from '../ui/screens/login/LoginPublic/LoginPublicScreen';
 import RecoverPasswordScreen from '../ui/screens/RecoverPassword/RecoverPasswordScreen';
 import SignUpScreen from '../ui/screens/SignUp/SignUpScreen';
 import EnterResetCodeScreen from '../ui/screens/RecoverPassword/EnterResetCodeScreen';
@@ -17,7 +17,7 @@ import Movies from '../ui/screens/Movies/Movies';
 import {UserContext} from '../UserContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ConfirmDeleteProfileScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreen';
-import ProfilePrivateScreen from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreen';
+import ProfilePrivateScreen from '../ui/screens/profile/ProfilePrivate/ProfilePrivateScreen';
 import CinemaList from '../ui/screens/CinemaList/CinemaList';
 import AuditoriumList from '../ui/screens/AuditoriumList/AuditoriumList';
 import CreateAuditorium from '../ui/screens/CreateAuditorium/CreateAuditorium';
@@ -29,12 +29,12 @@ import UpdateCinema from '../ui/screens/UpdateCinema/UpdateCinema';
 import PrivateMoviesListScreenUI from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreenUI';
 import CreateScreeningUI from '../ui/screens/CreateScreening/CreateScreeningUI';
 import ListScreeningUIPrivate from '../ui/screens/ListScreeningPrivate/ListScreeningUIPrivate';
-import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
-import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
-import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
 import ConfirmDeleteProfileScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreenUI';
-import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
 import ConfirmDeleteCinemaUI from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaUI';
+import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
+import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
+import ProfilePrivateScreenUI from '../ui/screens/profile/ProfilePrivate/ProfilePrivateScreenUI';
+import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
