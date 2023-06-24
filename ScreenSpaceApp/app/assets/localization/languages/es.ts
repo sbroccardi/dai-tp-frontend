@@ -37,4 +37,13 @@ export default {
   movies: 'Peliculas',
   usuario: 'Usuario',
   adress: 'Direccion',
+  cinemas: 'Mis cines',
+  createCinema: 'Crear cine',
+  profile:'Perfil',
+  confirmDeleteAccount:'Confirmar eliminar cuenta',
+  auditoriums: 'Mis salas',
+  updateAuditorium: 'Actualizar sala',
+  confirmDeleteAuditorium: 'Confirmar eliminar sala',
+  confirmDeleteCinema: 'Confirmar eliminar cine',
+  updateCinema: 'Actualizar cine'
 };

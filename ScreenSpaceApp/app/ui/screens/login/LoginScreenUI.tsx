@@ -26,6 +26,7 @@ const LoginScreenUI = ({}) => {
         <ButtonPrimary
           onPress={() => navigation.navigate('LoginPublic')}
           title={I18n.t('loginButton')}
+          isDisabled
         />
       </Center>
       <Center w={'100%'} pb={2}>

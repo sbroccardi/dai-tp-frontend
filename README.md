@@ -112,6 +112,7 @@ Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones
 ## Referencias
 - [Example to Use React Native Vector Icons](https://aboutreact.com/react-native-vector-icons/)
 - [Catalogo de iconos](https://oblador.github.io/react-native-vector-icons/)
+- [Managing Configuration in React Native](https://medium.com/differential/managing-configuration-in-react-native-cd2dfb5e6f7b)
 
 ## Autores ✒️
 

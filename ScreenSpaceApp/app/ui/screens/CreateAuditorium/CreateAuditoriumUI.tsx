@@ -20,7 +20,7 @@ export default function CreateAuditoriumUI() {
   const validate = () => {
     setErrors({});
 
-    // Email
+    // Name
     if (formData.nameAuditorium.length === 0) {
       setErrors(prevErrors => ({
         ...prevErrors,
@@ -30,10 +30,19 @@ export default function CreateAuditoriumUI() {
     }
 
     // Rows
-    if (formData.rows.length < 0) {
+    if (formData.rows.length == 0) {
       setErrors(prevErrors => ({
         ...prevErrors,
         rows: 'Number of rows is required',
+      }));
+      return false;
+    }
+
+     // Seats
+     if (formData.rows.length == 0) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        rows: 'Number of seats is required',
       }));
       return false;
     }
@@ -81,8 +90,8 @@ export default function CreateAuditoriumUI() {
             </FormControl.Label>
             <Input
               size="md"
-              keyboardType="email-address"
-              inputMode="email"
+              keyboardType="default"
+              inputMode="text"
               placeholder={I18n.t('enterNameAuditorium')}
               onChangeText={value =>
                 setData({...formData, nameAuditorium: value})
@@ -100,7 +109,7 @@ export default function CreateAuditoriumUI() {
               size="md"
               placeholder={I18n.t('enterRows')}
               type="text"
-              keyboardType="default"
+              keyboardType="numeric"
               onChangeText={value => setData({...formData, rows: value})}
             />
             <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
@@ -115,7 +124,7 @@ export default function CreateAuditoriumUI() {
               size="md"
               placeholder={I18n.t('enterSeats')}
               type="text"
-              keyboardType="default"
+              keyboardType="numeric"
               onChangeText={value => setData({...formData, seats: value})}
             />
             <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>

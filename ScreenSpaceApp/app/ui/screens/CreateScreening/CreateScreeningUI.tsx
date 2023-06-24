@@ -1,9 +1,13 @@
-import {Center, VStack} from 'native-base';
+import { Center, VStack } from 'native-base';
 import React from 'react';
 import DropdownMenu from '../../components/DropdownMenu';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/native';
 import ButtonPrimary from '../../components/ButtonPrimary';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { palette } from '../../styles/theme';
+import I18n from '../../../assets/localization/I18n';
+
 
 type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -11,12 +15,13 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
+const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   /*TEMP*/
   const cinemaOptions = ['Cinema Devoto', 'Cinema Abasto', 'Cinema Caballito'];
   const auditoriumOptions = ['Auditorio 1', 'Auditorio 2', 'Auditorio 3'];
   const movieOptions = ['Oppenheimer', 'Interstellar', 'Harry Potter'];
   /*TEMP*/
+  const [selectedDay, setSelectedDay] = React.useState('');
   const [selectedCinema, setSelectedCinema] = React.useState('');
   const [selectedAuditorium, setSelectedAuditorium] = React.useState('');
   const [selectedMovie, setSelectedMovie] = React.useState('');
@@ -61,10 +66,34 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
           onChange={undefined}
         />
       </Center>
+      <Center p='2'>
+        <Calendar
+          style={{
+            borderWidth:1,
+            borderRadius:12,
+            borderColor:palette.blackLight,
+            width: 362
+          }}
+          theme={{
+            textSectionTitleColor:palette.green            
+          }}
+          onDayPress={day => {
+            setSelectedDay(day.dateString);
+          }}
+          markedDates={{
+            [selectedDay]: { selected: true, disableTouchEvent: true}
+          }}
+        />
+      </Center>
       <Center>
         <ButtonPrimary
-          title="Save"
-          onPress={() => navigation.replace('ScreeningList', {movieID: '1'})}
+          title={I18n.t('save')}
+          onPress={
+            () => {
+            //onSubmit
+            navigation.replace('ScreeningList', { movieID: '1'})
+          }
+        }
         />
       </Center>
     </VStack>
