@@ -29,12 +29,12 @@ import UpdateCinema from '../ui/screens/UpdateCinema/UpdateCinema';
 import PrivateMoviesListScreenUI from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreenUI';
 import CreateScreeningUI from '../ui/screens/CreateScreening/CreateScreeningUI';
 import ListScreeningUIPrivate from '../ui/screens/ListScreeningPrivate/ListScreeningUIPrivate';
-import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
-import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
-import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
 import ConfirmDeleteProfileScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreenUI';
-import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
 import ConfirmDeleteCinemaUI from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaUI';
+import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
+import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
+import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
+import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
