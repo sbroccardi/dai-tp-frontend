@@ -1,9 +1,5 @@
-import React from "react";
-import { useState } from 'react';
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Center, CheckIcon, Image, Pressable, Text, View } from "native-base";
-import { NativeBaseProvider, Box } from "native-base";
-import { Select } from "native-base";
+import React from 'react';
+import {Box, Center, CheckIcon, Select} from 'native-base';
 
 
 const DropdownMenu = (params: {purpose: string, disabled: any, options: string[], onChange: any, valueSelected?: string}) => {
@@ -11,12 +7,12 @@ const DropdownMenu = (params: {purpose: string, disabled: any, options: string[]
   const onChange = params.onChange;
   const renderOptions = () => {
     const elements = [];
-    for(let count = 0; count < params.options.length; count++){
-        const opt = params.options[count];
-        elements.push(<Select.Item key={count} label = {opt} value = {opt}/>)
+    for (let count = 0; count < params.options.length; count++) {
+      const opt = params.options[count];
+      elements.push(<Select.Item key={count} label={opt} value={opt} />);
     }
     return elements;
-  }
+  };
   return (
     <Center>
         <Box maxW="300">
@@ -32,5 +28,5 @@ const DropdownMenu = (params: {purpose: string, disabled: any, options: string[]
     </Center>
   );
 };
-  
-  export default DropdownMenu;
+
+export default DropdownMenu;

@@ -1,8 +1,7 @@
 import React from 'react';
-import {Box, HStack, Image, Pressable, VStack} from 'native-base';
+import {Box, Button, HStack, Image, Pressable, VStack} from 'native-base';
 import {Text} from 'react-native';
 import {palette, styles} from '../styles/theme';
-import {Button} from 'native-base';
 
 const CardAuditorium = (props: {
   auditoriumName?: string | undefined;

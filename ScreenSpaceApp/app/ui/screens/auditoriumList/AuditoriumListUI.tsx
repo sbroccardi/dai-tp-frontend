@@ -18,38 +18,38 @@ export default function AuditoriumListUI(params: {cinema: string}) {
         <SearchBar />
       </Center>
       <Center>
-          <ScrollView maxH="300">
-            <VStack space={4} alignItems="center" height="100%">
-              <Center>
-                <CardAuditorium
-                  auditoriumName="Sala 7"
-                  auditoriumAvailability="Disponible"
-                  auditoriumSize="12 rows of 7 seats"
-                />
-              </Center>
-              <Center>
-                <CardAuditorium
-                  auditoriumName="Sala 8"
-                  auditoriumAvailability="Disponible"
-                  auditoriumSize="12 rows of 7 seats"
-                />
-              </Center>
-              <Center>
-                <CardAuditorium
-                  auditoriumName="Sala 8"
-                  auditoriumAvailability="Disponible"
-                  auditoriumSize="12 rows of 7 seats"
-                />
-              </Center>
-              <Center>
-                <CardAuditorium
-                  auditoriumName="Sala 8"
-                  auditoriumAvailability="Disponible"
-                  auditoriumSize="12 rows of 7 seats"
-                />
-              </Center>
-            </VStack>
-          </ScrollView>
+        <ScrollView maxH="300">
+          <VStack space={4} alignItems="center" height="100%">
+            <Center>
+              <CardAuditorium
+                auditoriumName="Sala 7"
+                auditoriumAvailability="Disponible"
+                auditoriumSize="12 rows of 7 seats"
+              />
+            </Center>
+            <Center>
+              <CardAuditorium
+                auditoriumName="Sala 8"
+                auditoriumAvailability="Disponible"
+                auditoriumSize="12 rows of 7 seats"
+              />
+            </Center>
+            <Center>
+              <CardAuditorium
+                auditoriumName="Sala 8"
+                auditoriumAvailability="Disponible"
+                auditoriumSize="12 rows of 7 seats"
+              />
+            </Center>
+            <Center>
+              <CardAuditorium
+                auditoriumName="Sala 8"
+                auditoriumAvailability="Disponible"
+                auditoriumSize="12 rows of 7 seats"
+              />
+            </Center>
+          </VStack>
+        </ScrollView>
       </Center>
       <Center width="100%">
         <ButtonPrimary title="Create screening" onPress={undefined} />

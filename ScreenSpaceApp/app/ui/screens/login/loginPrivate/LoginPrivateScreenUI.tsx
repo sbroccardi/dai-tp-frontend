@@ -6,7 +6,6 @@ import {
   Text,
   VStack,
   useToast,
-  KeyboardAvoidingView,
 } from 'native-base';
 import React, {useContext} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -15,7 +14,8 @@ import ky from 'ky';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import {UserContext} from '../../../../UserContext';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Config} from 'react-native-config';
 
 const LoginPrivateScreenUI = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -78,84 +78,89 @@ const LoginPrivateScreenUI = () => {
   };
 
   const signIn = async () => {
-    console.log({email: formData.email, password: formData.password});
     const response = await ky.post(
       `${Config.API_BASE_URL}/auths/loginPrivate`,
       {
         json: {email: formData.email, password: formData.password},
       },
     );
-    console.log(response);
+    const responseBody = await response.json();
+    setUser({
+      token: responseBody.accessToken,
+      type: 'privado',
+      ...formData,
+      id: responseBody.id,
+    });
   };
 
   return (
     <KeyboardAwareScrollView>
       <VStack
-      space={4}
-      alignItems="center"
-      justifyContent="space-around"
-      height="100%">
-      <Center w="100%" pt={50}>
-        <Image
-          alt="ScreenSpace"
-          source={require('../../../../assets/images/popcorn.png')}
-          width={116}
-          height={116}
-        />
-      </Center>
-      <Center w={'90%'}>
-        <FormControl isRequired>
-          <FormControl.Label _text={{bold: true}}>
-            {I18n.t('email')}
-          </FormControl.Label>
-          <Input
-            size="md"
-            keyboardType="email-address"
-            inputMode="email"
-            placeholder={I18n.t('enterEmail')}
-            onChangeText={value => setData({...formData, email: value})}
+        space={4}
+        alignItems="center"
+        justifyContent="space-around"
+        height="100%">
+        <Center w="100%" pt={50}>
+          <Image
+            alt="ScreenSpace"
+            source={require('../../../../assets/images/popcorn.png')}
+            width={116}
+            height={116}
           />
-          <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-            Error Email
-          </FormControl.ErrorMessage>
-        </FormControl>
-        <FormControl isRequired pt={5}>
-          <FormControl.Label _text={{bold: true}}>
-            {I18n.t('password')}
-          </FormControl.Label>
-          <Input
-            size="md"
-            placeholder={I18n.t('enterPassword')}
-            type="password"
-            keyboardType="default"
-            onChangeText={value => setData({...formData, password: value})}
-          />
-          <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-            Error Password
-          </FormControl.ErrorMessage>
-        </FormControl>
-      </Center>
-      <Center w={'100%'}>
-        <ButtonPrimary onPress={onSubmit} title={I18n.t('login')} />
-        <Text
-          pt={5}
-          color={'yellow.400'}
-          onPress={() => navigation.navigate('RecoverPassword')}>
-          {I18n.t('forgotPassword')}
-        </Text>
-      </Center>
-      <Center w={'100%'}>
-        <Text fontWeight={'normal'} color={'gray.400'}>
-          {I18n.t('newToScreenSpace')}
+        </Center>
+        <Center w={'90%'}>
+          <FormControl isRequired>
+            <FormControl.Label _text={{bold: true}}>
+              {I18n.t('email')}
+            </FormControl.Label>
+            <Input
+              size="md"
+              keyboardType="email-address"
+              inputMode="email"
+              placeholder={I18n.t('enterEmail')}
+              onChangeText={value => setData({...formData, email: value})}
+            />
+            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+              Error Email
+            </FormControl.ErrorMessage>
+          </FormControl>
+          <FormControl isRequired pt={5}>
+            <FormControl.Label _text={{bold: true}}>
+              {I18n.t('password')}
+            </FormControl.Label>
+            <Input
+              size="md"
+              placeholder={I18n.t('enterPassword')}
+              type="password"
+              keyboardType="default"
+              onChangeText={value => setData({...formData, password: value})}
+            />
+            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+              Error Password
+            </FormControl.ErrorMessage>
+          </FormControl>
+        </Center>
+        <Center w={'100%'}>
+          <ButtonPrimary onPress={onSubmit} title={I18n.t('login')} />
           <Text
+            pt={5}
             color={'yellow.400'}
-            onPress={() => navigation.navigate('SignUp')}>
-            {' '}
-            {I18n.t('signUp')}
+            onPress={() => navigation.navigate('RecoverPassword')}>
+            {I18n.t('forgotPassword')}
           </Text>
-        </Text>
-      </Center>
-    </VStack>
+        </Center>
+        <Center w={'100%'}>
+          <Text fontWeight={'normal'} color={'gray.400'}>
+            {I18n.t('newToScreenSpace')}
+            <Text
+              color={'yellow.400'}
+              onPress={() => navigation.navigate('SignUp')}>
+              {' '}
+              {I18n.t('signUp')}
+            </Text>
+          </Text>
+        </Center>
+      </VStack>
     </KeyboardAwareScrollView>
   );
 };

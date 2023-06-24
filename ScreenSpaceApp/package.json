@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android-local": "ENVFILE=.env.local react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "lint-fix": "eslint \"{app}/**/*.ts\" --fix",
+    "format": "prettier --write \"app/**/*.ts\"",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "-": "^0.0.1",
