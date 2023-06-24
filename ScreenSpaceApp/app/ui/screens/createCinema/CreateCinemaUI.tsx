@@ -71,9 +71,6 @@ export default function CreateCinemaUI() {
       alignItems="center"
       justifyContent="space-around"
       height="100%">
-      <Center>
-        <HomeToolbarPrivateUser title="Create cinema" />
-      </Center>
       <Center w="100%" pt={50}>
         <Image
           alt="ScreenSpace"
