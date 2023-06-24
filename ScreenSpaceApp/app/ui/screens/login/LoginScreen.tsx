@@ -3,6 +3,5 @@ import LoginScreenUI from './LoginScreenUI';
 
 export default function LoginScreen() {
   //Logic
-
   return <LoginScreenUI />;
 }

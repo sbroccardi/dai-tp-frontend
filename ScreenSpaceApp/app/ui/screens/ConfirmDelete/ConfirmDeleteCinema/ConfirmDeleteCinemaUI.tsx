@@ -1,12 +1,9 @@
 import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {Box, Center, Text, VStack, View} from 'native-base';
+import {Center, VStack} from 'native-base';
 import React from 'react';
-import {styles} from '../../../styles/theme';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ButtonDanger from '../../../components/ButtonDanger';
-import I18n from '../../../../assets/localization/I18n';
 import WarningMessage from '../../../components/WarningMessage';
-import ToolbarPrivateUser from '../../../components/ToolbarPrivateUser';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export default function ConfirmDeleteCinemaUI() {

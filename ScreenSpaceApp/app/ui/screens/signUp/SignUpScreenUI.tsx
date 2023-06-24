@@ -11,6 +11,7 @@ import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ProfilePicture from '../../components/ProfilePicture';
 import {Config} from 'react-native-config';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SignUpScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -24,8 +25,11 @@ const SignUpScreenUI = ({}) => {
   const [errors, setErrors] = React.useState({});
   const [imageIsLoading, setImageIsLoading] = React.useState({});
   const [imageUrl, setImageUrl] = React.useState('');
-  const [singleFile, setSingleFile] = React.useState(null);
+  const [imageFile, setImageFile] = React.useState<DocumentPickerResponse[]>(
+    [],
+  );
 
+  //        ---= VALIDATION =---
   const validate = () => {
     setErrors({});
 
@@ -65,9 +69,11 @@ const SignUpScreenUI = ({}) => {
     return true;
   };
 
+  //        ---= SUBMIT =---
   const onSubmit = () => {
+    console.log('!! VALIDATING');
     if (validate()) {
-      //navigation.navigate('Movies');
+      console.log(`!! VALIDATE OK, SUBMITING TO ${Config.API_BASE_URL}/users`);    
       signUp();
     } else {
       console.log(errors);
@@ -94,6 +100,7 @@ const SignUpScreenUI = ({}) => {
       },
     });
     console.log(response);
+    navigation.goBack();
   };
 
   const selectFile = async () => {
@@ -109,152 +116,151 @@ const SignUpScreenUI = ({}) => {
         // DocumentPicker.types.pdf
       });
       //Printing the log realted to the file
-      console.log('res : ' + JSON.stringify(results));
-      // console.log('URI : ' + res.uri);
-      // console.log('Type : ' + res.type);
-      // console.log('File Name : ' + res.name);
-      // console.log('File Size : ' + res.size);
-      //Setting the state to show single file attributes
-      //setSingleFile(res);
-      console.log(
-        `URI: ${results[0].uri}\nType: ${results[0].type}\nName: ${results[0].name}\nSize: ${results[0].size}`,
-      );
-      handleUploadImage(results[0]);
+      //console.log('res : ' + JSON.stringify(results));
+      //handleUploadImage(results[0]);
+      console.log(`!! FILE PRELOAD ${JSON.stringify(results)}`);
+      setImageFile(results);
+      //handleUploadImage(imageFile);
+      handleUploadImage(results);
     } catch (err) {
       //Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
         //If user canceled the document selection
+        setImageUrl('');
+        setImageFile([]);
       } else {
         //For Unknown Error
         throw err;
       }
-      toast.show({
+      /*       toast.show({
         description: JSON.stringify(err),
         title: 'Unknown Error',
         duration: 3000,
         placement: 'top',
-      });
+      }); */
     }
   };
 
-  const handleUploadImage = async (newImage: DocumentPickerResponse) => {
-    console.log('started: ', newImage.uri);
+  const handleUploadImage = async (newImage: DocumentPickerResponse[]) => {
+    let image = newImage[0];
+    console.log('!! UPLOAD started ', image.uri);
     setImageIsLoading(true);
 
     const formData = new FormData();
     formData.append('file', {
-      uri: newImage.uri,
-      type: newImage.type,
-      name: newImage.name,
+      uri: image.uri,
+      type: image.type,
+      name: image.name,
     });
     formData.append('upload_preset', 'default-unsigned-preset');
     formData.append(
       'public_id',
-      data.email
-        ? data.email.replace('@', '_at_')
-        : newImage.name?.split('.')[0],
+      data.email ? data.email.replace('@', '_at_') : image.name?.split('.')[0],
     );
 
     try {
+      console.log(`!! SUBMITING TO ${Config.CLOUDINARY_URL} => ${formData}`);
       const response = await ky.post(`${Config.CLOUDINARY_URL}`, {
         body: formData,
       });
       const data = await response.json();
-      console.log(data);
+      console.log('!! UPLOAD success ', data);
       setImageUrl(data.url);
     } catch (error) {
-      console.error('Upload failed', error);
+      console.error('!! UPLOAD failed ', error);
     } finally {
       setImageIsLoading(false);
     }
   };
 
   return (
-    <VStack
-      space={4}
-      alignItems="center"
-      justifyContent="space-around"
-      height="100%">
-      <Center w="100%">
-        <Flex direction="column">
-          <Center pt="5%">
-            <FormControl>
-              <ProfilePicture
-                title={I18n.t('uploadPortraitPhoto')}
-                onPress={selectFile}
-                imgUrl={imageUrl}
-              />
-            </FormControl>
-          </Center>
-          <Center pt="10%">
-            <FormControl isRequired>
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('company')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                placeholder={I18n.t('enterCompany')}
-                onChangeText={value => setData({...data, company: value})}
-              />
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Company
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('email')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                keyboardType="email-address"
-                inputMode="email"
-                placeholder={I18n.t('enterEmail')}
-                onChangeText={value => setData({...data, email: value})}
-              />
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Email
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('password')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                placeholder={I18n.t('enterPassword')}
-                type="password"
-                onChangeText={value => setData({...data, password: value})}
-              />
-              <FormControl.HelperText _text={{fontSize: 'xs'}}>
-                {I18n.t('helpPassword')}
-              </FormControl.HelperText>
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Password
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired pt="5%">
-              <FormControl.Label _text={{bold: true}}>
-                {I18n.t('confirmPassword')}
-              </FormControl.Label>
-              <Input
-                size="md"
-                placeholder={I18n.t('enterPassword')}
-                type="password"
-                onChangeText={value =>
-                  setData({...data, confirmPassword: value})
-                }
-              />
-              <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-                Error Password
-              </FormControl.ErrorMessage>
-            </FormControl>
-          </Center>
-        </Flex>
-      </Center>
-      <Center w="100%">
-        <ButtonPrimary onPress={onSubmit} title={I18n.t('signUp')} />
-      </Center>
-    </VStack>
+    <KeyboardAwareScrollView>
+      <VStack
+        space={4}
+        alignItems="center"
+        justifyContent="space-around"
+        height="100%">
+        <Center w="100%">
+          <Flex direction="column">
+            <Center pt="5%">
+              <FormControl>
+                <ProfilePicture
+                  title={I18n.t('uploadPortraitPhoto')}
+                  onPress={selectFile}
+                  imgUrl={imageUrl}
+                />
+              </FormControl>
+            </Center>
+            <Center pt="10%">
+              <FormControl isRequired>
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('company')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  placeholder={I18n.t('enterCompany')}
+                  onChangeText={value => setData({...data, company: value})}
+                />
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Company
+                </FormControl.ErrorMessage>
+              </FormControl>
+              <FormControl isRequired>
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('email')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  keyboardType="email-address"
+                  inputMode="email"
+                  placeholder={I18n.t('enterEmail')}
+                  onChangeText={value => setData({...data, email: value})}
+                />
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Email
+                </FormControl.ErrorMessage>
+              </FormControl>
+              <FormControl isRequired>
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('password')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  placeholder={I18n.t('enterPassword')}
+                  type="password"
+                  onChangeText={value => setData({...data, password: value})}
+                />
+                <FormControl.HelperText _text={{fontSize: 'xs'}}>
+                  {I18n.t('helpPassword')}
+                </FormControl.HelperText>
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Password
+                </FormControl.ErrorMessage>
+              </FormControl>
+              <FormControl isRequired pt="5%">
+                <FormControl.Label _text={{bold: true}}>
+                  {I18n.t('confirmPassword')}
+                </FormControl.Label>
+                <Input
+                  size="md"
+                  placeholder={I18n.t('enterPassword')}
+                  type="password"
+                  onChangeText={value =>
+                    setData({...data, confirmPassword: value})
+                  }
+                />
+                <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+                  Error Password
+                </FormControl.ErrorMessage>
+              </FormControl>
+            </Center>
+          </Flex>
+        </Center>
+        <Center w="100%">
+          <ButtonPrimary onPress={onSubmit} title={I18n.t('signUp')} />
+        </Center>
+      </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 

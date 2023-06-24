@@ -1,13 +1,13 @@
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {Center, Text, VStack} from 'native-base';
-import React,{useContext}from 'react';
+import React, {useContext} from 'react';
 import {styles} from '../../../styles/theme';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ButtonDanger from '../../../components/ButtonDanger';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {UserContext} from '../../../../UserContext';
+import {Config} from 'react-native-config';
 import ky from 'ky';
-
 
 export default function ConfirmDeleteProfileScreenUI() {
   const {setUser} = useContext(UserContext);
@@ -16,10 +16,10 @@ export default function ConfirmDeleteProfileScreenUI() {
 
   const salir = async () => {
     const authToken = user.user.token;
-    const respuesta = await ky.delete(`http://192.168.0.92:3000/users/` , {
+    const respuesta = await ky.delete(`${Config.API_BASE_URL}/users/`, {
       headers: {
-        Authorization: `Bearer ${authToken}`
-      }
+        Authorization: `Bearer ${authToken}`,
+      },
     });
     setUser(null);
   };
@@ -29,16 +29,10 @@ export default function ConfirmDeleteProfileScreenUI() {
         <Text style={styles.headerText}>Are you sure?</Text>
       </Center>
       <Center w="100%" marginBottom="10" marginLeft="-1">
-        <ButtonDanger
-          onPress={salir}
-          title="Delete"
-        />
+        <ButtonDanger onPress={salir} title="Delete" />
       </Center>
       <Center w="100%">
-        <ButtonPrimary
-          onPress={() => navigation.navigate('My Profile')}
-          title="Cancel"
-        />
+        <ButtonPrimary onPress={() => navigation.goBack()} title="Cancel" />
       </Center>
     </VStack>
   );

@@ -21,26 +21,26 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({navigation}) => {
       </Center>
       <Center>
         <ScrollView maxH="450">
-            <VStack space={3} alignItems="center" height="100%">
-              <Center>
-                <CardMovie movieID="1" />
-              </Center>
-              <Center>
-                <CardMovie movieID="2" />
-              </Center>
-              <Center>
-                <CardMovie movieID="3" />
-              </Center>
-              <Center>
-                <CardMovie movieID="3" />
-              </Center>
-              <Center>
-                <CardMovie movieID="3" />
-              </Center>
-              <Center>
-                <CardMovie movieID="3" />
-              </Center>
-            </VStack>
+          <VStack space={3} alignItems="center" height="100%">
+            <Center>
+              <CardMovie movieID="1" />
+            </Center>
+            <Center>
+              <CardMovie movieID="2" />
+            </Center>
+            <Center>
+              <CardMovie movieID="3" />
+            </Center>
+            <Center>
+              <CardMovie movieID="3" />
+            </Center>
+            <Center>
+              <CardMovie movieID="3" />
+            </Center>
+            <Center>
+              <CardMovie movieID="3" />
+            </Center>
+          </VStack>
         </ScrollView>
       </Center>
       <Center width="100%">

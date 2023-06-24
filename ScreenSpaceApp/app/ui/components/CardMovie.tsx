@@ -1,7 +1,6 @@
 import {
   AspectRatio,
   Box,
-  Center,
   HStack,
   Heading,
   Image,
@@ -10,7 +9,6 @@ import {
   Text,
 } from 'native-base';
 import React from 'react';
-import {useState} from 'react';
 import {styles} from '../styles/theme';
 import StarRating from 'react-native-star-rating-widget';
 import {ParamListBase, useNavigation} from '@react-navigation/native';

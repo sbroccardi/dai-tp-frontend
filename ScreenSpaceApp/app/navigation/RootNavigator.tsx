@@ -6,29 +6,35 @@ import {reactNavigationTheme} from '../ui/styles/theme';
 
 import I18n from '../assets/localization/I18n';
 
-import LoginScreen from '../ui/screens/login/LoginScreen';
-import LoginPrivateScreen from '../ui/screens/login/loginPrivate/LoginPrivateScreen';
-import LoginPublicScreen from '../ui/screens/login/loginPublic/LoginPublicScreen';
-import RecoverPasswordScreen from '../ui/screens/recoverPassword/RecoverPasswordScreen';
-import SignUpScreen from '../ui/screens/signUp/SignUpScreen';
-import EnterResetCodeScreen from '../ui/screens/recoverPassword/EnterResetCodeScreen';
-import EnterNewPasswordScreen from '../ui/screens/recoverPassword/EnterNewPasswordScreen';
-import Movies from '../ui/screens/movies/Movies';
+import LoginScreen from '../ui/screens/Login/LoginScreen';
+import LoginPrivateScreen from '../ui/screens/Login/LoginPrivate/LoginPrivateScreen';
+import LoginPublicScreen from '../ui/screens/Login/LoginPublic/LoginPublicScreen';
+import RecoverPasswordScreen from '../ui/screens/RecoverPassword/RecoverPasswordScreen';
+import SignUpScreen from '../ui/screens/SignUp/SignUpScreen';
+import EnterResetCodeScreen from '../ui/screens/RecoverPassword/EnterResetCodeScreen';
+import EnterNewPasswordScreen from '../ui/screens/RecoverPassword/EnterNewPasswordScreen';
+import Movies from '../ui/screens/Movies/Movies';
 import {UserContext} from '../UserContext';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ConfirmDeleteProfileScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreen';
-import ProfilePrivateScreen from '../ui/screens/profile/profilePrivate/ProfilePrivateScreen';
-import CinemaList from '../ui/screens/cinemaList/CinemaList';
-import AuditoriumList from '../ui/screens/auditoriumList/AuditoriumList';
+import ProfilePrivateScreen from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreen';
+import CinemaList from '../ui/screens/CinemaList/CinemaList';
+import AuditoriumList from '../ui/screens/AuditoriumList/AuditoriumList';
 import CreateAuditorium from '../ui/screens/CreateAuditorium/CreateAuditorium';
 import ConfirmDeleteAuditorium from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditorium';
-import UpdateAuditorium from '../ui/screens/updateAuditorium/UpdateAuditorium';
-import CreateCinema from '../ui/screens/createCinema/CreateCinema';
+import UpdateAuditorium from '../ui/screens/UpdateAuditorium/UpdateAuditorium';
+import CreateCinema from '../ui/screens/CreateCinema/CreateCinema';
 import ConfirmDeleteCinema from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinema';
-import UpdateCinema from '../ui/screens/updateCinema/UpdateCinema';
+import UpdateCinema from '../ui/screens/UpdateCinema/UpdateCinema';
 import PrivateMoviesListScreenUI from '../ui/screens/PrivateMoviesList/PrivateMoviesListScreenUI';
 import CreateScreeningUI from '../ui/screens/CreateScreening/CreateScreeningUI';
 import ListScreeningUIPrivate from '../ui/screens/ListScreeningPrivate/ListScreeningUIPrivate';
+import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
+import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
+import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
+import ConfirmDeleteProfileScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteProfile/ConfirmDeleteProfileScreenUI';
+import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
+import ConfirmDeleteCinemaUI from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaUI';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,8 +57,22 @@ function RootNavigator() {
   function MoviesStack({navigation}) {
     return (
       <Stack.Navigator initialRouteName="MoviesList">
-        <Stack.Screen name="MoviesList" component={PrivateMoviesListScreenUI} />
-        <Stack.Screen name="ScreeningList" component={ListScreeningUIPrivate} />
+        <Stack.Screen
+          name="MoviesList"
+          component={PrivateMoviesListScreenUI}
+          options={{
+            headerTitle: I18n.t('movies'),
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="ScreeningList"
+          component={ListScreeningUIPrivate}
+          options={{
+            headerTitle: '/////movie',
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen
           name="CreateScreeningStack"
           component={CreateScreeningStack}
@@ -66,7 +86,14 @@ function RootNavigator() {
   function CreateScreeningStack({navigation}) {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="CreateScreening" component={CreateScreeningUI} />
+        <Stack.Screen
+          name="CreateScreening"
+          component={CreateScreeningUI}
+          options={{
+            headerTitle: I18n.t('createScreening'),
+            headerTitleAlign: 'center',
+          }}
+        />
       </Stack.Navigator>
     );
   }
@@ -74,8 +101,15 @@ function RootNavigator() {
   // eslint-disable-next-line react/no-unstable-nested-components
   function CinemasStack({navigation}) {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="CinemasList" component={CinemaList} />
+      <Stack.Navigator initialRouteName="CinemasList">
+        <Stack.Screen
+          name="CinemasList"
+          component={CinemaListUI}
+          options={{
+            headerTitle: I18n.t('cinemas'),
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} />
         <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
         <Stack.Screen name="UpdateCinemaStack" component={UpdateCinemaStack} />
@@ -86,13 +120,31 @@ function RootNavigator() {
   // eslint-disable-next-line react/no-unstable-nested-components
   function AuditoriumsStack({navigation}) {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="AuditoriumList" component={AuditoriumList} />
+      <Stack.Navigator initialRouteName="AuditoriumList">
+        <Stack.Screen
+          name="AuditoriumList"
+          component={AuditoriumList}
+          options={{
+            headerTitle: I18n.t('auditoriums'),
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen name="CreateAuditorium" component={CreateAuditorium} />
-        <Stack.Screen name="UpdateAuditorium" component={UpdateAuditorium} />
+        <Stack.Screen
+          name="UpdateAuditorium"
+          component={UpdateAuditorium}
+          options={{
+            headerTitle: I18n.t('updateAuditorium'),
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen
           name="ConfirmDeleteAuditorium"
           component={ConfirmDeleteAuditorium}
+          options={{
+            headerTitle: I18n.t('confirmDeleteAuditorium'),
+            headerTitleAlign: 'center',
+          }}
         />
       </Stack.Navigator>
     );
@@ -101,8 +153,15 @@ function RootNavigator() {
   // eslint-disable-next-line react/no-unstable-nested-components
   function CreateCinemaStack({navigation}) {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="CreateCinema" component={CreateCinema} />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen
+          name="CreateCinema"
+          component={CreateCinemaUI}
+          options={{
+            headerTitle: I18n.t('createCinema'),
+            headerTitleAlign: 'center',
+          }}
+        />
       </Stack.Navigator>
     );
   }
@@ -111,10 +170,21 @@ function RootNavigator() {
   function UpdateCinemaStack({navigation}) {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="UpdateCinema" component={UpdateCinema} />
+        <Stack.Screen
+          name="UpdateCinema"
+          component={UpdateCinemaUI}
+          options={{
+            headerTitle: I18n.t('updateCinema'),
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen
           name="ConfirmDeleteCinema"
-          component={ConfirmDeleteCinema}
+          component={ConfirmDeleteCinemaUI}
+          options={{
+            headerTitle: I18n.t('confirmDeleteCinema'),
+            headerTitleAlign: 'center',
+          }}
         />
       </Stack.Navigator>
     );
@@ -124,17 +194,28 @@ function RootNavigator() {
   function ProfileStack({navigation}) {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="My Profile" component={ProfilePrivateScreen} />
+        <Stack.Screen
+          name="Profile"
+          component={ProfilePrivateScreenUI}
+          options={{
+            headerTitle: I18n.t('profile'),
+            headerTitleAlign: 'center',
+          }}
+        />
         <Stack.Screen
           name="ConfirmDelete"
-          component={ConfirmDeleteProfileScreen}
+          component={ConfirmDeleteProfileScreenUI}
+          options={{
+            headerTitle: I18n.t('confirmDeleteAccount'),
+            headerTitleAlign: 'center',
+          }}
         />
       </Stack.Navigator>
     );
   }
 
   return (
-    <NavigationContainer theme={reactNavigationTheme} >
+    <NavigationContainer theme={reactNavigationTheme}>
       {!user ? (
         <Stack.Navigator>
           <Stack.Screen
@@ -228,7 +309,6 @@ function RootNavigator() {
             component={ConfirmDeleteCinemaScreen}
           /> */}
         </Tab.Navigator>
-        
       ) : (
         <Tab.Navigator>
           <Stack.Screen name="PublicMovies" component={Movies} />
