@@ -25,7 +25,7 @@ export default function CreateCinemaUI() {
   const validate = () => {
     setErrors({});
 
-    // Email
+    // Name
     if (formData.name.length === 0) {
       setErrors(prevErrors => ({
         ...prevErrors,
@@ -34,7 +34,7 @@ export default function CreateCinemaUI() {
       return false;
     }
 
-    // Rows
+    // Location
     if (formData.location.length === 0) {
       setErrors(prevErrors => ({
         ...prevErrors,
@@ -86,8 +86,8 @@ export default function CreateCinemaUI() {
             </FormControl.Label>
             <Input
               size="md"
-              keyboardType="email-address"
-              inputMode="email"
+              keyboardType="default"
+              inputMode="text"
               placeholder={I18n.t('enterNameCinema')}
               onChangeText={value => setData({...formData, name: value})}
             />
