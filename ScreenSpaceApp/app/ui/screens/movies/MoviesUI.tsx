@@ -3,7 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Center} from 'native-base';
 import React from 'react';
 import {View} from 'react-native';
-import HomeToolbarPublicUser from '../../Components/HomeToolbarPublicUser';
+import HomeToolbarPublicUser from '../../components/HomeToolbarPublicUser';
 import {styles} from '../../styles/theme';
 
 const MoviesUI = ({}) => {
