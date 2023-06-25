@@ -12,6 +12,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ButtonPrimary from '../../Components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Config} from 'react-native-config';
+import ky from 'ky';
 
 const RecoverPasswordScreen = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -43,11 +45,26 @@ const RecoverPasswordScreen = ({}) => {
     return true;
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (validate()) {
-      navigation.navigate('EnterResetCode');
+      try {
+        //TODO: Mover navigate al fondo.
+        navigation.navigate('EnterResetCode', {
+          params: {emailAddress: formData.email},
+        });
+        const respuesta = await ky
+          .get(`${Config.API_BASE_URL}/users/resetpassword`, {
+            searchParams: {
+              email: formData.email,
+            },
+          })
+          .json();
+        console.log(respuesta);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      console.log(errors);
+      console.error(errors);
 
       toast.show({
         description: Object.values(errors).join('\n'),

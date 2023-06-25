@@ -13,13 +13,17 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ButtonPrimary from '../../Components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Config} from 'react-native-config';
+import ky from 'ky';
 
-const EnterResetCodeScreen = ({}) => {
+const EnterResetCodeScreen = ({route}) => {
+  const {emailAddress} = route.params;
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [resetCode, setResetCode] = useState(['', '', '', '']);
   const inputRefs = useRef<(typeof Input | null)[]>([]);
   const [errors, setErrors] = React.useState({});
+  const [userId, setUserId] = useState('');
 
   const handleResetCodeChange = (index: number, value: string) => {
     setResetCode(prevState => {
@@ -62,9 +66,28 @@ const EnterResetCodeScreen = ({}) => {
     return true;
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (validate()) {
-      navigation.navigate('EnterNewPassword');
+      //TODO: mover navigate al fondo. enviar dirección de email.
+      navigation.navigate('EnterNewPassword', {
+        params: {userId: userId, token: resetCode},
+      });
+      try {
+        console.log('!! SUBMITING RESET CODE');
+        const response = await ky
+          .post(`${Config.API_BASE_URL}/users/confirmcode`, {
+            json: {
+              email: emailAddress,
+              token: resetCode,
+            },
+          })
+          .json();
+        console.log('!! SUBMITING success ', response);
+        setUserId(response);
+        //TODO: Según la respuesta navegar a la siguiente o mostrar mensaje de error.
+      } catch (error) {
+        console.error('!! SUBMITING failed ', error);
+      }
     } else {
       console.log(errors);
 
