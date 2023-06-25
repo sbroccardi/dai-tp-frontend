@@ -4,6 +4,7 @@ import {
   Image,
   Input,
   Pressable,
+  Text,
   VStack,
   useToast,
 } from 'native-base';
@@ -15,16 +16,20 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
+import {UserContext} from '../../../UserContext';
+import { useContext } from 'react';
+import ky from 'ky';
+import Config from 'react-native-config';
 export default function CreateCinemaUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [formData, setData] = React.useState({name: '', location: ''});
   const [errors, setErrors] = React.useState({});
+  const user = useContext(UserContext);
+  const userId = user.user.id;
 
   const validate = () => {
     setErrors({});
-
     // Name
     if (formData.name.length === 0) {
       setErrors(prevErrors => ({
@@ -33,7 +38,6 @@ export default function CreateCinemaUI() {
       }));
       return false;
     }
-
     // Location
     if (formData.location.length === 0) {
       setErrors(prevErrors => ({
@@ -46,10 +50,29 @@ export default function CreateCinemaUI() {
     return true;
   };
 
-  const onSubmit = () => {
-    if (validate()) {
-      navigation.navigate('ProfilePrivate');
-    } else {
+
+const crearCine = async (nombreCine: string, direccionCine: string) => {
+  // Realizar validación de los datos ingresados
+  const datosValidos = validate();
+
+  if (datosValidos) {
+    try {
+      // Realizar la solicitud POST al backend utilizando ky
+      const response = await ky.post(`${Config.API_BASE_URL}/cinemas`, {
+        json: {
+          userId: userId,
+          name: nombreCine,
+          location: direccionCine
+        },
+      }); 
+      const responseBody = await response.json();
+
+      console.log('Cine creado:', responseBody);
+      // Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
+    } catch (error) {
+      console.error('Error al crear el cine:', error);
+    }
+  } else {
       console.log(errors);
 
       toast.show({
@@ -58,8 +81,12 @@ export default function CreateCinemaUI() {
         duration: 3000,
         placement: 'top',
       });
-    }
   };
+};
+
+  const handleCrearCine = () => {
+    crearCine(formData.name, formData.location);
+  }
 
   return (
     <KeyboardAwareScrollView>
@@ -70,6 +97,8 @@ export default function CreateCinemaUI() {
         height="100%">
         <Center>
           <HomeToolbarPrivateUser title="Create cinema" />
+        </Center>
+        <Center>
         </Center>
         <Center w="100%" pt={50}>
           <Image
@@ -117,9 +146,9 @@ export default function CreateCinemaUI() {
           </FormControl>
         </Center>
         <Center w={'100%'}>
-          <ButtonPrimary onPress={undefined} title={I18n.t('save')} />
+          <ButtonPrimary onPress={handleCrearCine} title={I18n.t('save')} />
         </Center>
       </VStack>
     </KeyboardAwareScrollView>
   );
-}
+};
