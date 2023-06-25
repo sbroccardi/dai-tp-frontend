@@ -1,18 +1,15 @@
 import {Center, Image, VStack} from 'native-base';
 import React from 'react';
-import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
-import ButtonPrimary from '../../components/ButtonPrimary';
-import CardScreeningPrivate from '../../components/CardScreeningPrivate';
-import DropdownMenu from '../../components/DropdownMenu';
+import HomeToolbarPrivateUser from '../../Components/HomeToolbarPrivateUser';
+import ButtonPrimary from '../../Components/ButtonPrimary';
+import CardScreeningPrivate from '../../Components/CardScreeningPrivate';
+import DropdownMenu from '../../Components/DropdownMenu';
 
 export default function ListScreeningUIPrivate({route}) {
   const {movieID} = route.params;
   //{JSON.stringify(movieID)}
   return (
     <VStack space={4} alignItems="center" height="100%">
-      <Center>
-        <HomeToolbarPrivateUser title={movieID} />
-      </Center>
       <Center w="100%" borderRadius="12">
         <Image
           alt="ScreenSpace"

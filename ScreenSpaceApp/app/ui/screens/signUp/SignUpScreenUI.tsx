@@ -18,8 +18,8 @@ import DocumentPicker, {
 } from 'react-native-document-picker';
 import ky from 'ky';
 import I18n from '../../../assets/localization/I18n';
-import ButtonPrimary from '../../components/ButtonPrimary';
-import ProfilePicture from '../../components/ProfilePicture';
+import ButtonPrimary from '../../Components/ButtonPrimary';
+import ProfilePicture from '../../Components/ProfilePicture';
 import {Config} from 'react-native-config';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
