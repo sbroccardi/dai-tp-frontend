@@ -1,9 +1,9 @@
 import {Center, VStack, Text, ScrollView} from 'native-base';
 import React from 'react';
-import CardAuditorium from '../../components/CardAuditorium';
-import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
-import SearchBar from '../../components/SearchBar';
-import ButtonPrimary from '../../components/ButtonPrimary';
+import CardAuditorium from '../../Components/CardAuditorium';
+import ToolbarPrivateUser from '../../Components/ToolbarPrivateUser';
+import SearchBar from '../../Components/SearchBar';
+import ButtonPrimary from '../../Components/ButtonPrimary';
 
 export default function AuditoriumListUI(params: {cinema: string}) {
   return (
