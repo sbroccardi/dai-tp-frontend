@@ -12,13 +12,17 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import I18n from '../../../assets/localization/I18n';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Config} from 'react-native-config';
+import ky from 'ky';
 
-const EnterNewPasswordScreen = ({}) => {
+const EnterNewPasswordScreen = ({route}) => {
+  const {userID, token} = route.params;
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [formData, setData] = React.useState({
     password: '',
     confirmPassword: '',
+    token: token,
   });
   const [errors, setErrors] = React.useState({});
 
@@ -49,9 +53,26 @@ const EnterNewPasswordScreen = ({}) => {
     return true;
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (validate()) {
       navigation.navigate('LoginPrivate');
+      //TODO: mover navigate al fondo.
+      try {
+        console.log('!! SUBMITING NEW PASSWORD');
+        const response = await ky
+          .post(`${Config.API_BASE_URL}/users/changepassword`, {
+            json: {
+              userId: userID,
+              newPassword: formData.password,
+              token: formData.token,
+            },
+          })
+          .json();
+        console.log('!! SUBMITING success ', response);
+        //TODO: Según la respuesta navegar a la siguiente o mostrar mensaje de error.
+      } catch (error) {
+        console.error('!! SUBMITING failed ', error);
+      }
     } else {
       console.log(errors);
 
