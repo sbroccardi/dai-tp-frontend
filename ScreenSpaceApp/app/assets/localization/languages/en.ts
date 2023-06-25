@@ -54,4 +54,7 @@ export default {
   updateAuditorium: 'Update auditorium',
   confirmDeleteAuditorium: 'Confirm delete auditorium',
   confirmDeleteCinema: 'Confirm delete cinema',
+  accept: 'Accept',
+  terms: 'Terms of Use',
+  privacy: 'Privacy Policy',
 };

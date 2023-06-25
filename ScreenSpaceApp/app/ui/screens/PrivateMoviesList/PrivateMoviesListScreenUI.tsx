@@ -1,8 +1,8 @@
 import {Center, ScrollView, VStack} from 'native-base';
 import React from 'react';
-import CardMovie from '../../components/CardMovie';
-import SearchBar from '../../components/SearchBar';
-import ButtonPrimary from '../../components/ButtonPrimary';
+import CardMovie from '../../Components/CardMovie';
+import SearchBar from '../../Components/SearchBar';
+import ButtonPrimary from '../../Components/ButtonPrimary';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 

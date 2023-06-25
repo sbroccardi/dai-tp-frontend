@@ -3,9 +3,9 @@ import React, {useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import I18n from '../../../assets/localization/I18n';
-import ButtonDanger from '../../components/ButtonDanger';
-import ButtonPrimary from '../../components/ButtonPrimary';
-import OpenMapsButton from '../../components/OpenMapsButton';
+import ButtonDanger from '../../Components/ButtonDanger';
+import ButtonPrimary from '../../Components/ButtonPrimary';
+import OpenMapsButton from '../../Components/OpenMapsButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const UpdateCinemaUI = ({}) => {

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "android-local": "ENVFILE=.env.local react-native run-android",
+    "android-local-win": "set ENVFILE=.env.local && react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "lint-fix": "eslint \"{app}/**/*.ts\" --fix",
@@ -26,6 +26,7 @@
     "react-native": "0.71.6",
     "react-native-calendars": "^1.1298.0",
     "react-native-config": "^1.5.1",
+    "react-native-country-flag": "^1.1.9",
     "react-native-document-picker": "^9.0.1",
     "react-native-google-places-autocomplete": "^2.5.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",

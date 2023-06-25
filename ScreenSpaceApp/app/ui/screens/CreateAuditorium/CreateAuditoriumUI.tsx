@@ -1,8 +1,8 @@
 import {Center, FormControl, Image, Input, VStack, useToast} from 'native-base';
 import React from 'react';
-import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
+import ToolbarPrivateUser from '../../Components/ToolbarPrivateUser';
 import I18n from '../../../assets/localization/I18n';
-import ButtonPrimary from '../../components/ButtonPrimary';
+import ButtonPrimary from '../../Components/ButtonPrimary';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';

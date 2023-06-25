@@ -2,7 +2,7 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Center, Image, Text, VStack} from 'native-base';
 import I18n from '../../../assets/localization/I18n';
-import ButtonPrimary from '../../components/ButtonPrimary';
+import ButtonPrimary from '../../Components/ButtonPrimary';
 import React from 'react';
 
 const LoginScreenUI = ({}) => {

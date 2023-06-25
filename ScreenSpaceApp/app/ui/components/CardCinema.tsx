@@ -7,15 +7,16 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Button} from 'native-base';
 
 const CardCinema = (props: {
-  cinemaName?: string | undefined;
-  cinemaAuditoriumsAmount?: string | undefined;
+  cinemaName: string | undefined;
+  cinemaAuditoriumsAmount: string | undefined;
+  onPressEdit: any;
 }) => {
   const {cinemaName = 'undefined', cinemaAuditoriumsAmount = 'undefined'} =
     props;
   return (
     <Pressable onPress={() => {}} style={styles.cardAuditorium}>
-      <HStack m={4} space={19} style={{display: 'flex'}}>
-        <VStack p={4} space={35} style={{flex: 2}}>
+      <HStack m={4} space={10} style={{display: 'flex'}}>
+        <VStack p={4} space={20} style={{flex: 2}}>
           <Box display="flex" flexDirection="row">
             <Image
               style={styles.iconExtraSmallImage}
@@ -31,7 +32,7 @@ const CardCinema = (props: {
           </Box>
         </VStack>
         <VStack style={{flex: 0.5}}>
-          <Button onPress={undefined} variant="outline" colorScheme="white">
+          <Button onPress={props.onPressEdit} variant="outline" colorScheme="white">
             <Icon name="pencil-outline" size={25} color="white" />
           </Button>
         </VStack>
