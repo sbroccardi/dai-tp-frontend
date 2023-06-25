@@ -1,8 +1,8 @@
 import {Center, FormControl, Image, Input, VStack, useToast} from 'native-base';
 import React from 'react';
-import ToolbarPrivateUser from '../../Components/ToolbarPrivateUser';
+import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import I18n from '../../../assets/localization/I18n';
-import ButtonPrimary from '../../Components/ButtonPrimary';
+import ButtonPrimary from '../../components/ButtonPrimary';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -72,9 +72,6 @@ export default function CreateAuditoriumUI() {
         alignItems="center"
         justifyContent="space-around"
         height="100%">
-        <Center w="100%">
-          <ToolbarPrivateUser title="Create Auditorium" onPress={undefined} />
-        </Center>
         <Center w="100%" pt={50}>
           <Image
             alt="ScreenSpace"

@@ -10,11 +10,12 @@ const CardCinema = (props: {
   cinemaName: string | undefined;
   cinemaAuditoriumsAmount: string | undefined;
   onPressEdit: any;
+  onPressCard: any;
 }) => {
   const {cinemaName = 'undefined', cinemaAuditoriumsAmount = 'undefined'} =
     props;
   return (
-    <Pressable onPress={() => {}} style={styles.cardAuditorium}>
+    <Pressable onPress={props.onPressCard} style={styles.cardAuditorium}>
       <HStack m={4} space={10} style={{display: 'flex'}}>
         <VStack p={4} space={20} style={{flex: 2}}>
           <Box display="flex" flexDirection="row">

@@ -1,19 +1,30 @@
-import {Center, FormControl, Input, Image, VStack, useToast} from 'native-base';
-import React, {useState} from 'react';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import { Center, FormControl, Input, Image, VStack, useToast, Pressable, Icon } from 'native-base';
+import React, { useState } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
 import I18n from '../../../assets/localization/I18n';
-import ButtonDanger from '../../Components/ButtonDanger';
-import ButtonPrimary from '../../Components/ButtonPrimary';
-import OpenMapsButton from '../../Components/OpenMapsButton';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import ButtonDanger from '../../components/ButtonDanger';
+import ButtonPrimary from '../../components/ButtonPrimary';
+import OpenMapsButton from '../../components/OpenMapsButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Linking } from 'react-native';
 
-const UpdateCinemaUI = ({}) => {
+const UpdateCinemaUI = ({ }) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
+  const [show, setShow] = React.useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [formData, setData] = React.useState({name: '', address: ''});
+  const [formData, setData] = React.useState({ name: '', address: '' });
+  const openMaps = () => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      formData.address,
+    )}`;
+    console.log(url);
+    Linking.openURL(url);
+  };
+
 
   return (
     <KeyboardAwareScrollView>
@@ -39,7 +50,7 @@ const UpdateCinemaUI = ({}) => {
               inputMode="email"
               placeholder={I18n.t('name')}
               backgroundColor={'#21242D'}
-              onChangeText={value => setData({...formData, name: value})}
+              onChangeText={value => setData({ ...formData, name: value })}
             />
             {'\n'}
             {I18n.t('address')}
@@ -49,24 +60,25 @@ const UpdateCinemaUI = ({}) => {
               inputMode="email"
               placeholder={I18n.t('address')}
               backgroundColor={'#21242D'}
-              onChangeText={value => setData({...formData, address: value})}
+              onChangeText={value => setData({ ...formData, address: value })}
+              InputRightElement={<Pressable onPress={() => openMaps()}>
+                <Icon as={<MaterialCommunityIcons name='google-maps' />} size={5} mr="2" color="muted.400" />
+              </Pressable>}
             />
           </FormControl>
-          {'\n'}
-          <OpenMapsButton address={formData.address} />
         </Center>
         <Center w={'100%'}>
           <ButtonDanger
             onPress={() => navigation.navigate('ConfirmDeleteCinema')}
             title={I18n.t('delete')}
-            width="80%"
+            width="150px"
           />
         </Center>
         <Center w={'100%'}>
           <ButtonPrimary
             onPress={() => console.log(formData.address)}
             title={I18n.t('save')}
-            width="80%"
+            width="90%"
           />
         </Center>
       </VStack>

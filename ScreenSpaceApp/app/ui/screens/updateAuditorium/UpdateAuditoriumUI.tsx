@@ -12,8 +12,8 @@ import {View, Switch} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import I18n from '../../../assets/localization/I18n';
-import ButtonDanger from '../../Components/ButtonDanger';
-import ButtonPrimary from '../../Components/ButtonPrimary';
+import ButtonDanger from '../../components/ButtonDanger';
+import ButtonPrimary from '../../components/ButtonPrimary';
 import {styles} from '../../styles/theme';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 

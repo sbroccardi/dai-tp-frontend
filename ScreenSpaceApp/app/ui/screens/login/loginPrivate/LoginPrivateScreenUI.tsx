@@ -12,7 +12,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import ky from 'ky';
 import I18n from '../../../../assets/localization/I18n';
-import ButtonPrimary from '../../../Components/ButtonPrimary';
+import ButtonPrimary from '../../../components/ButtonPrimary';
 import {UserContext} from '../../../../UserContext';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Config} from 'react-native-config';
@@ -79,7 +79,7 @@ const LoginPrivateScreenUI = () => {
 
   const signIn = async () => {
     const response = await ky.post(
-      `${Config.API_BASE_URL}/auths/loginPrivate`,
+      `http://192.168.1.82:3000/auths/loginPrivate`,
       {
         json: {email: formData.email, password: formData.password},
       },
@@ -87,7 +87,7 @@ const LoginPrivateScreenUI = () => {
     const responseBody = await response.json();
     setUser({
       token: responseBody.accessToken,
-      type: 'privado',
+      type: 'privado', 
       ...formData,
       id: responseBody.id,
     });
