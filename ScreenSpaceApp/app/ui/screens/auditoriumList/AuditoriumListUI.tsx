@@ -9,9 +9,6 @@ export default function AuditoriumListUI(params: {cinema: string}) {
   return (
     <VStack space={4} alignItems="center" height="100%">
       <Center>
-        <ToolbarPrivateUser title="My auditoriums" onPress={undefined} />
-      </Center>
-      <Center>
         <Text>jajaajaj</Text>
       </Center>
       <Center>

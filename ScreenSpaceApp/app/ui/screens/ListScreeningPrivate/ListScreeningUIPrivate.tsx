@@ -10,9 +10,6 @@ export default function ListScreeningUIPrivate({route}) {
   //{JSON.stringify(movieID)}
   return (
     <VStack space={4} alignItems="center" height="100%">
-      <Center>
-        <HomeToolbarPrivateUser title={movieID} />
-      </Center>
       <Center w="100%" borderRadius="12">
         <Image
           alt="ScreenSpace"
