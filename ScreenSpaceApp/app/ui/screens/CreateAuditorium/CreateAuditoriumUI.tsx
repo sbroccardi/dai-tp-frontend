@@ -72,9 +72,6 @@ export default function CreateAuditoriumUI() {
         alignItems="center"
         justifyContent="space-around"
         height="100%">
-        <Center w="100%">
-          <ToolbarPrivateUser title="Create Auditorium" onPress={undefined} />
-        </Center>
         <Center w="100%" pt={50}>
           <Image
             alt="ScreenSpace"

@@ -67,7 +67,7 @@ const CardMovie = (props: {movieID: string}) => {
                       _dark={{
                         color: '#FFFFFF',
                       }}
-                      fontWeight="50"
+                      fontWeight="500"
                       ml="-0.5"
                       mt="-1">
                       {age}

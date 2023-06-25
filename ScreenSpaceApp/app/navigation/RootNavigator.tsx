@@ -35,6 +35,12 @@ import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
 import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
 import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
 import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
+import PrivacyScreen from '../ui/screens/SignUp/PrivacyScreen';
+import TermsScreen from '../ui/screens/SignUp/TermsScreen';
+import CreateAuditoriumUI from '../ui/screens/CreateAuditorium/CreateAuditoriumUI';
+import UpdateAuditoriumUI from '../ui/screens/UpdateAuditorium/UpdateAuditoriumUI';
+import ConfirmDeleteAuditoriumUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumUI';
+import AuditoriumListUI from '../ui/screens/AuditoriumList/AuditoriumListUI';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -110,7 +116,7 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-        <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} />
+        <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} options={{headerShown:false}}/>
         <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
         <Stack.Screen name="UpdateCinemaStack" component={UpdateCinemaStack} />
       </Stack.Navigator>
@@ -123,16 +129,16 @@ function RootNavigator() {
       <Stack.Navigator initialRouteName="AuditoriumList">
         <Stack.Screen
           name="AuditoriumList"
-          component={AuditoriumList}
+          component={AuditoriumListUI}
           options={{
             headerTitle: I18n.t('auditoriums'),
             headerTitleAlign: 'center',
           }}
         />
-        <Stack.Screen name="CreateAuditorium" component={CreateAuditorium} />
+        <Stack.Screen name="CreateAuditorium" component={CreateAuditoriumUI} />
         <Stack.Screen
           name="UpdateAuditorium"
-          component={UpdateAuditorium}
+          component={UpdateAuditoriumUI}
           options={{
             headerTitle: I18n.t('updateAuditorium'),
             headerTitleAlign: 'center',
@@ -140,7 +146,7 @@ function RootNavigator() {
         />
         <Stack.Screen
           name="ConfirmDeleteAuditorium"
-          component={ConfirmDeleteAuditorium}
+          component={ConfirmDeleteAuditoriumUI}
           options={{
             headerTitle: I18n.t('confirmDeleteAuditorium'),
             headerTitleAlign: 'center',
@@ -248,6 +254,16 @@ function RootNavigator() {
               name="SignUp"
               component={SignUpScreen}
               options={{title: I18n.t('signUp')}}
+            />
+            <Stack.Screen
+              name="Terms"
+              component={TermsScreen}
+              options={{title: I18n.t('terms')}}
+            />
+            <Stack.Screen
+              name="Privacy"
+              component={PrivacyScreen}
+              options={{title: I18n.t('privacy')}}
             />
           </Stack.Group>
           <Stack.Group>

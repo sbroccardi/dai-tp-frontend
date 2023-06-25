@@ -1,8 +1,18 @@
 //import { View } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Center, Flex, FormControl, Input, VStack, useToast} from 'native-base';
+import {
+  Center,
+  Flex,
+  FormControl,
+  Input,
+  Switch,
+  Text,
+  VStack,
+  View,
+  useToast,
+} from 'native-base';
 import DocumentPicker, {
   DocumentPickerResponse,
 } from 'react-native-document-picker';
@@ -23,6 +33,8 @@ const SignUpScreenUI = ({}) => {
     confirmPassword: '',
   });
   const [errors, setErrors] = React.useState({});
+  const [isAccepted, setIsAccepted] = useState(false);
+  const toggleSwitch = () => setIsAccepted(previousState => !previousState);
   const [imageIsLoading, setImageIsLoading] = React.useState({});
   const [imageUrl, setImageUrl] = React.useState('');
   const [imageFile, setImageFile] = React.useState<DocumentPickerResponse[]>(
@@ -73,7 +85,7 @@ const SignUpScreenUI = ({}) => {
   const onSubmit = () => {
     console.log('!! VALIDATING');
     if (validate()) {
-      console.log(`!! VALIDATE OK, SUBMITING TO ${Config.API_BASE_URL}/users`);    
+      console.log(`!! VALIDATE OK, SUBMITING TO ${Config.API_BASE_URL}/users`);
       signUp();
     } else {
       console.log(errors);
@@ -253,6 +265,33 @@ const SignUpScreenUI = ({}) => {
                   Error Password
                 </FormControl.ErrorMessage>
               </FormControl>
+              <View
+                style={{
+                  backgroundColor: '#21242D',
+                  paddingHorizontal: 40,
+                  paddingVertical: 10,
+                  borderRadius: 8,
+                  flexDirection: 'row',
+                }}>
+                <Text>{I18n.t('accept')}</Text>
+                <Text
+                  color={'yellow.400'}
+                  onPress={() => navigation.navigate('Terms')}>
+                  {I18n.t('terms')} {' & '}
+                </Text>
+                <Text
+                  color={'yellow.400'}
+                  onPress={() => navigation.navigate('Privacy')}>
+                  {I18n.t('privacy')}
+                </Text>
+                <Switch
+                  trackColor={{false: 'grey', true: '#f5dd4b'}}
+                  thumbColor={isAccepted ? 'white' : 'white'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitch}
+                  value={isAccepted}
+                />
+              </View>
             </Center>
           </Flex>
         </Center>

@@ -1,10 +1,10 @@
-import {Center, ScrollView, VStack} from 'native-base';
+import { Center, ScrollView, Text, VStack } from 'native-base';
 import React from 'react';
 import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -12,10 +12,13 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
-const PrivateMoviesScreenUI: React.FC<Props> = ({navigation}) => {
+const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
   //const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
     <VStack space={3} alignItems="center" height="100%">
+      <Center>
+        <Text>{undefined}</Text>
+      </Center>
       <Center>
         <SearchBar />
       </Center>
