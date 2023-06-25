@@ -4,9 +4,10 @@ import {Text} from 'react-native';
 import {palette, styles} from '../styles/theme';
 
 const CardAuditorium = (props: {
-  auditoriumName?: string | undefined;
-  auditoriumSize?: string | undefined;
-  auditoriumAvailability?: string | undefined;
+  auditoriumName: string | undefined;
+  auditoriumSize: string | undefined;
+  auditoriumAvailability: string | undefined;
+  onPressCard:any;
 }) => {
   const {
     auditoriumName = 'undefined',
@@ -15,9 +16,8 @@ const CardAuditorium = (props: {
   } = props;
   return (
     <Pressable
-      onPress={() => {
-        /*TEMP*/ console.log('BP!');
-      }}
+      onPress={
+       props.onPressCard}
       style={styles.cardAuditorium}>
       <HStack m={4} space={19} style={{display: 'flex'}}>
         <VStack p={4} space={30} style={{flex: 1}}>

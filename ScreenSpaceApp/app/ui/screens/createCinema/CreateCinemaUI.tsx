@@ -10,10 +10,10 @@ import {
 } from 'native-base';
 import React from 'react';
 import I18n from '../../../assets/localization/I18n';
-import ButtonPrimary from '../../Components/ButtonPrimary';
+import ButtonPrimary from '../../components/ButtonPrimary';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import HomeToolbarPrivateUser from '../../Components/HomeToolbarPrivateUser';
+import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {UserContext} from '../../../UserContext';
@@ -54,11 +54,10 @@ export default function CreateCinemaUI() {
 const crearCine = async (nombreCine: string, direccionCine: string) => {
   // Realizar validación de los datos ingresados
   const datosValidos = validate();
-
   if (datosValidos) {
     try {
       // Realizar la solicitud POST al backend utilizando ky
-      const response = await ky.post(`${Config.API_BASE_URL}/cinemas`, {
+      const response = await ky.post(`http://192.168.1.82:3000/cinemas`, {
         json: {
           userId: userId,
           name: nombreCine,
@@ -86,6 +85,7 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
 
   const handleCrearCine = () => {
     crearCine(formData.name, formData.location);
+    navigation.navigate('CinemasStack');
   }
 
   return (
@@ -95,9 +95,6 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
         alignItems="center"
         justifyContent="space-around"
         height="100%">
-        <Center>
-          <HomeToolbarPrivateUser title="Create cinema" />
-        </Center>
         <Center>
         </Center>
         <Center w="100%" pt={50}>

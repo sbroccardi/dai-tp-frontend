@@ -49,4 +49,5 @@ export default {
   accept: 'Aceptar',
   terms: 'Terminos y condiciones',
   privacy: 'Política de privacidad',
+  createAuditoriums:'Crear sala'
 };

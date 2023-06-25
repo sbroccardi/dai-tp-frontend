@@ -57,4 +57,5 @@ export default {
   accept: 'Accept',
   terms: 'Terms of Use',
   privacy: 'Privacy Policy',
+  createAuditoriums:'Create auditoriums'
 };

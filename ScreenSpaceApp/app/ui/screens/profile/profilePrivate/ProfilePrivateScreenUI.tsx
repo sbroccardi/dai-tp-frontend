@@ -4,10 +4,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { View, Text } from 'react-native';
 import I18n from '../../../../assets/localization/I18n';
-import ButtonLogout from '../../../Components/ButtonLogout';
-import ButtonDanger from '../../../Components/ButtonDanger';
-import ButtonPrimary from '../../../Components/ButtonPrimary';
-import ProfilePicture from '../../../Components/ProfilePicture';
+import ButtonLogout from '../../../components/ButtonLogout';
+import ButtonDanger from '../../../components/ButtonDanger';
+import ButtonPrimary from '../../../components/ButtonPrimary';
+import ProfilePicture from '../../../components/ProfilePicture';
 import DocumentPicker from 'react-native-document-picker';
 import ky from 'ky';
 import { styles } from '../../../styles/theme';
@@ -62,7 +62,7 @@ const ProfilePrivateScreenUI = ({ }) => {
   const traerDatos = async () => {
     const authToken = user.user.token;
     const respuesta = await ky.get(
-      `${Config.API_BASE_URL}/users/${user.user.id}`,
+      `http://192.168.1.82:3000/users/${user.user.id}`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -102,7 +102,7 @@ const ProfilePrivateScreenUI = ({ }) => {
       };
     }
     const authToken = user.user.token;
-    const respuesta = await ky.put(`${Config.API_BASE_URL}/users`, {
+    const respuesta = await ky.put(`http://192.168.1.82:3000/users`, {
       json: data,
       headers: {
         Authorization: `Bearer ${authToken}`,

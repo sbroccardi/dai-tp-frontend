@@ -1,9 +1,9 @@
 import { Center, VStack } from 'native-base';
 import React from 'react';
-import DropdownMenu from '../../Components/DropdownMenu';
+import DropdownMenu from '../../components/DropdownMenu';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ParamListBase } from '@react-navigation/native';
-import ButtonPrimary from '../../Components/ButtonPrimary';
+import ButtonPrimary from '../../components/ButtonPrimary';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { palette } from '../../styles/theme';
 import I18n from '../../../assets/localization/I18n';

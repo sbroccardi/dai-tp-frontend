@@ -1,7 +1,7 @@
 import {VStack} from 'native-base';
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import FilterDropdown from '../../Components/FilterDropDown';
+import FilterDropdown from '../../components/FilterDropDown';
 
 const FiltersScreenUI = ({}) => {
   const [service1, setService1] = useState('');
