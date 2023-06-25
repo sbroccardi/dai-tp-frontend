@@ -39,11 +39,14 @@ export default {
   adress: 'Direccion',
   cinemas: 'Mis cines',
   createCinema: 'Crear cine',
-  profile:'Perfil',
-  confirmDeleteAccount:'Confirmar eliminar cuenta',
+  profile: 'Perfil',
+  confirmDeleteAccount: 'Confirmar eliminar cuenta',
   auditoriums: 'Mis salas',
   updateAuditorium: 'Actualizar sala',
   confirmDeleteAuditorium: 'Confirmar eliminar sala',
   confirmDeleteCinema: 'Confirmar eliminar cine',
-  updateCinema: 'Actualizar cine'
+  updateCinema: 'Actualizar cine',
+  accept: 'Aceptar',
+  terms: 'Terminos y condiciones',
+  privacy: 'Política de privacidad',
 };

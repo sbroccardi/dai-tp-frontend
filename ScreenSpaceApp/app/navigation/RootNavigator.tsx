@@ -35,6 +35,8 @@ import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
 import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
 import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
 import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
+import PrivacyScreen from '../ui/screens/SignUp/PrivacyScreen';
+import TermsScreen from '../ui/screens/SignUp/TermsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -248,6 +250,16 @@ function RootNavigator() {
               name="SignUp"
               component={SignUpScreen}
               options={{title: I18n.t('signUp')}}
+            />
+            <Stack.Screen
+              name="Terms"
+              component={TermsScreen}
+              options={{title: I18n.t('terms')}}
+            />
+            <Stack.Screen
+              name="Privacy"
+              component={PrivacyScreen}
+              options={{title: I18n.t('privacy')}}
             />
           </Stack.Group>
           <Stack.Group>
