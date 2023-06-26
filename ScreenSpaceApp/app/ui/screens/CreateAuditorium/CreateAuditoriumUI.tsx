@@ -17,8 +17,8 @@ export default function CreateAuditoriumUI({ route }) {
   const [formData, setData] = React.useState({
     cinemaId: '',
     nameAuditorium: '',
-    rows: 0,
-    seats: '0',
+    rows: '',
+    seats: '',
   });
 
   const cineId = route.params.cinemaId;
@@ -37,7 +37,7 @@ export default function CreateAuditoriumUI({ route }) {
     }
 
     // Rows
-    if (formData.rows == 0) {
+    if (!formData.rows) {
       setErrors(prevErrors => ({
         ...prevErrors,
         rows: 'Number of rows is required',
@@ -46,7 +46,7 @@ export default function CreateAuditoriumUI({ route }) {
     }
 
      // Seats
-     if (formData.seats == 0) {
+     if (!formData.seats) {
       setErrors(prevErrors => ({
         ...prevErrors,
         rows: 'Number of seats is required',
@@ -57,7 +57,7 @@ export default function CreateAuditoriumUI({ route }) {
     return true;
   };
 
-  const crearAuditorio = async (nombreAuditorio: string, rows: number, seats: number) => {
+  const crearAuditorio = async (nombreAuditorio: string, rows: string, seats: string) => {
     // Realizar validación de los datos ingresados
     const datosValidos = validate();
     if (datosValidos) {

@@ -6,27 +6,23 @@ import SearchBar from '../../components/SearchBar';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ky from 'ky';
 import I18n from '../../../assets/localization/I18n';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { ParamListBase, useNavigation,useRoute} from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Config from 'react-native-config';
 
-export default function AuditoriumListUI({ route }) {
-  const { cineName } = route.params
-  /*const [auditoriumsData, setAuditoriumsData] = useState([
-    {
+export default function AuditoriumListUI() {
+  const route = useRoute();
+  const params = route.params;
+  const [auditoriumsData, setAuditoriumsData] = useState([
+    { 
+      id: '',
       cinemaId: '',
       name: '',
       rows: 0,
-      SeatsPerRow: 0
+      SeatsPerRow: 0,
     }
   ]);
 
-  const cineId = route.params.cinemaId;
-  
-
-  useEffect(() => {
-    getAuditoriums();
-  }, []);
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   //const {cinemaName} = route.params
@@ -38,17 +34,17 @@ export default function AuditoriumListUI({ route }) {
      try {
        //const cinemaId = user.user.id;
        const response = await ky.get(
-         `${Config.API_BASE_URL}/cinemas/${cineId}/auditoriums`,
+         `http://192.168.0.92:3000/cinemas/${params.id}/auditoriums`,
        );
        const responseBody = await response.json();
-       const auditoriumsData = responseBody.filter((document: { cineId: any; }) => document.cineId === cineId).map((document: { cinemaId: any; name: any; rows: any; seatsPerRow: any }) => ({
+       const auditoriumsData = responseBody.filter((document: { cineId: any; }) => document.cineId === params.id).map((document: { _id:any,cinemaId: any; name: any; rows: any; seatsPerRow: any }) => ({
+         id:document._id,
          cinemaId: document.cinemaId,
          name: document.name,
          rows: document.rows,
-         seatsPerRow: document.seatsPerRow
+         seatsPerRow: document.seatsPerRow,
        }));
        setAuditoriumsData(auditoriumsData);
-       console.log(auditoriumsData);
  
      }
      catch (err) {
@@ -67,9 +63,9 @@ export default function AuditoriumListUI({ route }) {
       elements.push(
         <Center>
           <CardAuditorium auditoriumName={auditorium.name}
-            auditoriumSize ={`${auditorium.rows} rows of ${auditorium.SeatsPerRow} seats`}
-            auditoriumAvailability='?'
-            onPressCard={() => navigation.navigate('UpdateAuditorium', { params: { auditoriumName: auditorium.name, rows: auditorium.rows, seats: auditorium.SeatsPerRow } })} />
+            auditoriumSize ={`${auditorium.rows} rows of ${auditorium.seatsPerRow} seats`}
+            auditoriumAvailability="Disponible"
+            onPressCard={() => navigation.navigate('UpdateAuditorium',  { auditoriumName: auditorium.name, rows: auditorium.rows, seats: auditorium.seatsPerRow,cinemaID: auditorium.cinemaId,id: auditorium.id })} />
         </Center>);
     }
     return elements;
@@ -78,14 +74,14 @@ export default function AuditoriumListUI({ route }) {
   return (
     <VStack space={4} alignItems="center" height="100%">
       <Center>
-        <Text>{cineName}</Text>
+        <Text>{params.cinemaName}</Text>
       </Center>
       <Center>
         <SearchBar />
       </Center>
       <Center>
         <ScrollView maxH="450">
-          <VStack space={4} alignItems="center" height="100%">
+          <VStack space={4} alignItems="center" height="200%">
             <Center>
               {
                 //renderAuditoriums()
