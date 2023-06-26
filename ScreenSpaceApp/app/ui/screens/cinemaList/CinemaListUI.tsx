@@ -33,7 +33,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       const userId = user.user.id;
       console.log(userId);
       const response = await ky.get(
-        'http://192.168.1.82:3000/cinemas',
+        'http://192.168.0.92:3000/cinemas',
       );
       const responseBody = await response.json();
       console.log(responseBody);

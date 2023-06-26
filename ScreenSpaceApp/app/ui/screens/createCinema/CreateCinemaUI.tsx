@@ -20,14 +20,25 @@ import {UserContext} from '../../../UserContext';
 import { useContext } from 'react';
 import ky from 'ky';
 import Config from 'react-native-config';
+import { Linking } from 'react-native';
 export default function CreateCinemaUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [formData, setData] = React.useState({name: '', location: ''});
   const [errors, setErrors] = React.useState({});
+  const [address, setAddress] = React.useState('');
   const user = useContext(UserContext);
   const userId = user.user.id;
 
+  const openMaps = () => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      address,
+    )}`;
+    console.log(url);
+    Linking.openURL(url);
+  };
+  
+  
   const validate = () => {
     setErrors({});
     // Name
@@ -57,7 +68,7 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
   if (datosValidos) {
     try {
       // Realizar la solicitud POST al backend utilizando ky
-      const response = await ky.post(`http://192.168.1.82:3000/cinemas`, {
+      const response = await ky.post(`http://192.168.0.92:3000/cinemas`, {
         json: {
           userId: userId,
           name: nombreCine,
@@ -67,6 +78,7 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
       const responseBody = await response.json();
 
       console.log('Cine creado:', responseBody);
+      navigation.replace('CinemasList');
       // Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
     } catch (error) {
       console.error('Error al crear el cine:', error);
@@ -132,7 +144,7 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
               keyboardType="default"
               onChangeText={value => setData({...formData, location: value})}
               InputRightElement={
-                <Pressable marginRight="5">
+                <Pressable marginRight="5" onPress={() => openMaps()}>
                   <Icon name="add-location-alt" size={15} color="#FFFFFF" />
                 </Pressable>
               }
