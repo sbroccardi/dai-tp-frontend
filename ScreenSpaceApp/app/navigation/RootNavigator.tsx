@@ -41,6 +41,11 @@ import CreateAuditoriumUI from '../ui/screens/CreateAuditorium/CreateAuditoriumU
 import UpdateAuditoriumUI from '../ui/screens/UpdateAuditorium/UpdateAuditoriumUI';
 import ConfirmDeleteAuditoriumUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumUI';
 import AuditoriumListUI from '../ui/screens/AuditoriumList/AuditoriumListUI';
+import Cinema from 'react-native-vector-icons/Feather';
+import Screening from 'react-native-vector-icons/MaterialCommunityIcons';
+import Profile from 'react-native-vector-icons/FontAwesome';
+
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -284,16 +289,31 @@ function RootNavigator() {
             options={{headerShown: false}}
             name="MoviesStack"
             component={MoviesStack}
+            options={{
+              tabBarIcon: ({ color="", size=0 }) => (
+                <Screening name="movie-open-outline" color={color} size={size} />
+              ),
+            }}
           />
           <Stack.Screen
             options={{headerShown: false}}
             name="CinemasStack"
             component={CinemasStack}
+            options={{
+              tabBarIcon: ({ color="", size=0 }) => (
+                <Cinema name="home" color={color} size={size} />
+              ),
+            }}
           />
           <Stack.Screen
             options={{headerShown: false}}
             name="ProfileStack"
             component={ProfileStack}
+            options={{
+              tabBarIcon: ({ color="", size=0 }) => (
+                <Profile name="user-o" color={color} size={size} />
+              ),
+            }}
           />
           {/* <Stack.Screen
               options={{headerShown: false}}
