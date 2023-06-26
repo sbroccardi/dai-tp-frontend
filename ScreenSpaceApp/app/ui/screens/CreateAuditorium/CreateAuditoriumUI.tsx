@@ -18,7 +18,7 @@ export default function CreateAuditoriumUI({ route }) {
     cinemaId: '',
     nameAuditorium: '',
     rows: 0,
-    seats: 0,
+    seats: '0',
   });
 
   const cineId = route.params.cinemaId;
