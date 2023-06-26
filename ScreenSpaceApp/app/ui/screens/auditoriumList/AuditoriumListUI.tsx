@@ -8,30 +8,46 @@ import ky from 'ky';
 import I18n from '../../../assets/localization/I18n';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Config from 'react-native-config';
 
 export default function AuditoriumListUI({ route }) {
-  const [auditorios, setAuditorios] = useState([]);
+  const [auditoriumsData, setAuditoriumsData] = useState([
+    {
+      cinemaId: '',
+      name: '',
+      rows: 0,
+      SeatsPerRow: 0
+    }
+  ]);
+
+  const cineId = route.params.cinemaId;
+  const cineName = route.params.cinemaName
+
   useEffect(() => {
-    //obtenerAuditorios(); // Llamamos a la función para obtener los auditorios al cargar la pantalla
+    getAuditoriums();
   }, []);
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   //const {cinemaName} = route.params
 
-  /* const getCinemas = async () => {
+    const [flag, setFlag] = React.useState(0);
+
+   const getAuditoriums = async () => {
      setFlag(1);
      try {
-       const userId = user.user.id;
+       //const cinemaId = user.user.id;
        const response = await ky.get(
-         'http://192.168.1.82:3000/cinemas',
+         `${Config.API_BASE_URL}/cinemas/${cineId}/auditoriums`,
        );
        const responseBody = await response.json();
-       const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId === userId).map((document: { _id: any; name: any; location: any; }) => ({
-         id: document.id,
+       const auditoriumsData = responseBody.filter((document: { cineId: any; }) => document.cineId === cineId).map((document: { cinemaId: any; name: any; rows: any; seatsPerRow: any }) => ({
+         cinemaId: document.cinemaId,
          name: document.name,
-         location: document.location
+         rows: document.rows,
+         seatsPerRow: document.seatsPerRow
        }));
-       setData(cinemasData);
-       console.log(cinemasData);
+       setAuditoriumsData(auditoriumsData);
+       console.log(auditoriumsData);
  
      }
      catch (err) {
@@ -40,25 +56,28 @@ export default function AuditoriumListUI({ route }) {
    };
  
    if (flag == 0) {
-     getCinemas()
-   }*/
+     getAuditoriums()
+   };
 
-  /*const renderAuditoriums = () => {
+   const renderAuditoriums = () => {
     const elements = [];
-    for (let count = 0; count < formData.length; count++) {
-      const cine = formData[count];
-      elements.push(<CardAuditorium
-        auditoriumName="Sala 7"
-        auditoriumAvailability="Disponible"
-        auditoriumSize="12 rows of 7 seats" onPressCard={navigation}/>);
+    for (let count = 0; count < auditoriumsData.length; count++) {
+      const auditorium = auditoriumsData[count];
+      elements.push(
+        <Center>
+          <CardAuditorium auditoriumName={auditorium.name}
+            auditoriumSize ={`${auditorium.rows} rows of ${auditorium.SeatsPerRow} seats`}
+            auditoriumAvailability='?'
+            onPressCard={() => navigation.navigate('UpdateAuditorium', { params: { auditoriumName: auditorium.name, rows: auditorium.rows, seats: auditorium.SeatsPerRow } })} />
+        </Center>);
     }
     return elements;
-  };*/
+  };
 
   return (
     <VStack space={4} alignItems="center" height="100%">
       <Center>
-        <Text>{undefined}</Text>
+        <Text>{cineName}</Text>
       </Center>
       <Center>
         <SearchBar />
@@ -68,18 +87,14 @@ export default function AuditoriumListUI({ route }) {
           <VStack space={4} alignItems="center" height="100%">
             <Center>
               {
-                /*renderAuditoriums()*/
+                renderAuditoriums()
               }
-              <CardAuditorium
-                auditoriumName="Sala 7"
-                auditoriumAvailability="Disponible"
-                auditoriumSize="12 rows of 7 seats" onPressCard={()=>navigation.navigate('UpdateAuditorium')} />;
             </Center>
           </VStack>
         </ScrollView>
       </Center>
       <Center width="100%">
-        <ButtonPrimary title={I18n.t('createAuditoriums')} onPress={() => navigation.navigate('CreateAuditorium')} />
+        <ButtonPrimary title={I18n.t('createAuditoriums')} onPress={() => navigation.navigate('CreateAuditorium', {params: {cinemaId: cineId}})} />
       </Center>
     </VStack>
   );
