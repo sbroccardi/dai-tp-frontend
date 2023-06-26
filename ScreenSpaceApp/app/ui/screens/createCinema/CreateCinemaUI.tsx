@@ -62,7 +62,8 @@ export default function CreateCinemaUI() {
   };
 
 
-const crearCine = async (nombreCine: string, direccionCine: string) => {
+  // El que toque esto el golpe mas tranquilo que se va a llevar es una patada a la cabeza.
+const crearCine = async (nombreCine: string, direccionCine: string, userId: string) => {
   // Realizar validación de los datos ingresados
   const datosValidos = validate();
   if (datosValidos) {
@@ -70,9 +71,9 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
       // Realizar la solicitud POST al backend utilizando ky
       const response = await ky.post(`https://screenspace.azurewebsites.net/cinemas`, {
         json: {
-          userId: userId,
-          name: nombreCine,
-          location: direccionCine
+          'userId': `${userId}`,
+          'name': `${nombreCine}`,
+          'location': `${direccionCine}`
         },
       }); 
       const responseBody = await response.json();
@@ -96,7 +97,7 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
 };
 
   const handleCrearCine = () => {
-    crearCine(formData.name, formData.location);
+    crearCine(formData.name, formData.location, userId);
     navigation.navigate('CinemasStack');
   }
 
