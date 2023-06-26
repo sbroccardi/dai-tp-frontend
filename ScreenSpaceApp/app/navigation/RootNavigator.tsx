@@ -139,7 +139,7 @@ function RootNavigator() {
         />
        
         <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} options={{headerShown:false}}/>
-        <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
+        <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} options={{headerShown:false}}/>
         <Stack.Screen name="UpdateCinemaStack" component={UpdateCinemaStack} options={{headerShown:false}}/>
       </Stack.Navigator>
     );
@@ -181,7 +181,7 @@ function RootNavigator() {
   // eslint-disable-next-line react/no-unstable-nested-components
   function CreateCinemaStack({navigation}) {
     return (
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator>
         <Stack.Screen
           name="CreateCinema"
           component={CreateCinemaUI}
