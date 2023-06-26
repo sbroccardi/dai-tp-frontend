@@ -14,7 +14,7 @@ export default function ConfirmDeleteAuditoriumUI() {
 
   const borrar = async () => {
     try{
-    const respuesta = await ky.delete(`http://192.168.0.92:3000/cinemas/${params.cinemaID}/auditoriums/${params.id}`);
+    const respuesta = await ky.delete(`https://screenspace.azurewebsites.net/cinemas/${params.cinemaID}/auditoriums/${params.id}`);
     navigation.replace('CinemasList');
   }
   catch (error){

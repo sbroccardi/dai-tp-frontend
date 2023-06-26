@@ -53,7 +53,7 @@ const RecoverPasswordScreen = ({}) => {
           params: {emailAddress: formData.email},
         });
         const respuesta = await ky
-          .get(`${Config.API_BASE_URL}/users/resetpassword`, {
+          .get(`https://screenspace.azurewebsites.net/users/resetpassword`, {
             searchParams: {
               email: formData.email,
             },
