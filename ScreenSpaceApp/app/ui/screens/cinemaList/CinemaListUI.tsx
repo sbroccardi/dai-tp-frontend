@@ -17,8 +17,7 @@ type Props = {
 };
 
 const CinemaListUI: React.FC<Props> = ({ navigation }) => {
-
-  const [flag, setFlag] = React.useState(0);
+  const [cinemasFlag, setCinemasFlag] = React.useState(0);
   const [formData, setData] = React.useState([
     {
       id: '',
@@ -30,7 +29,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
   const user = useContext(UserContext)
 
   const getCinemas = async () => {
-    setFlag(1);
+    setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
       const userId = user.user.id;
       const response = await ky.get(
@@ -48,22 +47,31 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
     catch (err) {
       console.error('error: ', err);
     }
-  };
+  }; cinemasFlag == 0 ? getCinemas() : undefined;
 
-  if (flag == 0) {
-    getCinemas()
-  }
+  /*const getCinemaAuditoriumsAmount = async (cinemaId: any) => {
+    try {
+      const response = await ky.get(`http://192.168.1.82:3000/cinemas/${cinemaId}/auditoriums`);
+      const responseBody = await response.json();
+      return responseBody.length;
+    }
+    catch (err) {
+      console.error('ERROR:',err);
+    }
+  };*/
 
   const renderCinemas = () => {
     const elements = [];
     for (let count = 0; count < formData.length; count++) {
       const cine = formData[count];
+      //const auditoriumsAmount = await getCinemaAuditoriumsAmount(cine.id);
+      //console.log(auditoriumsAmount);
       elements.push(
         <Center>
           <CardCinema cinemaName={cine.name}
-            cinemaAuditoriumsAmount={undefined}
-            onPressEdit={() => navigation.navigate('UpdateCinema',{id:cine.id})}
-            onPressCard={() => navigation.navigate('AuditoriumList', {cinemaName: cine.name, cinemaId: cine.id })}/>
+            cinemaAuditoriumsAmount = {'2'}
+            onPressEdit={() => navigation.navigate('UpdateCinemaStack')}
+            onPressCard={() => navigation.navigate('AuditoriumsStack', { params: { cinemaName: cine.name, cinemaId: cine.id } })} />
         </Center>);
     }
     return elements;

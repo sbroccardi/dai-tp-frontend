@@ -121,7 +121,6 @@ const ProfilePrivateScreenUI = ({ }) => {
       alignItems="center"
       justifyContent="space-around"
       height="100%">
-      <Center w="100%" pt={50} />
       <Text style={styles.headerText}> Avatar </Text>
       <ProfilePicture
         title={I18n.t('uploadPortraitPhoto')}
