@@ -38,7 +38,7 @@ export default function ListScreeningUIPrivate({route, navigation}) {
         />
       </Center>
       <Center>
-        <ScrollView maxH="250">
+        <ScrollView maxH="350">
           <VStack>
             <Center>
               <CardScreeningPrivate

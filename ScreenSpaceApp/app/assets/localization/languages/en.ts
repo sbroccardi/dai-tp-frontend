@@ -58,5 +58,6 @@ export default {
   terms: 'Terms of Use',
   privacy: 'Privacy Policy',
   createAuditoriums:'Create auditoriums',
-  auditoriums:'Auditoriums'
+  auditoriums:'Auditoriums',
+  createScreening:'Create screening'
 };

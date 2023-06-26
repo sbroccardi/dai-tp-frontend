@@ -50,5 +50,6 @@ export default {
   terms: 'Terminos y condiciones',
   privacy: 'Política de privacidad',
   createAuditoriums:'Crear sala',
-  auditoriums:'Salas'
+  auditoriums:'Salas',
+  createScreening:'Crear funcion'
 };

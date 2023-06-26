@@ -12,7 +12,7 @@ import Config from 'react-native-config';
 
 export default function AuditoriumListUI({ route }) {
   const { cineName } = route.params.cinemaName
-  /*const [auditoriumsData, setAuditoriumsData] = useState([
+  const [auditoriumsData, setAuditoriumsData] = useState([
     {
       cinemaId: '',
       name: '',
@@ -31,7 +31,7 @@ export default function AuditoriumListUI({ route }) {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   //const {cinemaName} = route.params
 
-    const [flag, setFlag] = React.useState(0);
+  const [flag, setFlag] = React.useState(0);
 
    const getAuditoriums = async () => {
      setFlag(1);
@@ -73,7 +73,7 @@ export default function AuditoriumListUI({ route }) {
         </Center>);
     }
     return elements;
-  };*/
+  };
 
   return (
     <VStack space={4} alignItems="center" height="100%">
@@ -88,7 +88,7 @@ export default function AuditoriumListUI({ route }) {
           <VStack space={4} alignItems="center" height="100%">
             <Center>
               {
-                //renderAuditoriums()
+                renderAuditoriums()
               }
             </Center>
           </VStack>

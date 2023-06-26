@@ -71,7 +71,8 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
             cinemaAuditoriumsAmount = {'2'}
             onPressEdit={() => navigation.navigate('UpdateCinemaStack')}
             onPressCard={() => navigation.navigate('AuditoriumsStack', { params: { cinemaName: cine.name, cinemaId: cine.id } })} />
-        </Center>);
+        </Center>
+        );
     }
     return elements;
   };
