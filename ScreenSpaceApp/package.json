@@ -12,8 +12,7 @@
     "format": "prettier --write \"app/**/*.ts\"",
     "start": "react-native start",
     "test": "jest",
-    "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd ..",
-    "android-local-win": "set ENVFILE=.env.local && react-native run-android"
+    "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "-": "^0.0.1",

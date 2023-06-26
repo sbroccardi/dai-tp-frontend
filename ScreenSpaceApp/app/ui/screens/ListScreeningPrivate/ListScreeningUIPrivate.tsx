@@ -1,11 +1,19 @@
-import {Center, Image, VStack} from 'native-base';
+import {Center, Image, ScrollView, VStack} from 'native-base';
 import React from 'react';
 import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import CardScreeningPrivate from '../../components/CardScreeningPrivate';
 import DropdownMenu from '../../components/DropdownMenu';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/native';
 
-export default function ListScreeningUIPrivate({route}) {
+type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
+
+type Props = {
+  navigation: ScreenNavigationProp;
+};
+
+export default function ListScreeningUIPrivate({route, navigation}) {
   const {movieID} = route.params;
   //{JSON.stringify(movieID)}
   return (
@@ -30,21 +38,27 @@ export default function ListScreeningUIPrivate({route}) {
         />
       </Center>
       <Center>
-        <CardScreeningPrivate
-          cinema="jajaja"
-          auditorium="jajajaj"
-          date="jajajaj"
-        />
-      </Center>
-      <Center>
-        <CardScreeningPrivate
-          cinema="jajaja"
-          auditorium="jajajaj"
-          date="jajajaj"
-        />
+        <ScrollView maxH="250">
+          <VStack>
+            <Center>
+              <CardScreeningPrivate
+                cinema="jajaja"
+                auditorium="jajajaj"
+                date="jajajaj"
+              />
+            </Center>
+            <Center>
+              <CardScreeningPrivate
+                cinema="jajaja"
+                auditorium="jajajaj"
+                date="jajajaj"
+              />
+            </Center>
+          </VStack>
+        </ScrollView>
       </Center>
       <Center w="100%">
-        <ButtonPrimary title="Create screening" onPress={undefined} />
+        <ButtonPrimary title="Create screening" onPress={() => navigation.navigate('CreateScreeningStack')} />
       </Center>
     </VStack>
   );

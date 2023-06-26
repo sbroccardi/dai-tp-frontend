@@ -79,7 +79,7 @@ const LoginPrivateScreenUI = () => {
 
   const signIn = async () => {
     const response = await ky.post(
-      `http://192.168.1.82:3000/auths/loginPrivate`,
+      `http://192.168.0.92:3000/auths/loginPrivate`,
       {
         json: {email: formData.email, password: formData.password},
       },

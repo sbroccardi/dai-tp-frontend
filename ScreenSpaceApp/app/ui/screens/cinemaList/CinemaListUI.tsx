@@ -17,52 +17,59 @@ type Props = {
 };
 
 const CinemaListUI: React.FC<Props> = ({ navigation }) => {
-
-  const [flag, setFlag] = React.useState(0);
+  const [cinemasFlag, setCinemasFlag] = React.useState(0);
   const [formData, setData] = React.useState([
     {
       id: '',
       name: '',
       location: '',
+
     }
   ]);
   const user = useContext(UserContext)
 
   const getCinemas = async () => {
-    setFlag(1);
+    setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
       const userId = user.user.id;
-      console.log(userId);
       const response = await ky.get(
-        'http://192.168.1.82:3000/cinemas',
+        'https://screenspace.azurewebsites.net/cinemas',
       );
       const responseBody = await response.json();
-      console.log(responseBody);
-      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any; }) => ({
+      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any;}) => ({
         id: document._id,
         name: document.name,
-        location: document.location
+        location: document.location,
+        
       }));
       setData(cinemasData);
-      console.log(cinemasData);
     }
     catch (err) {
       console.error('error: ', err);
     }
-  };
+  }; cinemasFlag == 0 ? getCinemas() : undefined;
 
-  if (flag == 0) {
-    getCinemas()
-  }
+  /*const getCinemaAuditoriumsAmount = async (cinemaId: any) => {
+    try {
+      const response = await ky.get(`http://192.168.1.82:3000/cinemas/${cinemaId}/auditoriums`);
+      const responseBody = await response.json();
+      return responseBody.length;
+    }
+    catch (err) {
+      console.error('ERROR:',err);
+    }
+  };*/
 
   const renderCinemas = () => {
     const elements = [];
     for (let count = 0; count < formData.length; count++) {
       const cine = formData[count];
+      //const auditoriumsAmount = await getCinemaAuditoriumsAmount(cine.id);
+      //console.log(auditoriumsAmount);
       elements.push(
         <Center>
           <CardCinema cinemaName={cine.name}
-            cinemaAuditoriumsAmount={undefined}
+            cinemaAuditoriumsAmount = {'2'}
             onPressEdit={() => navigation.navigate('UpdateCinemaStack')}
             onPressCard={() => navigation.navigate('AuditoriumsStack', { params: { cinemaName: cine.name, cinemaId: cine.id } })} />
         </Center>);

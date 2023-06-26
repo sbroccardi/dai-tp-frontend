@@ -62,7 +62,7 @@ const ProfilePrivateScreenUI = ({ }) => {
   const traerDatos = async () => {
     const authToken = user.user.token;
     const respuesta = await ky.get(
-      `http://192.168.1.82:3000/users/${user.user.id}`,
+      `http://192.168.0.92:3000/users/${user.user.id}`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -102,7 +102,7 @@ const ProfilePrivateScreenUI = ({ }) => {
       };
     }
     const authToken = user.user.token;
-    const respuesta = await ky.put(`http://192.168.1.82:3000/users`, {
+    const respuesta = await ky.put(`http://192.168.0.92:3000/users`, {
       json: data,
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -121,7 +121,6 @@ const ProfilePrivateScreenUI = ({ }) => {
       alignItems="center"
       justifyContent="space-around"
       height="100%">
-      <Center w="100%" pt={50} />
       <Text style={styles.headerText}> Avatar </Text>
       <ProfilePicture
         title={I18n.t('uploadPortraitPhoto')}
