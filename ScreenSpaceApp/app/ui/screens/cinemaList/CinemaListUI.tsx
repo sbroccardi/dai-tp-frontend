@@ -23,7 +23,6 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       id: '',
       name: '',
       location: '',
-
     }
   ]);
   const user = useContext(UserContext)
