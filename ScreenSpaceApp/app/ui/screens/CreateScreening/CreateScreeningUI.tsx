@@ -25,7 +25,6 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   const [selectedCinema, setSelectedCinema] = React.useState('');
   const [selectedAuditorium, setSelectedAuditorium] = React.useState('');
   const [selectedMovie, setSelectedMovie] = React.useState('');
-
   const handleCinemaChange = (value: any) => {
     console.log(value);
     setSelectedCinema(value);
@@ -97,7 +96,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleCreateScreening = async () => {
-    createScreening(formData.name, formData.location);
+    createScreening();
     navigation.replace('ScreeningList', { movieID: '1' })
   }
 

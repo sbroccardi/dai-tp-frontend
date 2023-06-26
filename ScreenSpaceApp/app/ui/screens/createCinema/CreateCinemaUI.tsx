@@ -76,7 +76,6 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
         },
       }); 
       const responseBody = await response.json();
-
       console.log('Cine creado:', responseBody);
       navigation.replace('CinemasList');
       // Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
