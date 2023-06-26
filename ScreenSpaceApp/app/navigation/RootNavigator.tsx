@@ -132,18 +132,6 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-       
-        <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} options={{headerShown:false}}/>
-        <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
-        <Stack.Screen name="UpdateCinemaStack" component={UpdateCinemaStack} options={{headerShown:false}}/>
-      </Stack.Navigator>
-    );
-  }
-
-  // eslint-disable-next-line react/no-unstable-nested-components
-  function AuditoriumsStack({navigation}) {
-    return (
-      <Stack.Navigator initialRouteName="AuditoriumList">
         <Stack.Screen
           name="AuditoriumList"
           component={AuditoriumListUI}
@@ -169,6 +157,16 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
+       
+        <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
+      </Stack.Navigator>
+    );
+  }
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  function AuditoriumsStack({navigation}) {
+    return (
+      <Stack.Navigator initialRouteName="AuditoriumList">
       </Stack.Navigator>
     );
   }

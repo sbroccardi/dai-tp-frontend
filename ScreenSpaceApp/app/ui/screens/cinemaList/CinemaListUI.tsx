@@ -24,6 +24,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       id: '',
       name: '',
       location: '',
+
     }
   ]);
   const user = useContext(UserContext)
@@ -32,19 +33,17 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
     setFlag(1);
     try {
       const userId = user.user.id;
-      console.log(userId);
       const response = await ky.get(
         'http://192.168.0.92:3000/cinemas',
       );
       const responseBody = await response.json();
-      console.log(responseBody);
-      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any; }) => ({
+      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any;}) => ({
         id: document._id,
         name: document.name,
-        location: document.location
+        location: document.location,
+        
       }));
       setData(cinemasData);
-      console.log(cinemasData);
     }
     catch (err) {
       console.error('error: ', err);
@@ -64,7 +63,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
           <CardCinema cinemaName={cine.name}
             cinemaAuditoriumsAmount={undefined}
             onPressEdit={() => navigation.navigate('UpdateCinema',{id:cine.id})}
-            onPressCard={() => navigation.navigate('AuditoriumsStack', { params: { cinemaName: cine.name, cinemaId: cine.id } })} />
+            onPressCard={() => navigation.navigate('AuditoriumList', {cinemaName: cine.name, cinemaId: cine.id })}/>
         </Center>);
     }
     return elements;
