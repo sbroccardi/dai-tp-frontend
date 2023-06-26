@@ -41,7 +41,7 @@ export default {
   createCinema: 'Crear cine',
   profile: 'Perfil',
   confirmDeleteAccount: 'Confirmar eliminar cuenta',
-  auditoriums: 'Mis salas',
+  myAuditoriums: 'Mis salas',
   updateAuditorium: 'Actualizar sala',
   confirmDeleteAuditorium: 'Confirmar eliminar sala',
   confirmDeleteCinema: 'Confirmar eliminar cine',
@@ -49,5 +49,6 @@ export default {
   accept: 'Aceptar',
   terms: 'Terminos y condiciones',
   privacy: 'Política de privacidad',
-  createAuditoriums:'Crear sala'
+  createAuditoriums:'Crear sala',
+  auditoriums:'Salas'
 };
