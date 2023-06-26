@@ -23,6 +23,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       id: '',
       name: '',
       location: '',
+
     }
   ]);
   const user = useContext(UserContext)
@@ -31,19 +32,17 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
     setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
       const userId = user.user.id;
-      console.log(userId);
       const response = await ky.get(
         'http://192.168.0.92:3000/cinemas',
       );
       const responseBody = await response.json();
-      console.log(responseBody);
-      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any; }) => ({
+      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any;}) => ({
         id: document._id,
         name: document.name,
-        location: document.location
+        location: document.location,
+        
       }));
       setData(cinemasData);
-      console.log(cinemasData);
     }
     catch (err) {
       console.error('error: ', err);

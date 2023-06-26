@@ -174,6 +174,16 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
+       
+        <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
+      </Stack.Navigator>
+    );
+  }
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  function AuditoriumsStack({navigation}) {
+    return (
+      <Stack.Navigator initialRouteName="AuditoriumList">
       </Stack.Navigator>
     );
   }

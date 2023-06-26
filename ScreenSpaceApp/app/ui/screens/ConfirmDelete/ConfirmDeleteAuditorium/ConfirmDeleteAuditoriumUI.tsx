@@ -1,13 +1,26 @@
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {ParamListBase, useNavigation,useRoute} from '@react-navigation/native';
 import {Center, VStack} from 'native-base';
 import React from 'react';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ButtonDanger from '../../../components/ButtonDanger';
 import WarningMessage from '../../../components/WarningMessage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import ky from 'ky';
 
 export default function ConfirmDeleteAuditoriumUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const route = useRoute();
+  const params = route.params; 
+
+  const borrar = async () => {
+    try{
+    const respuesta = await ky.delete(`http://192.168.0.92:3000/cinemas/${params.cinemaID}/auditoriums/${params.id}`);
+    navigation.replace('CinemasList');
+  }
+  catch (error){
+    console.log(error)
+  }
+}
   return (
     <VStack>
       <Center w="100%" marginBottom="10" marginTop="10">
@@ -15,7 +28,7 @@ export default function ConfirmDeleteAuditoriumUI() {
       </Center>
       <Center w="100%" marginBottom="1">
         <ButtonDanger
-          onPress={() => navigation.navigate('ConfirmDeleteAuditorium')}
+          onPress={borrar}
           title="Delete"
         />
       </Center>
@@ -28,3 +41,4 @@ export default function ConfirmDeleteAuditoriumUI() {
     </VStack>
   );
 }
+
