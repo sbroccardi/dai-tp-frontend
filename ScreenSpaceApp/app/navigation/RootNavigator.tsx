@@ -116,9 +116,26 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
+         <Stack.Screen
+          name="UpdateCinema"
+          component={UpdateCinemaUI}
+          options={{
+            headerTitle: I18n.t('updateCinema'),
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="ConfirmDeleteCinema"
+          component={ConfirmDeleteCinemaUI}
+          options={{
+            headerTitle: I18n.t('confirmDeleteCinema'),
+            headerTitleAlign: 'center',
+          }}
+        />
+       
         <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} options={{headerShown:false}}/>
         <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
-        <Stack.Screen name="UpdateCinemaStack" component={UpdateCinemaStack} />
+        <Stack.Screen name="UpdateCinemaStack" component={UpdateCinemaStack} options={{headerShown:false}}/>
       </Stack.Navigator>
     );
   }
@@ -176,22 +193,6 @@ function RootNavigator() {
   function UpdateCinemaStack({navigation}) {
     return (
       <Stack.Navigator>
-        <Stack.Screen
-          name="UpdateCinema"
-          component={UpdateCinemaUI}
-          options={{
-            headerTitle: I18n.t('updateCinema'),
-            headerTitleAlign: 'center',
-          }}
-        />
-        <Stack.Screen
-          name="ConfirmDeleteCinema"
-          component={ConfirmDeleteCinemaUI}
-          options={{
-            headerTitle: I18n.t('confirmDeleteCinema'),
-            headerTitleAlign: 'center',
-          }}
-        />
       </Stack.Navigator>
     );
   }
