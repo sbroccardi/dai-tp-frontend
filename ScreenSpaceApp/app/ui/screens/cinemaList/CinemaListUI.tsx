@@ -33,7 +33,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
     try {
       const userId = user.user.id;
       const response = await ky.get(
-        'http://192.168.0.92:3000/cinemas',
+        'https://screenspace.azurewebsites.net/cinemas',
       );
       const responseBody = await response.json();
       const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any;}) => ({

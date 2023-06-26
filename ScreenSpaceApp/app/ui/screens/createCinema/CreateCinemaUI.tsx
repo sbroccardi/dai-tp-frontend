@@ -68,7 +68,7 @@ const crearCine = async (nombreCine: string, direccionCine: string) => {
   if (datosValidos) {
     try {
       // Realizar la solicitud POST al backend utilizando ky
-      const response = await ky.post(`http://192.168.0.92:3000/cinemas`, {
+      const response = await ky.post(`https://screenspace.azurewebsites.net/cinemas`, {
         json: {
           userId: userId,
           name: nombreCine,
