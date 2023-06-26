@@ -98,7 +98,7 @@ const crearCine = async (nombreCine: string, direccionCine: string, userId: stri
 
   const handleCrearCine = () => {
     crearCine(formData.name, formData.location, userId);
-    navigation.navigate('CinemasStack');
+    navigation.replace('CinemasList', {userId: userId});
   }
 
   return (

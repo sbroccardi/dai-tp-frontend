@@ -16,7 +16,7 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-const CinemaListUI: React.FC<Props> = ({ navigation }) => {
+const CinemaListUI: React.FC<Props> = ({ route, navigation }) => {
   const [cinemasFlag, setCinemasFlag] = React.useState(0);
   const [formData, setData] = React.useState([
     {
@@ -27,11 +27,12 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
     }
   ]);
   const user = useContext(UserContext)
+  
 
   const getCinemas = async () => {
     setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
-      const userId = user.user.id;
+      const userId = user.user.id
       const response = await ky.get(
         'https://screenspace.azurewebsites.net/cinemas',
       );
@@ -70,8 +71,8 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
         <Center>
           <CardCinema cinemaName={cine.name}
             cinemaAuditoriumsAmount = {'2'}
-            onPressEdit={() => navigation.navigate('UpdateCinemaStack')}
-            onPressCard={() => navigation.navigate('AuditoriumsStack', { params: { cinemaName: cine.name, cinemaId: cine.id } })} />
+            onPressEdit={() => navigation.navigate('UpdateCinema', {cinemaId: cine.id})}
+            onPressCard={() => navigation.navigate('AuditoriumList', { cinemaName: cine.name, cinemaId: cine.id })} />
         </Center>);
     }
     return elements;

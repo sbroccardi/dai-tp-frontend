@@ -15,6 +15,12 @@ type Props = {
 
 export default function ListScreeningUIPrivate({route, navigation}) {
   const {movieID} = route.params;
+  const cinemaOptions = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo' ];
+  const [selectedCinema, setSelectedCinema] = React.useState('');
+  const handleCinemaChange = (value: any) => {
+    console.log(value);
+    setSelectedCinema(value);
+  };
   //{JSON.stringify(movieID)}
   return (
     <VStack space={4} alignItems="center" height="100%">
@@ -33,25 +39,32 @@ export default function ListScreeningUIPrivate({route, navigation}) {
         <DropdownMenu
           purpose={'Cinema'}
           disabled={undefined}
-          options={[]}
-          onChange={undefined}
+          options={cinemaOptions}
+          onChange={handleCinemaChange}
         />
       </Center>
       <Center>
-        <ScrollView maxH="250">
+        <ScrollView maxH="350">
           <VStack>
             <Center>
               <CardScreeningPrivate
-                cinema="jajaja"
-                auditorium="jajajaj"
-                date="jajajaj"
+                cinema="Hoyts Belgrano"
+                auditorium="Sala 7"
+                date="Saturday, 21.07.23 - 16:00"
               />
             </Center>
             <Center>
               <CardScreeningPrivate
-                cinema="jajaja"
-                auditorium="jajajaj"
-                date="jajajaj"
+                cinema="Cinemark Palermo"
+                auditorium="Sala 3"
+                date="Sunday, 17.08.23 - 19:30"
+              />
+            </Center>
+            <Center>
+              <CardScreeningPrivate
+                cinema="Abasto"
+                auditorium="Sala 12"
+                date="Tuesday, 12.06.23 - 16:00"
               />
             </Center>
           </VStack>

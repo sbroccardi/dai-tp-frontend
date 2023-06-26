@@ -21,9 +21,11 @@ export default function CreateAuditoriumUI({ route }) {
     seats: '',
   });
 
-  const cineId = route.params.cinemaId;
+  const cineId = route.params
+  const cinemaName = route.params
 
   const [errors, setErrors] = React.useState({});
+
   const validate = () => {
     setErrors({});
 
@@ -63,12 +65,12 @@ export default function CreateAuditoriumUI({ route }) {
     if (datosValidos) {
       try {
         // Realizar la solicitud POST al backend utilizando ky
-        const response = await ky.post(`${Config.API_BASE_URL}/cinemas/${cineId}/auditoriums`, {
+        const response = await ky.post(`https://screenspace.azurewebsites.net/cinemas/${cineId}/auditoriums`, {
           json: {
-            cinemaId: cineId,
-            name: nombreAuditorio,
-            rows: rows,
-            seatsPerRow: seats 
+            'cinemaId': `${cineId}`,
+            'name': `${nombreAuditorio}`,
+            'rows': `${rows}`,
+            'seatsPerRow': `${seats}` 
           },
         }); 
         const responseBody = await response.json();
@@ -92,7 +94,7 @@ export default function CreateAuditoriumUI({ route }) {
 
   const handleCrearAuditorio = () => {
     crearAuditorio(formData.nameAuditorium, formData.rows, formData.seats);
-    navigation.navigate('AutidoriumsStack');
+    navigation.replace('AuditoriumList', {params: {cinemaName: cinemaName, cinemaId: cineId}});
   };
 
   return (

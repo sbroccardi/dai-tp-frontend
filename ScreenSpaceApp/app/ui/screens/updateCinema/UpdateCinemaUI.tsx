@@ -11,7 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Linking } from 'react-native';
 import ky from 'ky';
 
-const UpdateCinemaUI = () => {
+const UpdateCinemaUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [show, setShow] = React.useState(false);
@@ -21,7 +21,7 @@ const UpdateCinemaUI = () => {
   const route = useRoute();
   const [name, setName] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const id = route.params.id;
+  const id = route.params.cinemaId;
 
   const openMaps = () => {
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -33,7 +33,7 @@ const UpdateCinemaUI = () => {
 
   const traerDatos = async () => {
     const respuesta = await ky.get(
-      `http://192.168.0.92:3000/cinemas/${id}`,
+      `https://screenspace.azurewebsites.net/cinemas/${id}`,
       {
       },
     );
@@ -69,7 +69,7 @@ const UpdateCinemaUI = () => {
         location: address,
       };
     }
-    const respuesta = await ky.put(`http://192.168.0.92:3000/cinemas/${id}`, {
+    const respuesta = await ky.put(`https://screenspace.azurewebsites.net/cinemas/${id}`, {
       json: data,
     });
     traerDatos();

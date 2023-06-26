@@ -67,7 +67,7 @@ function RootNavigator() {
   // eslint-disable-next-line react/no-unstable-nested-components
   function MoviesStack({navigation}) {
     return (
-      <Stack.Navigator initialRouteName="MoviesList">
+      <Stack.Navigator initialRouteName="MoviesList" >
         <Stack.Screen
           name="MoviesList"
           component={PrivateMoviesListScreenUI}
@@ -80,7 +80,7 @@ function RootNavigator() {
           name="ScreeningList"
           component={ListScreeningUIPrivate}
           options={{
-            headerTitle: '/////movie',
+            headerTitle: I18n.t('screenings'),
             headerTitleAlign: 'center',
           }}
         />
@@ -137,6 +137,31 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
+        <Stack.Screen
+          name="CreateCinema"
+          component={CreateCinemaUI}
+          options={{
+            headerTitle: I18n.t('createCinema'),
+            headerTitleAlign: 'center',
+          }}
+        />
+         <Stack.Screen
+          name="AuditoriumList"
+          component={AuditoriumListUI}
+          options={{
+            headerTitle: I18n.t('auditoriums'),
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen name="CreateAuditorium" component={CreateAuditoriumUI} />
+        <Stack.Screen
+          name="UpdateAuditorium"
+          component={UpdateAuditoriumUI}
+          options={{
+            headerTitle: I18n.t('updateAuditorium'),
+            headerTitleAlign: 'center',
+          }}
+        />
        
         <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} options={{headerShown:false}}/>
         <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} options={{headerShown:false}}/>
@@ -176,14 +201,6 @@ function RootNavigator() {
         />
        
         <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
-      </Stack.Navigator>
-    );
-  }
-
-  // eslint-disable-next-line react/no-unstable-nested-components
-  function AuditoriumsStack({navigation}) {
-    return (
-      <Stack.Navigator initialRouteName="AuditoriumList">
       </Stack.Navigator>
     );
   }
@@ -296,30 +313,27 @@ function RootNavigator() {
       ) : user.type === 'privado' ? (
         <Tab.Navigator {...{screenOptions}}>
           <Stack.Screen
-            options={{headerShown: false}}
-            name="MoviesStack"
-            component={MoviesStack}
-            options={{
+            options={{headerShown: false,
               tabBarIcon: ({ color="", size=0 }) => (
                 <Screening name="movie-open-outline" color={color} size={size} />
               ),
             }}
+            name="MoviesStack"
+            component={MoviesStack}
           />
           <Stack.Screen
-            options={{headerShown: false}}
             name="CinemasStack"
             component={CinemasStack}
-            options={{
+            options={{headerShown: false,
               tabBarIcon: ({ color="", size=0 }) => (
                 <Cinema name="home" color={color} size={size} />
               ),
             }}
           />
           <Stack.Screen
-            options={{headerShown: false}}
             name="ProfileStack"
             component={ProfileStack}
-            options={{
+            options={{headerShown: false,
               tabBarIcon: ({ color="", size=0 }) => (
                 <Profile name="user-o" color={color} size={size} />
               ),

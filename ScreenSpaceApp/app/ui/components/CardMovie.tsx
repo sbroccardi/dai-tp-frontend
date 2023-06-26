@@ -14,15 +14,13 @@ import StarRating from 'react-native-star-rating-widget';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const CardMovie = (props: {movieID: string}) => {
+const CardMovie = (props: {movieID: string, movieName: string, movieAge: string, movieRating: any }) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const movieID = props;
-  const {movie, age, rating} = 0;
   return (
     <Pressable
       onPress={() =>
         navigation.navigate('ScreeningList', {
-          movieID: movieID,
+          movieID: props.movieID,
         })
       }>
       <Box alignItems="center" marginBottom={0}>
@@ -48,7 +46,7 @@ const CardMovie = (props: {movieID: string}) => {
               <Stack p="4" space={3}>
                 <Stack space={2} marginBottom="1">
                   <Heading size="md" color="#FFFFFF" marginBottom="2" ml="-1">
-                    <Text style={styles.bodyText}>{movie}</Text>
+                    <Text style={styles.bodyText}>{props.movieName}</Text>
                   </Heading>
                   <Box
                     borderColor="#FFFFFF"
@@ -70,7 +68,7 @@ const CardMovie = (props: {movieID: string}) => {
                       fontWeight="500"
                       ml="-0.5"
                       mt="-1">
-                      {age}
+                      {props.movieAge}
                     </Text>
                   </Box>
                 </Stack>
@@ -80,7 +78,7 @@ const CardMovie = (props: {movieID: string}) => {
                   justifyContent="space-between">
                   <HStack alignItems="center">
                     <StarRating
-                      rating={rating}
+                      rating={props.movieRating}
                       style={{}}
                       starSize={20}
                       onChange={() => {}}

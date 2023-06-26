@@ -13,6 +13,7 @@ import ky from 'ky';
 import { styles } from '../../../styles/theme';
 import { Config } from 'react-native-config';
 import { UserContext } from '../../../../UserContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ProfilePrivateScreenUI = ({ }) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -62,7 +63,7 @@ const ProfilePrivateScreenUI = ({ }) => {
   const traerDatos = async () => {
     const authToken = user.user.token;
     const respuesta = await ky.get(
-      `http://192.168.0.92:3000/users/${user.user.id}`,
+      `https://screenspace.azurewebsites.net/users/${user.user.id}`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -102,7 +103,7 @@ const ProfilePrivateScreenUI = ({ }) => {
       };
     }
     const authToken = user.user.token;
-    const respuesta = await ky.put(`http://192.168.0.92:3000/users`, {
+    const respuesta = await ky.put(`https://screenspace.azurewebsites.net/users`, {
       json: data,
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -116,6 +117,7 @@ const ProfilePrivateScreenUI = ({ }) => {
   }
 
   return (
+    <KeyboardAwareScrollView>
     <VStack
       space={8}
       alignItems="center"
@@ -190,6 +192,7 @@ const ProfilePrivateScreenUI = ({ }) => {
         </View>
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 
