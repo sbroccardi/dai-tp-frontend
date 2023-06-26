@@ -63,7 +63,7 @@ export default function CreateAuditoriumUI({ route }) {
     if (datosValidos) {
       try {
         // Realizar la solicitud POST al backend utilizando ky
-        const response = await ky.post(`${Config.API_BASE_URL}/cinemas`, {
+        const response = await ky.post(`${Config.API_BASE_URL}/cinemas/${cineId}/auditoriums`, {
           json: {
             cinemaId: cineId,
             name: nombreAuditorio,
