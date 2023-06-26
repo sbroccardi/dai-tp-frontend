@@ -4,13 +4,12 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   Center,
+  Checkbox,
   Flex,
   FormControl,
   Input,
-  Switch,
   Text,
   VStack,
-  View,
   useToast,
 } from 'native-base';
 import DocumentPicker, {
@@ -32,9 +31,9 @@ const SignUpScreenUI = ({}) => {
     password: '',
     confirmPassword: '',
   });
-  const [errors, setErrors] = React.useState({});
   const [isAccepted, setIsAccepted] = useState(false);
   const toggleSwitch = () => setIsAccepted(previousState => !previousState);
+  const [errors, setErrors] = React.useState({});
   const [imageIsLoading, setImageIsLoading] = React.useState({});
   const [imageUrl, setImageUrl] = React.useState('');
   const [imageFile, setImageFile] = React.useState<DocumentPickerResponse[]>(
@@ -44,6 +43,15 @@ const SignUpScreenUI = ({}) => {
   //        ---= VALIDATION =---
   const validate = () => {
     setErrors({});
+
+    // Terms
+    if (!isAccepted) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        isAccepted: 'Terms not accepted',
+      }));
+      return false;
+    }
 
     // Company
     if (data.company.length === 0) {
@@ -265,33 +273,25 @@ const SignUpScreenUI = ({}) => {
                   Error Password
                 </FormControl.ErrorMessage>
               </FormControl>
-              <View
-                style={{
-                  backgroundColor: '#21242D',
-                  paddingHorizontal: 40,
-                  paddingVertical: 10,
-                  borderRadius: 8,
-                  flexDirection: 'row',
-                }}>
-                <Text>{I18n.t('accept')}</Text>
-                <Text
-                  color={'yellow.400'}
-                  onPress={() => navigation.navigate('Terms')}>
-                  {I18n.t('terms')} {' & '}
-                </Text>
-                <Text
-                  color={'yellow.400'}
-                  onPress={() => navigation.navigate('Privacy')}>
-                  {I18n.t('privacy')}
-                </Text>
-                <Switch
-                  trackColor={{false: 'grey', true: '#f5dd4b'}}
-                  thumbColor={isAccepted ? 'white' : 'white'}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={toggleSwitch}
-                  value={isAccepted}
-                />
-              </View>
+              <FormControl isRequired pt="5%">
+                <Checkbox
+                  onChange={toggleSwitch}
+                  accessibilityLabel="Accept terms of use & privacy policy"
+                  value={'isAccepted'}>
+                  <Text>{I18n.t('accept')}</Text>
+                  <Text
+                    color={'yellow.400'}
+                    onPress={() => navigation.navigate('Terms')}>
+                    {I18n.t('terms')}
+                  </Text>
+                  {'&  '}
+                  <Text
+                    color={'yellow.400'}
+                    onPress={() => navigation.navigate('Privacy')}>
+                    {I18n.t('privacy')}
+                  </Text>
+                </Checkbox>
+              </FormControl>
             </Center>
           </Flex>
         </Center>
