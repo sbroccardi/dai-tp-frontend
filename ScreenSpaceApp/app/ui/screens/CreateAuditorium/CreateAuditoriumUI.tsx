@@ -9,9 +9,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Config from 'react-native-config';
 import ky from 'ky';
 import {UserContext} from '../../../UserContext';
-import { useContext } from 'react';
+import {useContext} from 'react';
 
-export default function CreateAuditoriumUI({ route }) {
+export default function CreateAuditoriumUI({route}) {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [formData, setData] = React.useState({
@@ -21,8 +21,8 @@ export default function CreateAuditoriumUI({ route }) {
     seats: '',
   });
 
-  const cineId = route.params
-  const cinemaName = route.params
+  const cineId = route.params;
+  const cinemaName = route.params;
 
   const [errors, setErrors] = React.useState({});
 
@@ -47,8 +47,8 @@ export default function CreateAuditoriumUI({ route }) {
       return false;
     }
 
-     // Seats
-     if (!formData.seats) {
+    // Seats
+    if (!formData.seats) {
       setErrors(prevErrors => ({
         ...prevErrors,
         rows: 'Number of seats is required',
@@ -59,42 +59,51 @@ export default function CreateAuditoriumUI({ route }) {
     return true;
   };
 
-  const crearAuditorio = async (nombreAuditorio: string, rows: string, seats: string) => {
+  const crearAuditorio = async (
+    nombreAuditorio: string,
+    rows: string,
+    seats: string,
+  ) => {
     // Realizar validación de los datos ingresados
     const datosValidos = validate();
     if (datosValidos) {
       try {
         // Realizar la solicitud POST al backend utilizando ky
-        const response = await ky.post(`https://screenspace.azurewebsites.net/cinemas/${cineId}/auditoriums`, {
-          json: {
-            'cinemaId': `${cineId}`,
-            'name': `${nombreAuditorio}`,
-            'rows': `${rows}`,
-            'seatsPerRow': `${seats}` 
+        const response = await ky.post(
+          `https://screenspace.azurewebsites.net/cinemas/${cineId}/auditoriums`,
+          {
+            json: {
+              cinemaId: `${cineId}`,
+              name: `${nombreAuditorio}`,
+              rows: `${rows}`,
+              seatsPerRow: `${seats}`,
+            },
           },
-        }); 
+        );
         const responseBody = await response.json();
-  
+
         console.log('Cine creado:', responseBody);
         // Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
       } catch (error) {
         console.error('Error al crear el cine:', error);
       }
     } else {
-        console.log(errors);
-  
-        toast.show({
-          description: Object.values(errors).join('\n'),
-          title: 'Error',
-          duration: 3000,
-          placement: 'top',
-        });
-    };
+      console.log(errors);
+
+      toast.show({
+        description: Object.values(errors).join('\n'),
+        title: 'Error',
+        duration: 3000,
+        placement: 'top',
+      });
+    }
   };
 
   const handleCrearAuditorio = () => {
     crearAuditorio(formData.nameAuditorium, formData.rows, formData.seats);
-    navigation.replace('AuditoriumList', {params: {cinemaName: cinemaName, cinemaId: cineId}});
+    navigation.replace('AuditoriumList', {
+      params: {cinemaName: cinemaName, cinemaId: cineId},
+    });
   };
 
   return (
@@ -137,7 +146,7 @@ export default function CreateAuditoriumUI({ route }) {
             <Input
               size="md"
               placeholder={I18n.t('enterRows')}
-              value = {formData.rows}
+              value={formData.rows}
               keyboardType="numeric"
               onChangeText={value => setData({...formData, rows: value})}
             />
@@ -152,7 +161,7 @@ export default function CreateAuditoriumUI({ route }) {
             <Input
               size="md"
               placeholder={I18n.t('enterSeats')}
-              value = {formData.seats}
+              value={formData.seats}
               keyboardType="numeric"
               onChangeText={value => setData({...formData, seats: value})}
             />
@@ -162,7 +171,10 @@ export default function CreateAuditoriumUI({ route }) {
           </FormControl>
         </Center>
         <Center w={'100%'}>
-          <ButtonPrimary onPress={handleCrearAuditorio} title={I18n.t('save')} />
+          <ButtonPrimary
+            onPress={handleCrearAuditorio}
+            title={I18n.t('save')}
+          />
         </Center>
       </VStack>
     </KeyboardAwareScrollView>

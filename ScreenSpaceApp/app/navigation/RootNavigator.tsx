@@ -45,8 +45,6 @@ import Cinema from 'react-native-vector-icons/Feather';
 import Screening from 'react-native-vector-icons/MaterialCommunityIcons';
 import Profile from 'react-native-vector-icons/FontAwesome';
 
-
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -67,7 +65,7 @@ function RootNavigator() {
   // eslint-disable-next-line react/no-unstable-nested-components
   function MoviesStack({navigation}) {
     return (
-      <Stack.Navigator initialRouteName="MoviesList" >
+      <Stack.Navigator initialRouteName="MoviesList">
         <Stack.Screen
           name="MoviesList"
           component={PrivateMoviesListScreenUI}
@@ -121,7 +119,7 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="UpdateCinema"
           component={UpdateCinemaUI}
           options={{
@@ -145,7 +143,7 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="AuditoriumList"
           component={AuditoriumListUI}
           options={{
@@ -162,10 +160,22 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-       
-        <Stack.Screen name="AuditoriumsStack" component={AuditoriumsStack} options={{headerShown:false}}/>
-        <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} options={{headerShown:false}}/>
-        <Stack.Screen name="UpdateCinemaStack" component={UpdateCinemaStack} options={{headerShown:false}}/>
+
+        <Stack.Screen
+          name="AuditoriumsStack"
+          component={AuditoriumsStack}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CreateCinemaStack"
+          component={CreateCinemaStack}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="UpdateCinemaStack"
+          component={UpdateCinemaStack}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     );
   }
@@ -199,7 +209,7 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-       
+
         <Stack.Screen name="CreateCinemaStack" component={CreateCinemaStack} />
       </Stack.Navigator>
     );
@@ -223,10 +233,7 @@ function RootNavigator() {
 
   // eslint-disable-next-line react/no-unstable-nested-components
   function UpdateCinemaStack({navigation}) {
-    return (
-      <Stack.Navigator>
-      </Stack.Navigator>
-    );
+    return <Stack.Navigator />;
   }
 
   // eslint-disable-next-line react/no-unstable-nested-components
@@ -313,9 +320,14 @@ function RootNavigator() {
       ) : user.type === 'privado' ? (
         <Tab.Navigator {...{screenOptions}}>
           <Stack.Screen
-            options={{headerShown: false,
-              tabBarIcon: ({ color="", size=0 }) => (
-                <Screening name="movie-open-outline" color={color} size={size} />
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color = '', size = 0}) => (
+                <Screening
+                  name="movie-open-outline"
+                  color={color}
+                  size={size}
+                />
               ),
             }}
             name="MoviesStack"
@@ -324,8 +336,9 @@ function RootNavigator() {
           <Stack.Screen
             name="CinemasStack"
             component={CinemasStack}
-            options={{headerShown: false,
-              tabBarIcon: ({ color="", size=0 }) => (
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color = '', size = 0}) => (
                 <Cinema name="home" color={color} size={size} />
               ),
             }}
@@ -333,8 +346,9 @@ function RootNavigator() {
           <Stack.Screen
             name="ProfileStack"
             component={ProfileStack}
-            options={{headerShown: false,
-              tabBarIcon: ({ color="", size=0 }) => (
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color = '', size = 0}) => (
                 <Profile name="user-o" color={color} size={size} />
               ),
             }}

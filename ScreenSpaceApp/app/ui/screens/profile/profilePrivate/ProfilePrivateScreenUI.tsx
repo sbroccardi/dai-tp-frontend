@@ -1,8 +1,8 @@
-import { Center, FormControl, Input, VStack, useToast } from 'native-base';
-import React, { useContext } from 'react';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { View, Text } from 'react-native';
+import {Center, FormControl, Input, VStack, useToast} from 'native-base';
+import React, {useContext} from 'react';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {View, Text} from 'react-native';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonLogout from '../../../components/ButtonLogout';
 import ButtonDanger from '../../../components/ButtonDanger';
@@ -10,16 +10,16 @@ import ButtonPrimary from '../../../components/ButtonPrimary';
 import ProfilePicture from '../../../components/ProfilePicture';
 import DocumentPicker from 'react-native-document-picker';
 import ky from 'ky';
-import { styles } from '../../../styles/theme';
-import { Config } from 'react-native-config';
-import { UserContext } from '../../../../UserContext';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {styles} from '../../../styles/theme';
+import {Config} from 'react-native-config';
+import {UserContext} from '../../../../UserContext';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const ProfilePrivateScreenUI = ({ }) => {
+const ProfilePrivateScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const user = useContext(UserContext);
-  const { setUser } = useContext(UserContext);
+  const {setUser} = useContext(UserContext);
   const [formData, setData] = React.useState({
     email: '',
     username: '',
@@ -31,7 +31,7 @@ const ProfilePrivateScreenUI = ({ }) => {
   const salir = () => {
     setUser(null);
   };
-  
+
   const selectFile = async () => {
     try {
       const res = await DocumentPicker.pick({
@@ -103,12 +103,15 @@ const ProfilePrivateScreenUI = ({ }) => {
       };
     }
     const authToken = user.user.token;
-    const respuesta = await ky.put(`https://screenspace.azurewebsites.net/users`, {
-      json: data,
-      headers: {
-        Authorization: `Bearer ${authToken}`,
+    const respuesta = await ky.put(
+      'https://screenspace.azurewebsites.net/users',
+      {
+        json: data,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
       },
-    });
+    );
     traerDatos();
   };
 
@@ -118,80 +121,80 @@ const ProfilePrivateScreenUI = ({ }) => {
 
   return (
     <KeyboardAwareScrollView>
-    <VStack
-      space={8}
-      alignItems="center"
-      justifyContent="space-around"
-      height="100%">
-      <Text style={styles.headerText}> Avatar </Text>
-      <ProfilePicture
-        title={I18n.t('uploadPortraitPhoto')}
-        onPress={selectFile}
-        imgUrl={formData.img}
-      />
-      <Center w={'90%'}>
-        <FormControl isRequired>
-          {I18n.t('username')}
-          {username === '' && (
-            <Input
-              size="md"
-              keyboardType="email-address"
-              inputMode="email"
-              placeholder={formData.username}
-              backgroundColor={'#21242D'}
-              onChangeText={value => setUsername(value)}
+      <VStack
+        space={8}
+        alignItems="center"
+        justifyContent="space-around"
+        height="100%">
+        <Text style={styles.headerText}> Avatar </Text>
+        <ProfilePicture
+          title={I18n.t('uploadPortraitPhoto')}
+          onPress={selectFile}
+          imgUrl={formData.img}
+        />
+        <Center w={'90%'}>
+          <FormControl isRequired>
+            {I18n.t('username')}
+            {username === '' && (
+              <Input
+                size="md"
+                keyboardType="email-address"
+                inputMode="email"
+                placeholder={formData.username}
+                backgroundColor={'#21242D'}
+                onChangeText={value => setUsername(value)}
+              />
+            )}
+            {username !== '' && (
+              <Input
+                size="md"
+                keyboardType="email-address"
+                inputMode="email"
+                placeholder={formData.username}
+                backgroundColor={'#21242D'}
+                onChangeText={value => setUsername(value)}
+              />
+            )}
+            {'\n'}
+            {I18n.t('emailAddress')}
+            {mail !== '' && (
+              <Input
+                size="md"
+                keyboardType="email-address"
+                inputMode="email"
+                placeholder={formData.email}
+                backgroundColor={'#21242D'}
+                onChangeText={value => setMail(value)}
+              />
+            )}
+            {mail === '' && (
+              <Input
+                size="md"
+                keyboardType="email-address"
+                inputMode="email"
+                placeholder={formData.email}
+                backgroundColor={'#21242D'}
+                onChangeText={value => setMail(value)}
+              />
+            )}
+          </FormControl>
+        </Center>
+        <ButtonPrimary
+          onPress={updatearDatos}
+          title={I18n.t('save')}
+          width="90%"
+        />
+        <Center w={'50%'}>
+          <View style={styles.buttonsContainer}>
+            <ButtonDanger
+              onPress={() => navigation.navigate('ConfirmDelete')}
+              title={I18n.t('delete')}
+              width="65%"
             />
-          )}
-          {username !== '' && (
-            <Input
-              size="md"
-              keyboardType="email-address"
-              inputMode="email"
-              placeholder={formData.username}
-              backgroundColor={'#21242D'}
-              onChangeText={value => setUsername(value)}
-            />
-          )}
-          {'\n'}
-          {I18n.t('emailAddress')}
-          {mail !== '' && (
-            <Input
-              size="md"
-              keyboardType="email-address"
-              inputMode="email"
-              placeholder={formData.email}
-              backgroundColor={'#21242D'}
-              onChangeText={value => setMail(value)}
-            />
-          )}
-          {mail === '' && (
-            <Input
-              size="md"
-              keyboardType="email-address"
-              inputMode="email"
-              placeholder={formData.email}
-              backgroundColor={'#21242D'}
-              onChangeText={value => setMail(value)}
-            />
-          )}
-        </FormControl>
-      </Center>
-      <ButtonPrimary
-        onPress={updatearDatos}
-        title={I18n.t('save')}
-        width="90%"
-      />
-      <Center w={'50%'}>
-        <View style={styles.buttonsContainer}>
-          <ButtonDanger
-            onPress={() => navigation.navigate('ConfirmDelete')}
-            title={I18n.t('delete')}
-            width="65%"
-          />
-          <ButtonLogout onPress={salir} title={I18n.t('logout')} />
-        </View>
-      </Center>
-    </VStack>
+            <ButtonLogout onPress={salir} title={I18n.t('logout')} />
+          </View>
+        </Center>
+      </VStack>
     </KeyboardAwareScrollView>
   );
 };

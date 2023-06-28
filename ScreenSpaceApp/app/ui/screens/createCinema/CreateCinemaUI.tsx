@@ -17,10 +17,10 @@ import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {UserContext} from '../../../UserContext';
-import { useContext } from 'react';
+import {useContext} from 'react';
 import ky from 'ky';
 import Config from 'react-native-config';
-import { Linking } from 'react-native';
+import {Linking} from 'react-native';
 export default function CreateCinemaUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
@@ -37,8 +37,7 @@ export default function CreateCinemaUI() {
     console.log(url);
     Linking.openURL(url);
   };
-  
-  
+
   const validate = () => {
     setErrors({});
     // Name
@@ -61,30 +60,36 @@ export default function CreateCinemaUI() {
     return true;
   };
 
-
   // El que toque esto el golpe mas tranquilo que se va a llevar es una patada a la cabeza.
-const crearCine = async (nombreCine: string, direccionCine: string, userId: string) => {
-  // Realizar validación de los datos ingresados
-  const datosValidos = validate();
-  if (datosValidos) {
-    try {
-      // Realizar la solicitud POST al backend utilizando ky
-      const response = await ky.post(`https://screenspace.azurewebsites.net/cinemas`, {
-        json: {
-          'userId': `${userId}`,
-          'name': `${nombreCine}`,
-          'location': `${direccionCine}`
-        },
-      }); 
-      const responseBody = await response.json();
+  const crearCine = async (
+    nombreCine: string,
+    direccionCine: string,
+    userId: string,
+  ) => {
+    // Realizar validación de los datos ingresados
+    const datosValidos = validate();
+    if (datosValidos) {
+      try {
+        // Realizar la solicitud POST al backend utilizando ky
+        const response = await ky.post(
+          'https://screenspace.azurewebsites.net/cinemas',
+          {
+            json: {
+              userId: `${userId}`,
+              name: `${nombreCine}`,
+              location: `${direccionCine}`,
+            },
+          },
+        );
+        const responseBody = await response.json();
 
-      console.log('Cine creado:', responseBody);
-      navigation.replace('CinemasList');
-      // Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
-    } catch (error) {
-      console.error('Error al crear el cine:', error);
-    }
-  } else {
+        console.log('Cine creado:', responseBody);
+        navigation.replace('CinemasList');
+        // Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
+      } catch (error) {
+        console.error('Error al crear el cine:', error);
+      }
+    } else {
       console.log(errors);
 
       toast.show({
@@ -93,13 +98,13 @@ const crearCine = async (nombreCine: string, direccionCine: string, userId: stri
         duration: 3000,
         placement: 'top',
       });
+    }
   };
-};
 
   const handleCrearCine = () => {
     crearCine(formData.name, formData.location, userId);
     navigation.replace('CinemasList', {userId: userId});
-  }
+  };
 
   return (
     <KeyboardAwareScrollView>
@@ -108,8 +113,7 @@ const crearCine = async (nombreCine: string, direccionCine: string, userId: stri
         alignItems="center"
         justifyContent="space-around"
         height="100%">
-        <Center>
-        </Center>
+        <Center />
         <Center w="100%" pt={50}>
           <Image
             alt="ScreenSpace"
@@ -161,4 +165,4 @@ const crearCine = async (nombreCine: string, direccionCine: string, userId: stri
       </VStack>
     </KeyboardAwareScrollView>
   );
-};
+}

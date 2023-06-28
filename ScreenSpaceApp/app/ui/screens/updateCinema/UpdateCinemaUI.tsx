@@ -1,14 +1,23 @@
-import { Center, FormControl, Input, Image, VStack, useToast, Pressable, Icon } from 'native-base';
-import React, { useState } from 'react';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase, useNavigation,useRoute } from '@react-navigation/native';
+import {
+  Center,
+  FormControl,
+  Input,
+  Image,
+  VStack,
+  useToast,
+  Pressable,
+  Icon,
+} from 'native-base';
+import React, {useState} from 'react';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import I18n from '../../../assets/localization/I18n';
 import ButtonDanger from '../../components/ButtonDanger';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import OpenMapsButton from '../../components/OpenMapsButton';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Linking } from 'react-native';
+import {Linking} from 'react-native';
 import ky from 'ky';
 
 const UpdateCinemaUI = ({}) => {
@@ -17,7 +26,7 @@ const UpdateCinemaUI = ({}) => {
   const [show, setShow] = React.useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [formData, setData] = React.useState({ name: '', address: '' });
+  const [formData, setData] = React.useState({name: '', address: ''});
   const route = useRoute();
   const [name, setName] = React.useState('');
   const [address, setAddress] = React.useState('');
@@ -34,11 +43,10 @@ const UpdateCinemaUI = ({}) => {
   const traerDatos = async () => {
     const respuesta = await ky.get(
       `https://screenspace.azurewebsites.net/cinemas/${id}`,
-      {
-      },
+      {},
     );
     const responseBody = await respuesta.json();
-    console.log(responseBody)
+    console.log(responseBody);
     setData({
       ...formData,
       name: responseBody.name,
@@ -69,15 +77,17 @@ const UpdateCinemaUI = ({}) => {
         location: address,
       };
     }
-    const respuesta = await ky.put(`https://screenspace.azurewebsites.net/cinemas/${id}`, {
-      json: data,
-    });
+    const respuesta = await ky.put(
+      `https://screenspace.azurewebsites.net/cinemas/${id}`,
+      {
+        json: data,
+      },
+    );
     traerDatos();
   };
 
-  if (show == false){
-    traerDatos(),
-    setShow(true)
+  if (show == false) {
+    traerDatos(), setShow(true);
   }
   return (
     <KeyboardAwareScrollView>
@@ -114,15 +124,22 @@ const UpdateCinemaUI = ({}) => {
               placeholder={formData.address}
               backgroundColor={'#21242D'}
               onChangeText={value => setAddress(value)}
-              InputRightElement={<Pressable onPress={() => openMaps()}>
-                <Icon as={<MaterialCommunityIcons name='google-maps' />} size={5} mr="2" color="muted.400" />
-              </Pressable>}
+              InputRightElement={
+                <Pressable onPress={() => openMaps()}>
+                  <Icon
+                    as={<MaterialCommunityIcons name="google-maps" />}
+                    size={5}
+                    mr="2"
+                    color="muted.400"
+                  />
+                </Pressable>
+              }
             />
           </FormControl>
         </Center>
         <Center w={'100%'}>
           <ButtonDanger
-            onPress={() => navigation.navigate('ConfirmDeleteCinema',{id:id})}
+            onPress={() => navigation.navigate('ConfirmDeleteCinema', {id: id})}
             title={I18n.t('delete')}
             width="150px"
           />

@@ -1,15 +1,14 @@
-import { Center, VStack, useToast } from 'native-base';
-import React, { useContext } from 'react';
+import {Center, VStack, useToast} from 'native-base';
+import React, {useContext} from 'react';
 import DropdownMenu from '../../components/DropdownMenu';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ParamListBase} from '@react-navigation/native';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { palette } from '../../styles/theme';
+import {Calendar, LocaleConfig} from 'react-native-calendars';
+import {palette} from '../../styles/theme';
 import I18n from '../../../assets/localization/I18n';
 import ky from 'ky';
-import { UserContext } from '../../../UserContext';
-
+import {UserContext} from '../../../UserContext';
 
 type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -17,17 +16,21 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
+const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
   /*TEMP*/
-  const cinemaOptions = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo' ];
-  const movieOptions = ['Oppenheimer', 'The Whale', 'Harry El sucio Potter', 'Interstellar'];
+  const cinemaOptions = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo'];
+  const movieOptions = [
+    'Oppenheimer',
+    'The Whale',
+    'Harry El sucio Potter',
+    'Interstellar',
+  ];
   const auditoriumOptions = ['Sala 1', 'Sala2', 'Sala 3', 'Sala Monster'];
   const [errors, setErrors] = React.useState({});
   const toast = useToast();
   const [cinemasFlag, setCinemasFlag] = React.useState(0);
   const [auditoriumsFlag, setAuditoriumsFlag] = React.useState(0);
   const [cinemaId, setCinemaId] = React.useState('');
-
 
   const user = useContext(UserContext);
   const userId = user.user.id;
@@ -73,7 +76,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
     catch (err) {
       console.error('error: ', err);
     }
-  }  
+  }
 
 
   const getAuditoriums = async (cinemaId: any) => {
@@ -119,7 +122,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
         // Realizar la solicitud POST al backend utilizando ky
         const response = await ky.post(`https://screenspace.azurewebsites.net/movies/${movieId}/screenings`, {
           json: {
-           
+
           },
         });
         const responseBody = await response.json();
@@ -140,7 +143,6 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
     };
   }; */
 
-
   const validate = () => {
     setErrors({});
     // Name
@@ -151,7 +153,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
       }));
       return false;
     }
-    // 
+    //
     if (!selectedAuditorium) {
       setErrors(prevErrors => ({
         ...prevErrors,
@@ -180,13 +182,14 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
 
   const handleCreateScreening = async () => {
     //createScreening(selectedCinema, selectedAuditorium, selectedMovie);
-    validate() ? navigation.replace('ScreeningList', { movieID: 'Opennheimer' }) : 
-    toast.show({
-      description: Object.values(errors).join('\n'),
-      title: 'Error',
-      duration: 3000,
-      placement: 'top',
-    });
+    validate()
+      ? navigation.replace('ScreeningList', {movieID: 'Opennheimer'})
+      : toast.show({
+          description: Object.values(errors).join('\n'),
+          title: 'Error',
+          duration: 3000,
+          placement: 'top',
+        });
   };
 
   return (
@@ -217,31 +220,28 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
           onChange={handleMovieChange}
         />
       </Center>
-      <Center p='2'>
+      <Center p="2">
         <Calendar
           style={{
             borderWidth: 1,
             borderRadius: 12,
             backgroundColor: palette.blackLight,
             borderColor: palette.blackLight,
-            width: 362
+            width: 362,
           }}
           theme={{
-            textSectionTitleColor: palette.green
+            textSectionTitleColor: palette.green,
           }}
           onDayPress={day => {
             setSelectedDay(day.dateString);
           }}
           markedDates={{
-            [selectedDay]: { selected: true, disableTouchEvent: true }
+            [selectedDay]: {selected: true, disableTouchEvent: true},
           }}
         />
       </Center>
       <Center width="100%">
-        <ButtonPrimary
-          title="Create screening"
-          onPress={undefined}
-        />
+        <ButtonPrimary title="Create screening" onPress={undefined} />
       </Center>
     </VStack>
   );

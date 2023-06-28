@@ -75,7 +75,7 @@ const EnterResetCodeScreen = ({route}) => {
       try {
         console.log('!! SUBMITING RESET CODE');
         const response = await ky
-          .post(`https://screenspace.azurewebsites.net/users/confirmcode`, {
+          .post('https://screenspace.azurewebsites.net/users/confirmcode', {
             json: {
               email: emailAddress,
               token: resetCode,

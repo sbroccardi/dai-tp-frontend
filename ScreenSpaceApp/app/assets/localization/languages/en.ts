@@ -1,5 +1,4 @@
 export default {
-
   changePassword: 'Change password',
 
   cinema: 'Cinema',
@@ -116,12 +115,11 @@ export default {
 
   privacy: 'Privacy Policy',
 
-  createAuditoriums:'Create auditoriums',
+  createAuditoriums: 'Create auditoriums',
 
-  auditoriums:'Auditoriums',
+  auditoriums: 'Auditoriums',
 
-  createScreening:'Create screening',
+  createScreening: 'Create screening',
 
   screenings: 'Screenings',
-
 };

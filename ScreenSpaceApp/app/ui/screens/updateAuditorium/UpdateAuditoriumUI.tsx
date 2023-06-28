@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 import {View, Switch} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase, useNavigation,useRoute} from '@react-navigation/native';
+import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import I18n from '../../../assets/localization/I18n';
 import ButtonDanger from '../../components/ButtonDanger';
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -25,12 +25,11 @@ const UpdateAuditoriumUI = ({}) => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [formData, setData] = React.useState({name: '', rows: '', seats: ''});
   const route = useRoute();
-  const params = route.params; 
-  const [name, setName] = React.useState(" ");
-  const [rows, setRows] = React.useState(" ");
-  const [seats, setSeats] = React.useState(" ");
-  const [bandera,setBandera] = React.useState(false);
-
+  const params = route.params;
+  const [name, setName] = React.useState(' ');
+  const [rows, setRows] = React.useState(' ');
+  const [seats, setSeats] = React.useState(' ');
+  const [bandera, setBandera] = React.useState(false);
 
   const traerDatos = async () => {
     const respuesta = await ky.get(
@@ -41,83 +40,81 @@ const UpdateAuditoriumUI = ({}) => {
       ...formData,
       name: responseBody.name,
       rows: responseBody.rows,
-      seats:responseBody.seatsPerRow
+      seats: responseBody.seatsPerRow,
     });
   };
   const updatearDatos = async () => {
     let data = {
       name: name,
       rows: rows,
-      seats:seats
-
+      seats: seats,
     };
-    if (name === '' && rows === '' && seats!== '') {
+    if (name === '' && rows === '' && seats !== '') {
       data = {
         name: formData.name,
         rows: formData.rows,
-        seats:seats
+        seats: seats,
       };
     }
     if (name === '' && rows !== '' && seats === '') {
       data = {
         name: formData.name,
         rows: rows,
-        seats:formData.seats
+        seats: formData.seats,
       };
     }
     if (name !== '' && rows === '' && seats === '') {
       data = {
         name: name,
         rows: formData.rows,
-        seats:formData.seats
+        seats: formData.seats,
       };
     }
     if (name === '' && rows !== '' && seats !== '') {
       data = {
         name: formData.name,
         rows: rows,
-        seats:seats
+        seats: seats,
       };
     }
     if (name !== '' && rows === '' && seats !== '') {
       data = {
         name: name,
         rows: formData.rows,
-        seats: seats
+        seats: seats,
       };
     }
     if (name !== '' && rows !== '' && seats === '') {
       data = {
         name: name,
         rows: rows,
-        seats:formData.seats
+        seats: formData.seats,
       };
     }
     if (name !== '' && rows !== '' && seats !== '') {
       data = {
         name: name,
         rows: rows,
-        seats:seats
+        seats: seats,
       };
     }
-    try{
-    const respuesta = await ky.put(`http://192.168.0.92:3000/cinemas/${params.cinemaID}/auditoriums/${params.id}`, {
-      json: data,
-    });
-    traerDatos()
-    }
-    catch(error){
-      console.log(error)
+    try {
+      const respuesta = await ky.put(
+        `http://192.168.0.92:3000/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
+        {
+          json: data,
+        },
+      );
+      traerDatos();
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  if (bandera == false){
-    traerDatos()
-    setBandera(true)
+  if (bandera == false) {
+    traerDatos();
+    setBandera(true);
   }
-
-
-
 
   return (
     <KeyboardAwareScrollView>
@@ -186,7 +183,12 @@ const UpdateAuditoriumUI = ({}) => {
             />
           </View>
           <ButtonDanger
-            onPress={() => navigation.navigate('ConfirmDeleteAuditorium',{id:params.id,cinemaid:params.cinemaID})}
+            onPress={() =>
+              navigation.navigate('ConfirmDeleteAuditorium', {
+                id: params.id,
+                cinemaid: params.cinemaID,
+              })
+            }
             title={I18n.t('delete')}
             width="150px"
           />

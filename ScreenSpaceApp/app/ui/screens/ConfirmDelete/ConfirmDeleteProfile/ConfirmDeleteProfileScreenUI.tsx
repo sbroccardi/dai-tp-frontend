@@ -16,11 +16,14 @@ export default function ConfirmDeleteProfileScreenUI() {
 
   const salir = async () => {
     const authToken = user.user.token;
-    const respuesta = await ky.delete('https://screenspace.azurewebsites.net/users/', {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
+    const respuesta = await ky.delete(
+      'https://screenspace.azurewebsites.net/users/',
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
       },
-    });
+    );
     setUser(null);
   };
   return (

@@ -30,11 +30,16 @@ const CardCinema = (props: {
             </Box>
           </Box>
           <Box>
-            <Text style={styles.labelText}>{cinemaAuditoriumsAmount} {I18n.t('auditoriums')}</Text>
+            <Text style={styles.labelText}>
+              {cinemaAuditoriumsAmount} {I18n.t('auditoriums')}
+            </Text>
           </Box>
         </VStack>
         <VStack style={{flex: 0.5}}>
-          <Button onPress={props.onPressEdit} variant="outline" colorScheme="white">
+          <Button
+            onPress={props.onPressEdit}
+            variant="outline"
+            colorScheme="white">
             <Icon name="pencil-outline" size={15} color="white" />
           </Button>
         </VStack>

@@ -287,10 +287,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   toolbarPublicUserContainer: {
-    /*esto define el comportamiento de la posicion 
-        y tamaño del toolbar con respecto a los 
-        demas componentes de una pantalla, 
-        dentro de un flex que puede tener cualquier  
+    /*esto define el comportamiento de la posicion
+        y tamaño del toolbar con respecto a los
+        demas componentes de una pantalla,
+        dentro de un flex que puede tener cualquier
         otro tipo de estructura */
     flex: 0.15,
     justifyContent: 'center',

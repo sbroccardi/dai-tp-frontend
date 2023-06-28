@@ -8,8 +8,8 @@
     "android-local": "ENVFILE=.env.local react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "lint-fix": "eslint \"{app}/**/*.ts\" --fix",
-    "format": "prettier --write \"app/**/*.ts\"",
+    "lint-fix": "eslint \"app/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"app/**/*.{ts,tsx}\"",
     "start": "react-native start",
     "test": "jest",
     "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd .."

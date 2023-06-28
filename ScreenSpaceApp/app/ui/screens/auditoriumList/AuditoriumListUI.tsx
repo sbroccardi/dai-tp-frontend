@@ -1,13 +1,13 @@
-import { Center, VStack, Text, ScrollView } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import {Center, VStack, Text, ScrollView} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import CardAuditorium from '../../components/CardAuditorium';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import SearchBar from '../../components/SearchBar';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ky from 'ky';
 import I18n from '../../../assets/localization/I18n';
-import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Config from 'react-native-config';
 
 export default function AuditoriumListUI() {
@@ -20,9 +20,8 @@ export default function AuditoriumListUI() {
       name: '',
       rows: 0,
       SeatsPerRow: 0,
-    }
+    },
   ]);
-
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [flag, setFlag] = React.useState(0);
@@ -35,24 +34,32 @@ export default function AuditoriumListUI() {
         `https://screenspace.azurewebsites.net/cinemas/${params.id}/auditoriums`,
       );
       const responseBody = await response.json();
-      const auditoriumsData = responseBody.filter((document: { cineId: any; }) => document.cineId === params.id).map((document: { _id: any, cinemaId: any; name: any; rows: any; seatsPerRow: any }) => ({
-        id: document._id,
-        cinemaId: document.cinemaId,
-        name: document.name,
-        rows: document.rows,
-        seatsPerRow: document.seatsPerRow,
-      }));
+      const auditoriumsData = responseBody
+        .filter((document: {cineId: any}) => document.cineId === params.id)
+        .map(
+          (document: {
+            _id: any;
+            cinemaId: any;
+            name: any;
+            rows: any;
+            seatsPerRow: any;
+          }) => ({
+            id: document._id,
+            cinemaId: document.cinemaId,
+            name: document.name,
+            rows: document.rows,
+            seatsPerRow: document.seatsPerRow,
+          }),
+        );
       setAuditoriumsData(auditoriumsData);
-
-    }
-    catch (err) {
+    } catch (err) {
       console.error('error: ', err);
     }
   };
 
   if (flag == 0) {
-    getAuditoriums()
-  };
+    getAuditoriums();
+  }
 
   const renderAuditoriums = () => {
     const elements = [];
@@ -60,11 +67,22 @@ export default function AuditoriumListUI() {
       const auditorium = auditoriumsData[count];
       elements.push(
         <Center marginBottom="4">
-          <CardAuditorium auditoriumName={auditorium.name}
+          <CardAuditorium
+            auditoriumName={auditorium.name}
             auditoriumSize={`${auditorium.rows} rows of ${auditorium.seatsPerRow} seats`}
             auditoriumAvailability="Disponible"
-            onPressCard={() => navigation.navigate('UpdateAuditorium', { auditoriumName: auditorium.name, rows: auditorium.rows, seats: auditorium.seatsPerRow, cinemaID: auditorium.cinemaId, id: auditorium.id })} />
-        </Center>);
+            onPressCard={() =>
+              navigation.navigate('UpdateAuditorium', {
+                auditoriumName: auditorium.name,
+                rows: auditorium.rows,
+                seats: auditorium.seatsPerRow,
+                cinemaID: auditorium.cinemaId,
+                id: auditorium.id,
+              })
+            }
+          />
+        </Center>,
+      );
     }
     return elements;
   };
@@ -80,16 +98,19 @@ export default function AuditoriumListUI() {
       <Center>
         <ScrollView maxH="450">
           <VStack space={10} alignItems="center" height="200%">
-            <Center>
-              {
-                renderAuditoriums()
-              }
-            </Center>
+            <Center>{renderAuditoriums()}</Center>
           </VStack>
         </ScrollView>
       </Center>
       <Center width="100%">
-        <ButtonPrimary title={I18n.t('createAuditoriums')} onPress={() => navigation.replace('CreateAuditorium',  {params: { cinemaId: params.cineId, cinemaName: params.cinemaName } })} />
+        <ButtonPrimary
+          title={I18n.t('createAuditoriums')}
+          onPress={() =>
+            navigation.replace('CreateAuditorium', {
+              params: {cinemaId: params.cineId, cinemaName: params.cinemaName},
+            })
+          }
+        />
       </Center>
     </VStack>
   );

@@ -1,5 +1,4 @@
 export default {
-
   changePassword: 'Cambiar contraseña',
 
   cinema: 'Cine',
@@ -107,5 +106,4 @@ export default {
   createScreening: 'Crear funcion',
 
   screenings: 'Funciones',
-
 };

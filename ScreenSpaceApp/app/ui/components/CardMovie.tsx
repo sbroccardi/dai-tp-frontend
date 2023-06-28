@@ -14,7 +14,12 @@ import StarRating from 'react-native-star-rating-widget';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const CardMovie = (props: {movieID: string, movieName: string, movieAge: string, movieRating: any }) => {
+const CardMovie = (props: {
+  movieID: string;
+  movieName: string;
+  movieAge: string;
+  movieRating: any;
+}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
     <Pressable

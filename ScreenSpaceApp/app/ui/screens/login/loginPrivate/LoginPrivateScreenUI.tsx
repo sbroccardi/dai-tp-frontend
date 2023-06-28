@@ -79,7 +79,7 @@ const LoginPrivateScreenUI = () => {
 
   const signIn = async () => {
     const response = await ky.post(
-      `https://screenspace.azurewebsites.net/auths/loginPrivate`,
+      'https://screenspace.azurewebsites.net/auths/loginPrivate',
       {
         json: {email: formData.email, password: formData.password},
       },
@@ -87,7 +87,7 @@ const LoginPrivateScreenUI = () => {
     const responseBody = await response.json();
     setUser({
       token: responseBody.accessToken,
-      type: 'privado', 
+      type: 'privado',
       ...formData,
       id: responseBody.id,
     });

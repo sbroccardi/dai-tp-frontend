@@ -4,8 +4,8 @@ import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import CardScreeningPrivate from '../../components/CardScreeningPrivate';
 import DropdownMenu from '../../components/DropdownMenu';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {ParamListBase} from '@react-navigation/native';
 
 type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -15,7 +15,7 @@ type Props = {
 
 export default function ListScreeningUIPrivate({route, navigation}) {
   const {movieID} = route.params;
-  const cinemaOptions = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo' ];
+  const cinemaOptions = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo'];
   const [selectedCinema, setSelectedCinema] = React.useState('');
   const handleCinemaChange = (value: any) => {
     console.log(value);
@@ -71,7 +71,10 @@ export default function ListScreeningUIPrivate({route, navigation}) {
         </ScrollView>
       </Center>
       <Center w="100%">
-        <ButtonPrimary title="Create screening" onPress={() => navigation.navigate('CreateScreeningStack')} />
+        <ButtonPrimary
+          title="Create screening"
+          onPress={() => navigation.navigate('CreateScreeningStack')}
+        />
       </Center>
     </VStack>
   );
