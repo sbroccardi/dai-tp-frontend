@@ -38,7 +38,7 @@ const ProfilePublicScreenUI = ({}) => {
       data.append('name', 'Image Upload');
       data.append('file_attachment', res);
       const response = await ky.post(
-        `${Config.API_BASE_URL}/api/uploadAvatar`,
+        `${Config.API_BASE_URL}/uploadAvatar`,
         {
           body: data,
         },

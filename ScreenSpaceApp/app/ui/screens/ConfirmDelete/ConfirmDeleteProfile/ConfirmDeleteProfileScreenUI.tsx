@@ -17,7 +17,7 @@ export default function ConfirmDeleteProfileScreenUI() {
   const salir = async () => {
     const authToken = user.user.token;
     const respuesta = await ky.delete(
-      'https://screenspace.azurewebsites.net/users/',
+      `${Config.API_BASE_URL}/users`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,

@@ -33,7 +33,7 @@ const UpdateAuditoriumUI = ({}) => {
 
   const traerDatos = async () => {
     const respuesta = await ky.get(
-      `http://192.168.0.92:3000/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
+      `${Config.API_BASE_URL}/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
     );
     const responseBody = await respuesta.json();
     setData({
@@ -100,7 +100,7 @@ const UpdateAuditoriumUI = ({}) => {
     }
     try {
       const respuesta = await ky.put(
-        `http://192.168.0.92:3000/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
+        `${Config.API_BASE_URL}/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
         {
           json: data,
         },

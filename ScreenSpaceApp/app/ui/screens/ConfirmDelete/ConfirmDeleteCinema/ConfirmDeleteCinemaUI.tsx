@@ -15,7 +15,7 @@ export default function ConfirmDeleteCinemaUI() {
   const borrar = async () => {
     try {
       const respuesta = await ky.delete(
-        `https://screenspace.azurewebsites.net/cinemas/${id}`,
+        `${Config.API_BASE_URL}/cinemas/${id}`,
       );
       console.log(respuesta);
       navigation.replace('CinemasList');

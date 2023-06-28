@@ -63,7 +63,7 @@ const ProfilePrivateScreenUI = ({}) => {
   const traerDatos = async () => {
     const authToken = user.user.token;
     const respuesta = await ky.get(
-      `https://screenspace.azurewebsites.net/users/${user.user.id}`,
+      `${Config.API_BASE_URL}/users/${user.user.id}`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -104,7 +104,7 @@ const ProfilePrivateScreenUI = ({}) => {
     }
     const authToken = user.user.token;
     const respuesta = await ky.put(
-      'https://screenspace.azurewebsites.net/users',
+      `${Config.API_BASE_URL}/users`,
       {
         json: data,
         headers: {

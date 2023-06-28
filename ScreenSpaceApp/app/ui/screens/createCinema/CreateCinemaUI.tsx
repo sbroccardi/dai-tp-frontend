@@ -72,7 +72,7 @@ export default function CreateCinemaUI() {
       try {
         // Realizar la solicitud POST al backend utilizando ky
         const response = await ky.post(
-          'https://screenspace.azurewebsites.net/cinemas',
+          `${Config.API_BASE_URL}/cinemas`,
           {
             json: {
               userId: `${userId}`,

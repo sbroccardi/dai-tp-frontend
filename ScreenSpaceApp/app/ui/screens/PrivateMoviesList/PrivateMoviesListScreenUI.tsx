@@ -32,7 +32,7 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({navigation}) => {
     try {
       //const cinemaId = user.user.id;
       const response = await ky.get(
-        'https://screenspace.azurewebsites.net/movies',
+        `${Config.API_BASE_URL}/movies`,
       );
       const responseBody = await response.json();
       console.log(responseBody);

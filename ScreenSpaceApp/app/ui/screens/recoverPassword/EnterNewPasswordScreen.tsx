@@ -60,7 +60,7 @@ const EnterNewPasswordScreen = ({route}) => {
       try {
         console.log('!! SUBMITING NEW PASSWORD');
         const response = await ky
-          .post('https://screenspace.azurewebsites.net/users/changepassword', {
+          .post(`${Config.API_BASE_URL}/users/changepassword`, {
             json: {
               userId: userID,
               newPassword: formData.password,

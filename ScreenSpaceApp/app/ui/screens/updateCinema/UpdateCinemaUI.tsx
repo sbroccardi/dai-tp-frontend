@@ -42,7 +42,7 @@ const UpdateCinemaUI = ({}) => {
 
   const traerDatos = async () => {
     const respuesta = await ky.get(
-      `https://screenspace.azurewebsites.net/cinemas/${id}`,
+      `${Config.API_BASE_URL}/cinemas/${id}`,
       {},
     );
     const responseBody = await respuesta.json();
@@ -78,7 +78,7 @@ const UpdateCinemaUI = ({}) => {
       };
     }
     const respuesta = await ky.put(
-      `https://screenspace.azurewebsites.net/cinemas/${id}`,
+      `${Config.API_BASE_URL}/cinemas/${id}`,
       {
         json: data,
       },

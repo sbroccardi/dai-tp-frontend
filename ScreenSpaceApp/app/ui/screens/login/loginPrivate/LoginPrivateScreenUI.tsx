@@ -79,7 +79,7 @@ const LoginPrivateScreenUI = () => {
 
   const signIn = async () => {
     const response = await ky.post(
-      'https://screenspace.azurewebsites.net/auths/loginPrivate',
+      `${Config.API_BASE_URL}/auths/loginPrivate`,
       {
         json: {email: formData.email, password: formData.password},
       },

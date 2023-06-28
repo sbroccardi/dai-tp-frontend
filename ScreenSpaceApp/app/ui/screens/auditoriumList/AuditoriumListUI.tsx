@@ -31,7 +31,7 @@ export default function AuditoriumListUI() {
     try {
       //const cinemaId = user.user.id;
       const response = await ky.get(
-        `https://screenspace.azurewebsites.net/cinemas/${params.id}/auditoriums`,
+        `${Config.API_BASE_URL}/cinemas/${params.id}/auditoriums`,
       );
       const responseBody = await response.json();
       const auditoriumsData = responseBody

@@ -84,7 +84,7 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
     try {
       //const cinemaId = user.user.id;
       const response = await ky.get(
-        `https://screenspace.azurewebsites.net/cinemas/${cinemaId}/auditoriums`,
+        `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums`,
       );
       const responseBody = await response.json();
       const auditoriumsData = responseBody.filter((document: { cineId: any; }) => document.cineId == cinemaId).map((document: { name: any; }) => ({
@@ -120,7 +120,7 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
     if (datosValidos) {
       try {
         // Realizar la solicitud POST al backend utilizando ky
-        const response = await ky.post(`https://screenspace.azurewebsites.net/movies/${movieId}/screenings`, {
+        const response = await ky.post(`${Config.API_BASE_URL}/movies/${movieId}/screenings`, {
           json: {
 
           },

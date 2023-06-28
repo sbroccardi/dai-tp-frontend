@@ -32,7 +32,7 @@ const CinemaListUI: React.FC<Props> = ({route, navigation}) => {
     try {
       const userId = user.user.id;
       const response = await ky.get(
-        'https://screenspace.azurewebsites.net/cinemas',
+        `${Config.API_BASE_URL}/cinemas`,
       );
       const responseBody = await response.json();
       const cinemasData = responseBody

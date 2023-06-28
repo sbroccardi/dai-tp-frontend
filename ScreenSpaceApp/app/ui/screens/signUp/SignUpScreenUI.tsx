@@ -93,9 +93,6 @@ const SignUpScreenUI = ({}) => {
   const onSubmit = () => {
     console.log('!! VALIDATING');
     if (validate()) {
-      console.log(
-        '!! VALIDATE OK, SUBMITING TO https://screenspace.azurewebsites.net/users',
-      );
       signUp();
     } else {
       console.log(errors);
@@ -111,7 +108,7 @@ const SignUpScreenUI = ({}) => {
 
   const signUp = async () => {
     const response = await ky.post(
-      'https://screenspace.azurewebsites.net/users',
+      `${Config.API_BASE_URL}/users`,
       {
         json: {
           avatar: imageUrl,
@@ -185,7 +182,7 @@ const SignUpScreenUI = ({}) => {
 
     try {
       console.log(`!! SUBMITING TO ${Config.CLOUDINARY_URL} => ${formData}`);
-      const response = await ky.post('https://screenspace.azurewebsites.net', {
+      const response = await ky.post(`${Config.CLOUDINARY_URL}`, {
         body: formData,
       });
       const data = await response.json();

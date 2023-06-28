@@ -70,7 +70,7 @@ export default function CreateAuditoriumUI({route}) {
       try {
         // Realizar la solicitud POST al backend utilizando ky
         const response = await ky.post(
-          `https://screenspace.azurewebsites.net/cinemas/${cineId}/auditoriums`,
+          `${Config.API_BASE_URL}/cinemas/${cineId}/auditoriums`,
           {
             json: {
               cinemaId: `${cineId}`,
