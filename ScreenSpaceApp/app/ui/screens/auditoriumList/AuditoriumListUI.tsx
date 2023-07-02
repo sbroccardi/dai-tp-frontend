@@ -110,9 +110,7 @@ export default function AuditoriumListUI() {
         <ButtonPrimary
           title={I18n.t('createAuditoriums')}
           onPress={() =>
-            navigation.replace('CreateAuditorium', {
-              params: {cinemaId: cinemaId, cinemaName: cinemaName},
-            })
+            navigation.replace('CreateAuditorium', {cinemaId: cinemaId, cinemaName: cinemaName})
           }
         />
       </Center>

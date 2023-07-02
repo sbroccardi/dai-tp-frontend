@@ -61,6 +61,7 @@ export default function CreateAuditoriumUI() {
   };
 
   const crearAuditorio = async (
+    cinemaId: string,
     nombreAuditorio: string,
     rows: string,
     seats: string,
@@ -74,7 +75,7 @@ export default function CreateAuditoriumUI() {
           `${Config.API_BASE_URL}/cinemas/${cineId}/auditoriums`,
           {
             json: {
-              cinemaId: `${cineId}`,
+              cinemaId: `${cinemaId}`,
               name: `${nombreAuditorio}`,
               rows: `${rows}`,
               seatsPerRow: `${seats}`,
@@ -101,9 +102,9 @@ export default function CreateAuditoriumUI() {
   };
 
   const handleCrearAuditorio = () => {
-    crearAuditorio(formData.nameAuditorium, formData.rows, formData.seats);
+    crearAuditorio(cineId, formData.nameAuditorium, formData.rows, formData.seats);
     navigation.replace('AuditoriumList', {
-      params: {cinemaName: cinemaName, cinemaId: cineId},
+      cinemaName: cinemaName, cinemaId: cineId
     });
   };
 
