@@ -3,7 +3,7 @@ import React from 'react';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Config from 'react-native-config';
@@ -11,7 +11,7 @@ import ky from 'ky';
 import {UserContext} from '../../../UserContext';
 import {useContext} from 'react';
 
-export default function CreateAuditoriumUI({route}) {
+export default function CreateAuditoriumUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [formData, setData] = React.useState({
@@ -21,8 +21,9 @@ export default function CreateAuditoriumUI({route}) {
     seats: '',
   });
 
-  const cineId = route.params;
-  const cinemaName = route.params;
+  const route = useRoute();
+  const cineId = route.params.cinemaId;
+  const cinemaName = route.params.cinemaName;
 
   const [errors, setErrors] = React.useState({});
 

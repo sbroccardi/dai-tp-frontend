@@ -11,17 +11,20 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Config from 'react-native-config';
 
 export default function AuditoriumListUI() {
-  const route = useRoute();
-  const params = route.params;
   const [auditoriumsData, setAuditoriumsData] = useState([
     {
       id: '',
       cinemaId: '',
       name: '',
       rows: 0,
-      SeatsPerRow: 0,
+      seatsPerRow: 0,
+      available: true,
     },
   ]);
+
+  const route = useRoute();
+  const cinemaId = route.params.cinemaId;
+  const cinemaName = route.params.cinemaName;
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [flag, setFlag] = React.useState(0);
@@ -31,11 +34,11 @@ export default function AuditoriumListUI() {
     try {
       //const cinemaId = user.user.id;
       const response = await ky.get(
-        `${Config.API_BASE_URL}/cinemas/${params.id}/auditoriums`,
+        `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums`,
       );
       const responseBody = await response.json();
       const auditoriumsData = responseBody
-        .filter((document: {cineId: any}) => document.cineId === params.id)
+        .filter((document: {cinemaId: any}) => document.cinemaId == cinemaId)
         .map(
           (document: {
             _id: any;
@@ -76,8 +79,9 @@ export default function AuditoriumListUI() {
                 auditoriumName: auditorium.name,
                 rows: auditorium.rows,
                 seats: auditorium.seatsPerRow,
-                cinemaID: auditorium.cinemaId,
-                id: auditorium.id,
+                cinemaId: auditorium.cinemaId,
+                auditoriumId: auditorium.id,
+                available: auditorium.available,
               })
             }
           />
@@ -90,7 +94,7 @@ export default function AuditoriumListUI() {
   return (
     <VStack space={4} alignItems="center" height="100%">
       <Center>
-        <Text>{params.cinemaName}</Text>
+        <Text>{cinemaName}</Text>
       </Center>
       <Center>
         <SearchBar />
@@ -107,7 +111,7 @@ export default function AuditoriumListUI() {
           title={I18n.t('createAuditoriums')}
           onPress={() =>
             navigation.replace('CreateAuditorium', {
-              params: {cinemaId: params.cineId, cinemaName: params.cinemaName},
+              params: {cinemaId: cinemaId, cinemaName: cinemaName},
             })
           }
         />

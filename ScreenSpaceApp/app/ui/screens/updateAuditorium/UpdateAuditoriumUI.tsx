@@ -7,7 +7,7 @@ import {
   VStack,
   useToast,
 } from 'native-base';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Switch} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
@@ -17,104 +17,52 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import {styles} from '../../styles/theme';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ky from 'ky';
+import Config from 'react-native-config';
 
 const UpdateAuditoriumUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [formData, setData] = React.useState({name: '', rows: '', seats: ''});
+  const [formData, setData] = React.useState({name: '', rows: '', seats: '', available: true});
   const route = useRoute();
-  const params = route.params;
-  const [name, setName] = React.useState(' ');
-  const [rows, setRows] = React.useState(' ');
-  const [seats, setSeats] = React.useState(' ');
-  const [bandera, setBandera] = React.useState(false);
-
-  const traerDatos = async () => {
-    const respuesta = await ky.get(
-      `${Config.API_BASE_URL}/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
+  const cinemaId = route.params.cinemaId;
+  const auditoriumId = route.params.auditoriumId;
+  useEffect(() => {  
+    console.log(cinemaId);
+    console.log(auditoriumId);
+    const respuesta = ky.get(
+      `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums/${auditoriumId}`,
     );
-    const responseBody = await respuesta.json();
+    const responseBody = respuesta.json();
+    console.log(responseBody);
     setData({
       ...formData,
       name: responseBody.name,
       rows: responseBody.rows,
       seats: responseBody.seatsPerRow,
+      available: responseBody.available,
     });
-  };
+  }, []);
+
   const updatearDatos = async () => {
     let data = {
-      name: name,
-      rows: rows,
-      seats: seats,
-    };
-    if (name === '' && rows === '' && seats !== '') {
-      data = {
-        name: formData.name,
-        rows: formData.rows,
-        seats: seats,
-      };
-    }
-    if (name === '' && rows !== '' && seats === '') {
-      data = {
-        name: formData.name,
-        rows: rows,
-        seats: formData.seats,
-      };
-    }
-    if (name !== '' && rows === '' && seats === '') {
-      data = {
-        name: name,
-        rows: formData.rows,
-        seats: formData.seats,
-      };
-    }
-    if (name === '' && rows !== '' && seats !== '') {
-      data = {
-        name: formData.name,
-        rows: rows,
-        seats: seats,
-      };
-    }
-    if (name !== '' && rows === '' && seats !== '') {
-      data = {
-        name: name,
-        rows: formData.rows,
-        seats: seats,
-      };
-    }
-    if (name !== '' && rows !== '' && seats === '') {
-      data = {
-        name: name,
-        rows: rows,
-        seats: formData.seats,
-      };
-    }
-    if (name !== '' && rows !== '' && seats !== '') {
-      data = {
-        name: name,
-        rows: rows,
-        seats: seats,
-      };
+      name: formData.name,
+      rows: formData.rows,
+      seats: formData.seats,
+      available: formData.available,
     }
     try {
       const respuesta = await ky.put(
-        `${Config.API_BASE_URL}/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
+        `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums/${auditoriumId}`,
         {
           json: data,
         },
       );
-      traerDatos();
     } catch (error) {
       console.log(error);
     }
   };
-
-  if (bandera == false) {
-    traerDatos();
-    setBandera(true);
-  }
 
   return (
     <KeyboardAwareScrollView>
@@ -140,7 +88,7 @@ const UpdateAuditoriumUI = ({}) => {
               inputMode="email"
               placeholder={formData.name}
               backgroundColor={'#21242D'}
-              onChangeText={value => setName(value)}
+              onChangeText={value => setData({...formData, name: value})}
             />
             {'\n'}
             {I18n.t('rows')}
@@ -148,9 +96,9 @@ const UpdateAuditoriumUI = ({}) => {
               size="md"
               keyboardType="email-address"
               inputMode="email"
-              placeholder={formData.rows.toString()}
+              placeholder={formData.rows}
               backgroundColor={'#21242D'}
-              onChangeText={value => setRows(value)}
+              onChangeText={value => setData({...formData, rows: value})}
             />
             {'\n'}
             {I18n.t('seatsRows')}
@@ -158,9 +106,9 @@ const UpdateAuditoriumUI = ({}) => {
               size="md"
               keyboardType="email-address"
               inputMode="email"
-              placeholder={formData.seats.toString()}
+              placeholder={formData.seats}
               backgroundColor={'#21242D'}
-              onChangeText={value => setSeats(value)}
+              onChangeText={value => setData({...formData, seats: value})}
             />
           </FormControl>
         </Center>
@@ -179,14 +127,14 @@ const UpdateAuditoriumUI = ({}) => {
               thumbColor={isEnabled ? 'white' : 'white'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
-              value={isEnabled}
+              value={formData.available}
             />
           </View>
           <ButtonDanger
             onPress={() =>
               navigation.navigate('ConfirmDeleteAuditorium', {
-                id: params.id,
-                cinemaid: params.cinemaID,
+                id: auditoriumId,
+                cinemaid: cinemaId,
               })
             }
             title={I18n.t('delete')}

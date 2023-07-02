@@ -1,4 +1,4 @@
-import {ParamListBase} from '@react-navigation/native';
+import {ParamListBase, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ky from 'ky';
 import {responseTypes} from 'ky/distribution/core/constants';
@@ -16,7 +16,7 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-const CinemaListUI: React.FC<Props> = ({route, navigation}) => {
+const CinemaListUI: React.FC<Props> = ({navigation}) => {
   const [cinemasFlag, setCinemasFlag] = React.useState(0);
   const [formData, setData] = React.useState([
     {
@@ -26,11 +26,11 @@ const CinemaListUI: React.FC<Props> = ({route, navigation}) => {
     },
   ]);
   const user = useContext(UserContext);
-
   const getCinemas = async () => {
     setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
       const userId = user.user.id;
+      console.log('UserId:' + userId)
       const response = await ky.get(
         `${Config.API_BASE_URL}/cinemas`,
       );
