@@ -72,7 +72,7 @@ const CinemaListUI: React.FC<Props> = ({navigation}) => {
             cinemaName={cine.name}
             cinemaAuditoriumsAmount={'2'}
             onPressEdit={() =>
-              navigation.navigate('UpdateCinema', {cinemaId: cine.id})
+              navigation.replace('UpdateCinema', {cinemaId: cine.id})
             }
             onPressCard={() =>
               navigation.navigate('AuditoriumList', {

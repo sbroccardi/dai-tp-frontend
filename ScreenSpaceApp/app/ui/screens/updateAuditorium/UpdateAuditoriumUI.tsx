@@ -28,6 +28,7 @@ const UpdateAuditoriumUI = ({}) => {
   const route = useRoute();
   const cinemaId = route.params.cinemaId;
   const auditoriumId = route.params.auditoriumId;
+  
   useEffect(() => {  
     console.log(cinemaId);
     console.log(auditoriumId);

@@ -106,4 +106,6 @@ export default {
   createScreening: 'Crear funcion',
 
   screenings: 'Funciones',
+  
+  cancel:'Cancelar'
 };

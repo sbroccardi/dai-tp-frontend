@@ -122,4 +122,5 @@ export default {
   createScreening: 'Create screening',
 
   screenings: 'Screenings',
+  cancel:'Cancel'
 };

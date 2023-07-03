@@ -8,7 +8,7 @@ import {
   Pressable,
   Icon,
 } from 'native-base';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import I18n from '../../../assets/localization/I18n';
@@ -20,6 +20,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Linking} from 'react-native';
 import ky from 'ky';
 import Config from 'react-native-config';
+import { UserContext } from '../../../UserContext';
 
 const UpdateCinemaUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -36,6 +37,8 @@ const UpdateCinemaUI = ({}) => {
     name: '',
     address: '',
   });
+  const user = useContext(UserContext);
+  const userId = user.user.id;
 
   const openMaps = () => {
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -87,7 +90,7 @@ const UpdateCinemaUI = ({}) => {
         json: data,
       },
     );
-    navigation.replace('CinemasList')
+    navigation.replace('CinemasList');
   };
 
   if (show == false) {
@@ -152,6 +155,13 @@ const UpdateCinemaUI = ({}) => {
           <ButtonPrimary
             onPress={updatearDatos}
             title={I18n.t('save')}
+            width="90%"
+          />
+        </Center>
+        <Center w={'100%'}>
+          <ButtonPrimary
+            onPress={()=>navigation.replace('CinemasList')}
+            title={I18n.t('cancel')}
             width="90%"
           />
         </Center>

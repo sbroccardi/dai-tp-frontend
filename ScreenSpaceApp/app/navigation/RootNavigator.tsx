@@ -171,11 +171,6 @@ function RootNavigator() {
           component={CreateCinemaStack}
           options={{headerShown: false}}
         />
-        <Stack.Screen
-          name="UpdateCinemaStack"
-          component={UpdateCinemaStack}
-          options={{headerShown: false}}
-        />
       </Stack.Navigator>
     );
   }
@@ -232,9 +227,6 @@ function RootNavigator() {
   }
 
   // eslint-disable-next-line react/no-unstable-nested-components
-  function UpdateCinemaStack({navigation}) {
-    return <Stack.Navigator />;
-  }
 
   // eslint-disable-next-line react/no-unstable-nested-components
   function ProfileStack({navigation}) {
