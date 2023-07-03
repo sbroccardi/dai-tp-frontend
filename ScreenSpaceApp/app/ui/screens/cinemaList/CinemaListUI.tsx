@@ -1,12 +1,12 @@
-import { ParamListBase } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {ParamListBase, useRoute} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ky from 'ky';
-import { responseTypes } from 'ky/distribution/core/constants';
-import { Center, ScrollView, Text, VStack } from 'native-base';
-import React, { useContext } from 'react';
+import {responseTypes} from 'ky/distribution/core/constants';
+import {Center, ScrollView, Text, VStack} from 'native-base';
+import React, {useContext} from 'react';
 import Config from 'react-native-config';
 import I18n from '../../../assets/localization/I18n';
-import { UserContext } from '../../../UserContext';
+import {UserContext} from '../../../UserContext';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import CardCinema from '../../components/CardCinema';
 
@@ -16,37 +16,38 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-const CinemaListUI: React.FC<Props> = ({ navigation }) => {
+const CinemaListUI: React.FC<Props> = ({navigation}) => {
   const [cinemasFlag, setCinemasFlag] = React.useState(0);
   const [formData, setData] = React.useState([
     {
       id: '',
       name: '',
       location: '',
-    }
+    },
   ]);
-  const user = useContext(UserContext)
-
+  const user = useContext(UserContext);
   const getCinemas = async () => {
     setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
       const userId = user.user.id;
+      console.log('UserId:' + userId)
       const response = await ky.get(
-        'http://192.168.1.82:3000/cinemas',
+        `${Config.API_BASE_URL}/cinemas`,
       );
       const responseBody = await response.json();
-      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: { _id: any; name: any; location: any;}) => ({
-        id: document._id,
-        name: document.name,
-        location: document.location,
-        
-      }));
+      const cinemasData = responseBody
+        .filter((document: {userId: any}) => document.userId == userId)
+        .map((document: {_id: any; name: any; location: any}) => ({
+          id: document._id,
+          name: document.name,
+          location: document.location,
+        }));
       setData(cinemasData);
-    }
-    catch (err) {
+    } catch (err) {
       console.error('error: ', err);
     }
-  }; cinemasFlag == 0 ? getCinemas() : undefined;
+  };
+  cinemasFlag == 0 ? getCinemas() : undefined;
 
   /*const getCinemaAuditoriumsAmount = async (cinemaId: any) => {
     try {
@@ -67,12 +68,21 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       //console.log(auditoriumsAmount);
       elements.push(
         <Center>
-          <CardCinema cinemaName={cine.name}
-            cinemaAuditoriumsAmount = {'2'}
-            onPressEdit={() => navigation.navigate('UpdateCinemaStack')}
-            onPressCard={() => navigation.navigate('AuditoriumsStack', { params: { cinemaName: cine.name, cinemaId: cine.id } })} />
-        </Center>
-        );
+          <CardCinema
+            cinemaName={cine.name}
+            cinemaAuditoriumsAmount={'2'}
+            onPressEdit={() =>
+              navigation.navigate('UpdateCinema', {cinemaId: cine.id})
+            }
+            onPressCard={() =>
+              navigation.navigate('AuditoriumList', {
+                cinemaName: cine.name,
+                cinemaId: cine.id,
+              })
+            }
+          />
+        </Center>,
+      );
     }
     return elements;
   };
@@ -81,19 +91,17 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
     <VStack>
       <Center>
         <ScrollView maxH="600">
-          <VStack space={4}>
-            {
-              renderCinemas()
-            }
-          </VStack>
+          <VStack space={4}>{renderCinemas()}</VStack>
         </ScrollView>
       </Center>
       <Center w={'100%'}>
-        <ButtonPrimary onPress={() => navigation.navigate('CreateCinemaStack')} title={I18n.t('createCinema')} />
+        <ButtonPrimary
+          onPress={() => navigation.navigate('CreateCinemaStack')}
+          title={I18n.t('createCinema')}
+        />
       </Center>
     </VStack>
   );
 };
 
 export default CinemaListUI;
-

@@ -7,7 +7,7 @@ const CardAuditorium = (props: {
   auditoriumName: string | undefined;
   auditoriumSize: string | undefined;
   auditoriumAvailability: string | undefined;
-  onPressCard:any;
+  onPressCard: any;
 }) => {
   const {
     auditoriumName = 'undefined',
@@ -15,12 +15,9 @@ const CardAuditorium = (props: {
     auditoriumAvailability = 'undefined',
   } = props;
   return (
-    <Pressable
-      onPress={
-       props.onPressCard}
-      style={styles.cardAuditorium}>
-      <HStack m={4} space={19} style={{display: 'flex'}}>
-        <VStack p={4} space={30} style={{flex: 1}}>
+    <Pressable onPress={props.onPressCard} style={styles.cardAuditorium}>
+      <HStack m={1} space={10} style={{display: 'flex'}}>
+        <VStack p={1} space={6} style={{flex: 1}} maxH="100%">
           <Box display="flex" flexDirection="row" flex={0}>
             <Image
               style={styles.iconExtraSmallImage}
@@ -31,11 +28,11 @@ const CardAuditorium = (props: {
               <Text style={styles.bodyText}>{auditoriumName}</Text>
             </Box>
           </Box>
-          <Box style={styles.auditoriumSizeContainer} flex={0}>
+          <Box flex={0} style={styles.auditoriumSizeContainer}>
             <Text style={styles.bodyText}>{auditoriumSize}</Text>
           </Box>
         </VStack>
-        <VStack pl={30} style={{flex: 1}}>
+        <VStack pl={1} style={{flex: 0.6}}>
           <Button disabled variant="outline" color={palette.white}>
             {auditoriumAvailability}
           </Button>

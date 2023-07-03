@@ -93,7 +93,6 @@ const SignUpScreenUI = ({}) => {
   const onSubmit = () => {
     console.log('!! VALIDATING');
     if (validate()) {
-      console.log(`!! VALIDATE OK, SUBMITING TO ${Config.API_BASE_URL}/users`);
       signUp();
     } else {
       console.log(errors);
@@ -108,17 +107,20 @@ const SignUpScreenUI = ({}) => {
   };
 
   const signUp = async () => {
-    const response = await ky.post(`${Config.API_BASE_URL}/users`, {
-      json: {
-        avatar: imageUrl,
-        fullname: '',
-        company: data.company,
-        address: '',
-        email: data.email,
-        password: data.password,
-        refreshToken: '',
+    const response = await ky.post(
+      `${Config.API_BASE_URL}/users`,
+      {
+        json: {
+          avatar: imageUrl,
+          fullname: '',
+          company: data.company,
+          address: '',
+          email: data.email,
+          password: data.password,
+          refreshToken: '',
+        },
       },
-    });
+    );
     console.log(response);
     navigation.goBack();
   };

@@ -16,11 +16,14 @@ export default function ConfirmDeleteProfileScreenUI() {
 
   const salir = async () => {
     const authToken = user.user.token;
-    const respuesta = await ky.delete('http://192.168.0.92:3000/users/', {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
+    const respuesta = await ky.delete(
+      `${Config.API_BASE_URL}/users`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
       },
-    });
+    );
     setUser(null);
   };
   return (
