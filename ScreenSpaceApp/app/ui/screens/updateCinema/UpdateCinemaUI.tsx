@@ -19,6 +19,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Linking} from 'react-native';
 import ky from 'ky';
+import Config from 'react-native-config';
 
 const UpdateCinemaUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -30,7 +31,11 @@ const UpdateCinemaUI = ({}) => {
   const route = useRoute();
   const [name, setName] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const id = route.params.cinemaId;
+  const cinemaId = route.params.cinemaId;
+  const [cinemaData, setCinemaData] = React.useState({
+    name: '',
+    address: '',
+  });
 
   const openMaps = () => {
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -42,12 +47,11 @@ const UpdateCinemaUI = ({}) => {
 
   const traerDatos = async () => {
     const respuesta = await ky.get(
-      `${Config.API_BASE_URL}/cinemas/${id}`,
-      {},
+      `${Config.API_BASE_URL}/cinemas/${cinemaId}`,
     );
     const responseBody = await respuesta.json();
     console.log(responseBody);
-    setData({
+    setCinemaData({
       ...formData,
       name: responseBody.name,
       address: responseBody.location,
@@ -78,12 +82,12 @@ const UpdateCinemaUI = ({}) => {
       };
     }
     const respuesta = await ky.put(
-      `${Config.API_BASE_URL}/cinemas/${id}`,
+      `${Config.API_BASE_URL}/cinemas/${cinemaId}`,
       {
         json: data,
       },
     );
-    traerDatos();
+    navigation.replace('CinemasList')
   };
 
   if (show == false) {
@@ -111,7 +115,7 @@ const UpdateCinemaUI = ({}) => {
               size="md"
               keyboardType="email-address"
               inputMode="email"
-              placeholder={formData.name}
+              placeholder={cinemaData.name}
               backgroundColor={'#21242D'}
               onChangeText={value => setName(value)}
             />
@@ -121,7 +125,7 @@ const UpdateCinemaUI = ({}) => {
               size="md"
               keyboardType="email-address"
               inputMode="email"
-              placeholder={formData.address}
+              placeholder={cinemaData.address}
               backgroundColor={'#21242D'}
               onChangeText={value => setAddress(value)}
               InputRightElement={
@@ -139,7 +143,7 @@ const UpdateCinemaUI = ({}) => {
         </Center>
         <Center w={'100%'}>
           <ButtonDanger
-            onPress={() => navigation.navigate('ConfirmDeleteCinema', {id: id})}
+            onPress={() => navigation.navigate('ConfirmDeleteCinema', {cinemaId: cinemaId})}
             title={I18n.t('delete')}
             width="150px"
           />

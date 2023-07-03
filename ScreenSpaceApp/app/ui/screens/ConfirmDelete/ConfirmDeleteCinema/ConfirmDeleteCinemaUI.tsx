@@ -6,16 +6,17 @@ import ButtonDanger from '../../../components/ButtonDanger';
 import WarningMessage from '../../../components/WarningMessage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ky from 'ky';
+import Config from 'react-native-config';
 
 export default function ConfirmDeleteCinemaUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
-  const id = route.params.id;
+  const cinemaId = route.params.cinemaId;
 
   const borrar = async () => {
     try {
       const respuesta = await ky.delete(
-        `${Config.API_BASE_URL}/cinemas/${id}`,
+        `${Config.API_BASE_URL}/cinemas/${cinemaId}`,
       );
       console.log(respuesta);
       navigation.replace('CinemasList');
@@ -33,7 +34,7 @@ export default function ConfirmDeleteCinemaUI() {
       </Center>
       <Center w="100%">
         <ButtonPrimary
-          onPress={() => navigation.navigate('UpdateCinema', {id: id})}
+          onPress={() => navigation.navigate('UpdateCinema', {id: cinemaId})}
           title="Cancel"
         />
       </Center>
