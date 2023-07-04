@@ -9,12 +9,10 @@ import I18n from '../../assets/localization/I18n';
 
 const CardCinema = (props: {
   cinemaName: string | undefined;
-  cinemaAuditoriumsAmount: any | undefined;
+  cinemaAuditoriumsAmount: any;
   onPressEdit: any;
   onPressCard: any;
 }) => {
-  const {cinemaName = 'undefined', cinemaAuditoriumsAmount = 'undefined'} =
-    props;
   return (
     <Pressable onPress={props.onPressCard} style={styles.cardAuditorium}>
       <HStack m={1} space={5} style={{display: 'flex'}}>
@@ -26,12 +24,12 @@ const CardCinema = (props: {
               alt="popcorn.png"
             />
             <Box style={styles.auditoriumNameContainer}>
-              <Text style={styles.bodyText}>{cinemaName}</Text>
+              <Text style={styles.bodyText}>{props.cinemaName}</Text>
             </Box>
           </Box>
           <Box>
             <Text style={styles.labelText}>
-              {cinemaAuditoriumsAmount} {I18n.t('auditoriums')}
+              {props.cinemaAuditoriumsAmount} {I18n.t('auditoriums')}
             </Text>
           </Box>
         </VStack>

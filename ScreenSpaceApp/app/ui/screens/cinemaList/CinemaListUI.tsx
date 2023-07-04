@@ -1,12 +1,12 @@
-import {ParamListBase, useRoute} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { ParamListBase, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import ky from 'ky';
-import {responseTypes} from 'ky/distribution/core/constants';
-import {Center, ScrollView, Text, VStack} from 'native-base';
-import React, {useContext, useEffect} from 'react';
+import { responseTypes } from 'ky/distribution/core/constants';
+import { Center, ScrollView, Text, VStack } from 'native-base';
+import React, { useContext, useEffect } from 'react';
 import Config from 'react-native-config';
 import I18n from '../../../assets/localization/I18n';
-import {UserContext} from '../../../UserContext';
+import { UserContext } from '../../../UserContext';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import CardCinema from '../../components/CardCinema';
 import { RefreshControl } from 'react-native';
@@ -17,7 +17,7 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-const CinemaListUI: React.FC<Props> = ({navigation}) => {
+const CinemaListUI: React.FC<Props> = ({ navigation }) => {
   const [cinemasFlag, setCinemasFlag] = React.useState(0);
   const [formData, setData] = React.useState([
     {
@@ -39,14 +39,15 @@ const CinemaListUI: React.FC<Props> = ({navigation}) => {
       );
       const responseBody = await response.json();
       const cinemasData = responseBody
-        .filter((document: {userId: any}) => document.userId == userId)
-        .map(async (document: {_id: any; name: any; location: any}) => {
+        .filter((document: { userId: any }) => document.userId == userId)
+        .map(async (document: { _id: any; name: any; location: any }) => {
+          console.log('cinemaId del map:'+document._id)
           const auditoriumsResponse = await ky.get(
             `${Config.API_BASE_URL}/cinemas/${document._id}/auditoriums`,
           );
           const auditoriumsData = await auditoriumsResponse.json();
-          console.log('AudAmount:' + auditoriumsData.length)
-          return{
+          console.log('JSON auditorios de un cine:'+auditoriumsData)
+          return {
             id: document._id,
             name: document.name,
             location: document.location,
@@ -75,7 +76,7 @@ const CinemaListUI: React.FC<Props> = ({navigation}) => {
     }
   };*/
 
-   const renderCinemas = () => {
+  const renderCinemas = () => {
     const elements = [];
     for (let count = 0; count < formData.length; count++) {
       const cine = formData[count];
@@ -86,7 +87,7 @@ const CinemaListUI: React.FC<Props> = ({navigation}) => {
             cinemaName={cine.name}
             cinemaAuditoriumsAmount={cine.auditoriumsAmount}
             onPressEdit={() =>
-              navigation.replace('UpdateCinema', {cinemaId: cine.id})
+              navigation.replace('UpdateCinema', { cinemaId: cine.id })
             }
             onPressCard={() =>
               navigation.navigate('AuditoriumList', {
@@ -104,7 +105,7 @@ const CinemaListUI: React.FC<Props> = ({navigation}) => {
   return (
     <VStack>
       <Center>
-        <ScrollView maxH="600" refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={getCinemas} />}>
+        <ScrollView maxH="600" refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getCinemas} />}>
           <VStack space={4}>{renderCinemas()}</VStack>
         </ScrollView>
       </Center>
