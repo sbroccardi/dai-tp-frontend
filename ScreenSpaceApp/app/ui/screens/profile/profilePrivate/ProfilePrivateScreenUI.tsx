@@ -14,21 +14,24 @@ import {styles} from '../../../styles/theme';
 import {Config} from 'react-native-config';
 import {UserContext} from '../../../../UserContext';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { RefreshControl } from 'react-native';
+
 
 const ProfilePrivateScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const user = useContext(UserContext);
   const {setUser} = useContext(UserContext);
+  const [refreshing, setRefreshing] = React.useState(false);
   const [formData, setData] = React.useState({
     email: '',
     username: '',
     img: ' ',
   });
-  const [mail, setMail] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [username, setUsername] = React.useState('');
 
-  const salir = () => {
+  const exit = () => {
     setUser(null);
   };
 
@@ -60,7 +63,7 @@ const ProfilePrivateScreenUI = ({}) => {
     }
   };
 
-  const traerDatos = async () => {
+  const getData = async () => {
     const authToken = user.user.token;
     const respuesta = await ky.get(
       `${Config.API_BASE_URL}/users/${user.user.id}`,
@@ -79,26 +82,26 @@ const ProfilePrivateScreenUI = ({}) => {
     });
   };
 
-  const updatearDatos = async () => {
+  const updateData = async () => {
     let data = {
-      email: mail,
+      email: email,
       fullname: username,
     };
-    if (username === '' && mail !== '') {
+    if (username === '' && email !== '') {
       data = {
-        email: mail,
+        email: email,
         fullname: formData.username,
       };
     }
-    if (username !== '' && mail === '') {
+    if (username !== '' && email === '') {
       data = {
         email: formData.email,
         fullname: username,
       };
     }
-    if (username !== '' && mail !== '') {
+    if (username !== '' && email !== '') {
       data = {
-        email: mail,
+        email: email,
         fullname: username,
       };
     }
@@ -112,15 +115,15 @@ const ProfilePrivateScreenUI = ({}) => {
         },
       },
     );
-    traerDatos();
+    getData();
   };
 
   if (formData.email === '') {
-    traerDatos();
+    getData();
   }
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getData}/>}>
       <VStack
         space={8}
         alignItems="center"
@@ -157,41 +160,41 @@ const ProfilePrivateScreenUI = ({}) => {
             )}
             {'\n'}
             {I18n.t('emailAddress')}
-            {mail !== '' && (
+            {email !== '' && (
               <Input
                 size="md"
                 keyboardType="email-address"
                 inputMode="email"
                 placeholder={formData.email}
                 backgroundColor={'#21242D'}
-                onChangeText={value => setMail(value)}
+                onChangeText={value => setEmail(value)}
               />
             )}
-            {mail === '' && (
+            {email === '' && (
               <Input
                 size="md"
                 keyboardType="email-address"
                 inputMode="email"
                 placeholder={formData.email}
                 backgroundColor={'#21242D'}
-                onChangeText={value => setMail(value)}
+                onChangeText={value => setEmail(value)}
               />
             )}
           </FormControl>
         </Center>
         <ButtonPrimary
-          onPress={updatearDatos}
+          onPress={updateData}
           title={I18n.t('save')}
           width="90%"
         />
         <Center w={'50%'}>
           <View style={styles.buttonsContainer}>
             <ButtonDanger
-              onPress={() => navigation.navigate('ConfirmDelete')}
+              onPress={() => navigation.replace('ConfirmDelete')}
               title={I18n.t('delete')}
               width="65%"
             />
-            <ButtonLogout onPress={salir} title={I18n.t('logout')} />
+            <ButtonLogout onPress={exit} title={I18n.t('logout')} />
           </View>
         </Center>
       </VStack>

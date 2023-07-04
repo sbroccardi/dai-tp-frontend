@@ -98,6 +98,8 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
     }
   };  */
 
+
+
   const handleMovieChange = (value: any) => {
     setSelectedMovie(value);
   };
@@ -241,7 +243,7 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
         />
       </Center>
       <Center width="100%">
-        <ButtonPrimary title="Create screening" onPress={undefined} />
+        <ButtonPrimary title="Create screening" onPress={handleCreateScreening}/>
       </Center>
     </VStack>
   );
