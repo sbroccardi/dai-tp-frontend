@@ -1,58 +1,88 @@
-import {VStack} from 'native-base';
+import {Center, VStack} from 'native-base';
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import FilterDropdown from '../../components/FilterDropDown';
+import ButtonDanger from '../../components/ButtonDanger';
+import ButtonPrimary from '../../components/ButtonPrimary';
+import DropdownMenu from '../../components/DropdownMenu';
+import { styles } from '../../styles/theme';
+import I18n from '../../../assets/localization/I18n';
+
 
 const FiltersScreenUI = ({}) => {
-  const [service1, setService1] = useState('');
-  const [service2, setService2] = useState('');
-  const [service3, setService3] = useState('');
-  const [service4, setService4] = useState('');
-  const [service5, setService5] = useState('');
+  const genreOptions = ['Terror', 'Comedia', 'Suspenso'];
+  const ageAllowed = ['ATP','+13','+16','+18'];
+  const rating = [' 1', '2', '3', '4','5','6','7','8','9','10'];
+  const distance = ['1KM', '3KM', '5KM', '10KM'];
+  const cinema = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo'];
+  const filtros = ['Genero','Edad','Calificacion','Distancia','Cinema'];
+  const [SelectedFilter, setSelectedFilter] = React.useState(' ');
+  const [SelectedMenu, setSelectedMenu] = React.useState(0);
+  const [Values, setValues] = React.useState([' ']);
+  const [Opcion, setOpcion] = React.useState('');
 
-  const handleService1Change = (value: string) => {
-    setService1(value);
-    // Lógica adicional si es necesario
-  };
+  const handleFilterChange = (value: string) => {
+    setSelectedFilter(value);
+  
+    if (value === 'Edad') {
+      setValues(ageAllowed);
+      setSelectedMenu(1);
 
-  const handleService2Change = (value: string) => {
-    setService2(value);
-    // Lógica adicional si es necesario
+    } else if (value === 'Genero') {
+      setValues(genreOptions);
+      setSelectedMenu(1);
+
+    } else if (value === 'Calificacion') {
+      setValues(rating);
+      setSelectedMenu(1);
+
+    } else if (value === 'Distancia') {
+      setValues(distance);
+      setSelectedMenu(1);
+      
+    } else if (value === 'Cinema') {
+      setValues(cinema);
+      setSelectedMenu(1);;
+    }
   };
+  const handleOptions = (value: any) => {
+    setOpcion(value)
+  };
+  
   return (
     <VStack
       space={4}
       alignItems="center"
       justifyContent="space-around"
-      height="100%">
-      <View>
-        <FilterDropdown
-          label="Genre"
-          value={JSON.stringify({id: 1, name: 'ds 1'})}
-          onValueChange={handleService1Change}
+      height="70%">
+     <Center>
+        <DropdownMenu
+          purpose={'filter'}
+          disabled={false}
+          options={filtros}
+          onChange={handleFilterChange}
+          valueSelected={SelectedFilter}
         />
-        <FilterDropdown
-          label="Allowed Age"
-          value={JSON.stringify({id: 1, name: 'Option 1'})}
-          onValueChange={handleService2Change}
+      </Center>
+      <Center>
+      {SelectedMenu == 1 && (
+        <DropdownMenu
+          purpose={SelectedFilter}
+          disabled={false}
+          options={Values}
+          onChange={handleOptions}
+          valueSelected={Opcion}
         />
-        <FilterDropdown
-          label="Raiting"
-          value={JSON.stringify({id: 1, name: 'Option 1'})}
-          onValueChange={handleService2Change}
-        />
-        <FilterDropdown
-          label="Distance"
-          value={JSON.stringify({id: 1, name: 'Option 1'})}
-          onValueChange={handleService2Change}
-        />
-        <FilterDropdown
-          label="Cinema"
-          value={JSON.stringify({id: 1, name: 'Option 1'})}
-          onValueChange={handleService2Change}
-        />
-        {/* Agrega los otros dropdowns con sus propias etiquetas y funciones de control */}
-      </View>
+        )}
+        </Center>
+        
+        <ButtonPrimary
+          onPress={() =>  console.log("guardar")}
+          title={I18n.t('save')}
+          width= "35%"
+          />
+        <ButtonDanger onPress={ () => console.log(" no guardar")} title={'Go Back'} width= "35%" />
+          
+
     </VStack>
   );
 };
