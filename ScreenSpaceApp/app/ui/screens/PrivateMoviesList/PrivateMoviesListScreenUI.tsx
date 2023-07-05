@@ -16,11 +16,12 @@ type Props = {
 
 const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
   //const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState([])
+
 
   const [moviesData, setMoviesData] = React.useState([
     {
-      id: '',
-      genre: '',
+      _id: '',
       name: '',
       age: '',
       rating: '',
@@ -28,27 +29,67 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
   ]);
 
   useEffect(() => {
-    const fetchScreenings = async () => {
-      try{
-        //traer todas las screenings
-      }
-      catch(err){
-        console.error(err);
-      }
-    }
-
-    const fetchMoviesByIds = async () => {
+    const fetchMovieIdsThatHaveScreenings = async () => {
       try {
-        const response = await ky.get(
-          `${Config.API_BASE_URL}/movies`
-        );
+        const response = await ky.get(`${Config.API_BASE_URL}/movies`);
         const responseObject = await response.json();
-        
+        const movieIds = responseObject.map((movie: { _id: any }) => movie._id)
+        const moviesWithScreenings = await Promise.all(
+          movieIds
+            .filter(async (_id: any) => {
+              const r = await ky.get(`${Config.API_BASE_URL}/movies/${_id}/screenings`);
+              const rObject = await r.json();
+              return Array.isArray(rObject) && rObject.length > 0;
+            })
+            .map(async (_id: any) => {
+              const r = await ky.get(`${Config.API_BASE_URL}/movies/${_id}/screenings`);
+              const rObject = await r.json();
+              const movieIdThatHaveScreenings = rObject
+                .filter((document: { movieId: any; }) => document.movieId === _id)
+                .map((document: { movieId: any; }) => document.movieId);
+              console.log(`movieId that have screenings ${_id}: `, movieIdThatHaveScreenings);
+              return movieIdThatHaveScreenings;
+            })
+        );
+        const data = moviesWithScreenings.filter((movieId: any) => movieId && movieId.length > 0);
+        console.log('movie ids that have screenings: ' + data)
+        setMovieIdsThatHaveScreenings(data);
+      } catch (error) {
+        console.error('Error retrieving screenings:', error);
       }
-      catch (err) {
-        console.error(err)
+    }; fetchMovieIdsThatHaveScreenings()
+
+    const fetchMoviesData = async () => {
+      try {
+        const response = await ky.get(`${Config.API_BASE_URL}/movies`);
+        const movies = await response.json();
+        const filteredMovies = []
+        for(let count=0; count<movieIdsThatHaveScreenings.length; count++){
+          const idFilter = movieIdsThatHaveScreenings[count]
+          const moviesData = movies
+          .filter((movie:{_id:any}) => movie._id===idFilter)
+          .map(
+            (document: {
+              _id: string;
+              name: string;
+              age: string;
+              rating: any;
+            }) => ({
+              _id: document._id,
+              name: document.name,
+              age: document.age,
+              rating: document.rating,
+              
+            }),
+          );
+          filteredMovies.push(moviesData)
+        }
+        setMoviesData(filteredMovies)
+        console.log('moviesData: ', moviesData)
+      } catch (error) {
+        console.error(error);
       }
-    }
+    };fetchMoviesData()
   }, [])
 
   const renderMovies = () => {
@@ -77,7 +118,7 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
       <Center>
         <ScrollView maxH="500">
           <VStack space={3} alignItems="center" height="100%">
-            {renderMovies()}
+            {/*renderMovies()*/}
           </VStack>
         </ScrollView>
       </Center>
