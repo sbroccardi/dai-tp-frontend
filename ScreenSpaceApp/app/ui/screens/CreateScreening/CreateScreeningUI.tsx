@@ -1,14 +1,15 @@
-import {Center, VStack, useToast} from 'native-base';
-import React, {useContext} from 'react';
+import { Center, VStack, useToast } from 'native-base';
+import React, { useContext, useEffect } from 'react';
 import DropdownMenu from '../../components/DropdownMenu';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/native';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
-import {palette} from '../../styles/theme';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { palette } from '../../styles/theme';
 import I18n from '../../../assets/localization/I18n';
 import ky from 'ky';
-import {UserContext} from '../../../UserContext';
+import { UserContext } from '../../../UserContext';
+import Config from 'react-native-config';
 
 type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -16,132 +17,133 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
+const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   /*TEMP*/
-  const cinemaOptions = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo'];
-  const movieOptions = [
-    'Oppenheimer',
-    'The Whale',
-    'Harry El sucio Potter',
-    'Interstellar',
-  ];
-  const auditoriumOptions = ['Sala 1', 'Sala2', 'Sala 3', 'Sala Monster'];
+  const [movieOptions, setMovieOptions] = React.useState([]);
+  const [auditoriumOptions, setAuditoriumOptions] = React.useState([]);
   const [errors, setErrors] = React.useState({});
   const toast = useToast();
-  const [cinemasFlag, setCinemasFlag] = React.useState(0);
-  const [auditoriumsFlag, setAuditoriumsFlag] = React.useState(0);
-  const [cinemaId, setCinemaId] = React.useState('');
-
   const user = useContext(UserContext);
-  const userId = user.user.id;
-
-  /*TEMP*/
   const [selectedDay, setSelectedDay] = React.useState('');
   const [selectedCinema, setSelectedCinema] = React.useState('');
   const [selectedAuditorium, setSelectedAuditorium] = React.useState('');
   const [selectedMovie, setSelectedMovie] = React.useState('');
+  const [cinemaOptions, setCinemaOptions] = React.useState([''])
+  const [cinemaIds, setCinemaIds] = React.useState([]);
+  const [auditoriumIds, setAuditoriumIds] = React.useState([{
+    _id: '',
+  }]);
+  const [cinemasData, setCinemasData] = React.useState([{
+    _id: '',
+    name: '',
+  }]);
+  const [moviesIds, setMoviesIds] = React.useState([{
+    _id: '',
+  }])
+  const [moviesData, setMoviesData] = React.useState([{
+    _id: '',
+    name:''
+  }])
 
-  /*const getCinemas = async () => {
-    setCinemasFlag(1); //este flag evita que la llamada se haga en loop
-    try {
-      const userId = user.user.id;
-      const response = await ky.get(
-        'https://screenspace.azurewebsites.net/cinemas',
-      );
-      const responseBody = await response.json();
-      const cinemasData = responseBody.filter((document: { userId: any; }) => document.userId == userId).map((document: {cinemaId: any; name: any;}) => ({
-        name: document.name,
-        cinemaId: document.cinemaId
-      }));
-      setCinemaOptions(cinemasData);
+  useEffect(() => {
+    const fetchCinemaOptions = async () => {
+      try {
+        const userId = user.user.id;
+        const response = await ky.get('https://screenspace.azurewebsites.net/cinemas');
+        const responseObject = await response.json();
+        const names = responseObject
+          .filter((document: { userId: any }) => document.userId == userId)
+          .map((cinema: any) => cinema.name);
+        setCinemaOptions(names);
+
+        const ids = responseObject
+          .filter((document: { userId: any }) => document.userId == userId)
+          .map((cinema: { _id: any; }) => cinema._id)
+        setCinemaIds(ids)
+
+        const data = responseObject
+          .filter((document: { userId: any }) => document.userId == userId)
+          .map((cinema: { _id: any; name: any; }) => ({
+            _id: cinema._id,
+            name: cinema.name,
+          })
+          )
+        setCinemasData(data)
+
+      } catch (error) {
+        console.error('Error retrieving cinema options:', error);
+      }
+    };
+
+    fetchCinemaOptions();
+
+    const fetchMovieOptions = async () => {
+      try {
+        const response = await ky.get(
+          `${Config.API_BASE_URL}/movies`
+        );
+        const responseObject = await response.json();
+        const movieNames = responseObject
+          .map((movie: any) => movie.name);
+        setMovieOptions(movieNames);
+
+        const moviesIds = responseObject
+          .map((movie: any) => movie._id)
+        setMoviesIds(moviesIds)
+
+        const moviesData = responseObject
+        .map((movie:{_id:any; name:any})=>({
+          _id: movie._id,
+          name: movie.name
+        }))
+        setMoviesData(moviesData);
+
+      } catch (error) {
+        console.error('Error retrieving movies:', error);
+      }
     }
-    catch (err) {
-      console.error('error: ', err);
-    }
-  }; cinemasFlag == 0 ? getCinemas(): undefined;
 
-  const getCinemaId = async (cinemaName: string) => {
-    setCinemasFlag(1); //este flag evita que la llamada se haga en loop
-    try {
-      const userId = user.user.id;
-      const response = await ky.get(
-        'https://screenspace.azurewebsites.net/cinemas',
-      );
-      const responseBody = await response.json();
-      const cinemasData = responseBody.filter((document: { cinemaName: any; }) => document.cinemaName == cinemaName).map((document: {cinemaId: any;}) => ({
-        cinemaId: document.cinemaId
-      }));
-      setCinemaId(cinemasData);
-    }
-    catch (err) {
-      console.error('error: ', err);
-    }
-  }
+    fetchMovieOptions();
+  }, []);
 
-
-  const getAuditoriums = async (cinemaId: any) => {
-    setAuditoriumsFlag(1);
-    try {
-      //const cinemaId = user.user.id;
-      const response = await ky.get(
-        `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums`,
-      );
-      const responseBody = await response.json();
-      const auditoriumsData = responseBody.filter((document: { cineId: any; }) => document.cineId == cinemaId).map((document: { name: any; }) => ({
-        name: document.name
-      }));
-      setAuditoriumOptions(auditoriumsData);
-
-    }
-    catch (err) {
-      console.error('error: ', err);
-    }
-  };  */
-
-  const handleMovieChange = (value: any) => {
-    setSelectedMovie(value);
-  };
-
-  const handleCinemaChange = (value: any) => {
-    console.log(value);
+  const handleCinemaChange = async (value: any) => {
+    console.log('cinemaId VALUE: ' + value);
+    const selectedCinemaName = cinemasData.find(cinema => cinema._id === value)?.name;
+    console.log('selected cinema name: ' + selectedCinemaName)
     setSelectedCinema(value);
     setSelectedAuditorium(''); // Reseteamos el valor del siguiente dropdown
     setSelectedMovie(''); // Reseteamos el valor del siguiente dropdown
-    //getAuditoriums(cinemaId);
+    try {
+      const response = await ky.get(
+        `${Config.API_BASE_URL}/cinemas/${value}/auditoriums`
+      );
+      const responseObject = await response.json();
+      //
+      const auditoriumNames = responseObject
+        .filter((document: { cinemaId: any }) => document.cinemaId == value)
+        .map((auditorium: any) => auditorium.name);
+      setAuditoriumOptions(auditoriumNames);
+      //
+      const auditoriumIds = responseObject
+        .filter((document: { cinemaId: any }) => document.cinemaId == value)
+        .map((auditorium: any) => auditorium._id);
+      setAuditoriumIds(auditoriumIds)
+
+    } catch (error) {
+      console.error('Error retrieving auditoriums:', error);
+    }
   };
 
   const handleAuditoriumChange = (value: any) => {
     setSelectedAuditorium(value);
+    console.log('auditorium id value: ' + value);
     setSelectedMovie(''); // Reseteamos el valor del siguiente dropdown
   };
 
-  /*const createScreening = async (cinema: string, auditorium: string, movieId: string, date: string) => { //Tenemos que sacar el id de la movie!
-    const datosValidos = validate();
-    if (datosValidos) {
-      try {
-        // Realizar la solicitud POST al backend utilizando ky
-        const response = await ky.post(`${Config.API_BASE_URL}/movies/${movieId}/screenings`, {
-          json: {
-
-          },
-        });
-        const responseBody = await response.json();
-        console.log('Cine creado:', responseBody);
-        navigation.replace('CinemasList');
-        // Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
-      } catch (error) {
-        console.error('Error al crear el cine:', error);
-      }
-    } else {
-      console.log(errors);
-      toast.show({
-        description: Object.values(errors).join('\n'),
-        title: 'Error',
-        duration: 3000,
-        placement: 'top',
-      });
-    };
-  }; */
+  const handleMovieChange = (value: any) => {
+    setSelectedMovie(value);
+    console.log('movie id value:' + value)
+  };
 
   const validate = () => {
     setErrors({});
@@ -180,16 +182,48 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
     return true;
   };
 
+  const createScreening = async (auditoriumId: string, movieId: string, datetime: string) => {
+    try {
+      // Realizar la solicitud POST al backend utilizando ky
+      const response = await ky.post(
+        `${Config.API_BASE_URL}/movies/${movieId}/screenings`,
+        {
+          json: {
+            movieId: `${movieId}`,
+            auditoriumId: `${auditoriumId}`,
+            datetime: `${datetime}`,
+          },
+        },
+      );
+      const responseBody = await response.json();
+      console.log('Funcion creada:', responseBody);
+      //getMovieName
+      const selectedMovieName = moviesData.find(movie => movie._id == movieId)?.name;
+
+      navigation.replace('ScreeningList', { movieID: selectedMovie, movieName: selectedMovieName})
+    } catch (error) {
+      console.error('Error al crear la funcion:', error);
+    }
+  }
+
   const handleCreateScreening = async () => {
-    //createScreening(selectedCinema, selectedAuditorium, selectedMovie);
-    validate()
-      ? navigation.replace('ScreeningList', {movieID: 'Opennheimer'})
-      : toast.show({
-          description: Object.values(errors).join('\n'),
-          title: 'Error',
-          duration: 3000,
-          placement: 'top',
-        });
+    if (validate()) {
+      createScreening(selectedAuditorium,selectedMovie,selectedDay)
+      toast.show({
+        title: 'Funcion creada',
+        duration: 3000,
+        placement: 'top',        
+      })
+      
+    }
+    else {
+      toast.show({
+        description: Object.values(errors).join('\n'),
+        title: 'Error',
+        duration: 3000,
+        placement: 'top',
+      });
+    }
   };
 
   return (
@@ -199,12 +233,14 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
           purpose={'cinema'}
           disabled={false}
           options={cinemaOptions}
+          data={cinemaIds}
           onChange={handleCinemaChange}
           valueSelected={selectedCinema}
         />
       </Center>
       <Center>
         <DropdownMenu
+          data={auditoriumIds}
           purpose={'auditorium'}
           disabled={!selectedCinema}
           options={auditoriumOptions}
@@ -214,6 +250,7 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
       </Center>
       <Center>
         <DropdownMenu
+          data={moviesIds}
           purpose={'movie'}
           disabled={!selectedAuditorium}
           options={movieOptions}
@@ -236,15 +273,42 @@ const CreateScreeningUI: React.FC<Props> = ({navigation}) => {
             setSelectedDay(day.dateString);
           }}
           markedDates={{
-            [selectedDay]: {selected: true, disableTouchEvent: true},
+            [selectedDay]: { selected: true, disableTouchEvent: true },
           }}
         />
       </Center>
       <Center width="100%">
-        <ButtonPrimary title="Create screening" onPress={undefined} />
+        <ButtonPrimary title={I18n.t('createScreening')} onPress={handleCreateScreening} />
       </Center>
     </VStack>
   );
 };
 
 export default CreateScreeningUI;
+ /*const createScreening = async (cinema: string, auditorium: string, movieId: string, date: string) => { //Tenemos que sacar el id de la movie!
+const datosValidos = validate();
+if (datosValidos) {
+try {
+// Realizar la solicitud POST al backend utilizando ky
+const response = await ky.post(`${Config.API_BASE_URL}/movies/${movieId}/screenings`, {
+json: {
+
+},
+});
+const responseBody = await response.json();
+console.log('Cine creado:', responseBody);
+navigation.replace('CinemasList');
+// Realizar cualquier acción adicional después de crear el cine, como redireccionar a otra pantalla
+} catch (error) {
+console.error('Error al crear el cine:', error);
+}
+} else {
+console.log(errors);
+toast.show({
+description: Object.values(errors).join('\n'),
+title: 'Error',
+duration: 3000,
+placement: 'top',
+});
+};
+}; */

@@ -1,11 +1,12 @@
-import {Center, ScrollView, Text, VStack} from 'native-base';
-import React from 'react';
+import { Center, ScrollView, Text, VStack } from 'native-base';
+import React, { useEffect } from 'react';
 import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
 import ky from 'ky';
+import Config from 'react-native-config';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -13,49 +14,83 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
-const PrivateMoviesScreenUI: React.FC<Props> = ({navigation}) => {
+const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
   //const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState([])
+
 
   const [moviesData, setMoviesData] = React.useState([
     {
-      id: '',
-      genre: '',
+      _id: '',
       name: '',
       age: '',
       rating: '',
     },
   ]);
 
-  const [flag, setFlag] = React.useState(0);
-  const getmovies = async () => {
-    setFlag(1);
-    try {
-      //const cinemaId = user.user.id;
-      const response = await ky.get(
-        `${Config.API_BASE_URL}/movies`,
-      );
-      const responseBody = await response.json();
-      console.log(responseBody);
-      const moviesData = responseBody.map(
-        (document: {
-          id: string;
-          genre: string;
-          name: string;
-          rating: any;
-          age: string;
-        }) => ({
-          id: document.id,
-          genre: document.genre,
-          name: document.name,
-          rating: document.rating,
-          age: document.age,
-        }),
-      );
-      setMoviesData(moviesData);
-    } catch (err) {
-      console.error('error: ', err);
-    }
-  };
+  useEffect(() => {
+    const fetchMovieIdsThatHaveScreenings = async () => {
+      try {
+        const response = await ky.get(`${Config.API_BASE_URL}/movies`);
+        const responseObject = await response.json();
+        const movieIds = responseObject.map((movie: { _id: any }) => movie._id)
+        const moviesWithScreenings = await Promise.all(
+          movieIds
+            .filter(async (_id: any) => {
+              const r = await ky.get(`${Config.API_BASE_URL}/movies/${_id}/screenings`);
+              const rObject = await r.json();
+              return Array.isArray(rObject) && rObject.length > 0;
+            })
+            .map(async (_id: any) => {
+              const r = await ky.get(`${Config.API_BASE_URL}/movies/${_id}/screenings`);
+              const rObject = await r.json();
+              const movieIdThatHaveScreenings = rObject
+                .filter((document: { movieId: any; }) => document.movieId === _id)
+                .map((document: { movieId: any; }) => document.movieId);
+              console.log(`movieId that have screenings ${_id}: `, movieIdThatHaveScreenings);
+              return movieIdThatHaveScreenings;
+            })
+        );
+        const data = moviesWithScreenings.filter((movieId: any) => movieId && movieId.length > 0);
+        console.log('movie ids that have screenings: ' + data)
+        setMovieIdsThatHaveScreenings(data);
+      } catch (error) {
+        console.error('Error retrieving screenings:', error);
+      }
+    }; fetchMovieIdsThatHaveScreenings()
+
+    const fetchMoviesData = async () => {
+      try {
+        const response = await ky.get(`${Config.API_BASE_URL}/movies`);
+        const movies = await response.json();
+        const filteredMovies = []
+        for(let count=0; count<movieIdsThatHaveScreenings.length; count++){
+          const idFilter = movieIdsThatHaveScreenings[count]
+          const moviesData = movies
+          .filter((movie:{_id:any}) => movie._id===idFilter)
+          .map(
+            (document: {
+              _id: string;
+              name: string;
+              age: string;
+              rating: any;
+            }) => ({
+              _id: document._id,
+              name: document.name,
+              age: document.age,
+              rating: document.rating,
+              
+            }),
+          );
+          filteredMovies.push(moviesData)
+        }
+        setMoviesData(filteredMovies)
+        console.log('moviesData: ', moviesData)
+      } catch (error) {
+        console.error(error);
+      }
+    };fetchMoviesData()
+  }, [])
 
   const renderMovies = () => {
     const elements = [];
@@ -83,30 +118,7 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({navigation}) => {
       <Center>
         <ScrollView maxH="500">
           <VStack space={3} alignItems="center" height="100%">
-            <Center marginBottom="4">
-              <CardMovie
-                movieID="1"
-                movieName="Oppenheimer"
-                movieAge="+16"
-                movieRating="5"
-              />
-            </Center>
-            <Center marginBottom="4">
-              <CardMovie
-                movieID="1"
-                movieName="Interstellar"
-                movieAge="+13"
-                movieRating="3"
-              />
-            </Center>
-            <Center marginBottom="4">
-              <CardMovie
-                movieID="1"
-                movieName="Inception"
-                movieAge="+13"
-                movieRating="5"
-              />
-            </Center>
+            {/*renderMovies()*/}
           </VStack>
         </ScrollView>
       </Center>

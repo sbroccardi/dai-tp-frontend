@@ -30,8 +30,8 @@ const UpdateAuditoriumUI = ({}) => {
   const auditoriumId = route.params.auditoriumId;
   
   useEffect(() => {  
-    console.log(cinemaId);
-    console.log(auditoriumId);
+    console.log('Aud cinemaId'+cinemaId);
+    console.log('Aud auditoriumId'+auditoriumId);
     const respuesta = ky.get(
       `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums/${auditoriumId}`,
     );
