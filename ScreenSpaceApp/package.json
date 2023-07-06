@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "@mindinventory/react-native-bus-seat-layout": "^1.0.2",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
@@ -36,7 +37,8 @@
     "react-native-screens": "^3.20.0",
     "react-native-star-rating-widget": "^1.7.2",
     "react-native-svg": "^13.9.0",
-    "react-native-vector-icons": "^9.2.0"
+    "react-native-vector-icons": "^9.2.0",
+    "react-seatmap": "^0.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
