@@ -34,7 +34,7 @@ export default function ConfirmDeleteCinemaUI() {
       </Center>
       <Center w="100%">
         <ButtonPrimary
-          onPress={() => navigation.navigate('UpdateCinema', {id: cinemaId})}
+          onPress={() => navigation.replace('UpdateCinema', {id: cinemaId})}
           title="Cancel"
         />
       </Center>
