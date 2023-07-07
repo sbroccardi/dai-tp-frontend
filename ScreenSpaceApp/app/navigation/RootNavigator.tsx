@@ -33,11 +33,13 @@ import ConfirmDeleteProfileScreenUI from '../ui/screens/ConfirmDelete/ConfirmDel
 import ConfirmDeleteCinemaUI from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaUI';
 import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
 import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
-import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
+import ProfilePrivateScreenUI from '../ui/screens/profile/profilePrivate/ProfilePrivateScreenUI';
+import ProfilePublicScreenUI from '../ui/screens/profile/profilePublic/ProfilePublicScreenUI';
 import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
 import PrivacyScreen from '../ui/screens/SignUp/PrivacyScreen';
 import TermsScreen from '../ui/screens/SignUp/TermsScreen';
 import CreateAuditoriumUI from '../ui/screens/CreateAuditorium/CreateAuditoriumUI';
+import PurchaseHistoryScreenUI from '../ui/screens/PurchaseHistory/PurchaseHistoryScreenUI';
 import UpdateAuditoriumUI from '../ui/screens/UpdateAuditorium/UpdateAuditoriumUI';
 import ConfirmDeleteAuditoriumUI from '../ui/screens/ConfirmDelete/ConfirmDeleteAuditorium/ConfirmDeleteAuditoriumUI';
 import AuditoriumListUI from '../ui/screens/AuditoriumList/AuditoriumListUI';
@@ -230,6 +232,7 @@ function RootNavigator() {
 
   // eslint-disable-next-line react/no-unstable-nested-components
   function ProfileStack({navigation}) {
+    if (user.type === 'privado'){
     return (
       <Stack.Navigator>
         <Stack.Screen
@@ -249,7 +252,36 @@ function RootNavigator() {
           }}
         />
       </Stack.Navigator>
+    
     );
+        }
+      else{
+        return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Profile"
+          component={ProfilePublicScreenUI}
+          options={{
+            headerTitle: I18n.t('profile'),
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="ConfirmDelete"
+          component={ConfirmDeleteProfileScreenUI}
+          options={{
+            headerTitle: I18n.t('confirmDeleteAccount'),
+            headerTitleAlign: 'center',
+          }}
+        />
+      <Stack.Screen name="Previous Purchase" component={PurchaseHistoryScreenUI} options={{
+            headerTitle: 'Previous Purchase',
+            headerTitleAlign: 'center',
+          }}/>
+      </Stack.Navigator>
+        );
+
+      }
   }
 
   return (
@@ -379,7 +411,18 @@ function RootNavigator() {
       ) : (
         <Tab.Navigator>
           <Stack.Screen name="PublicMovies" component={Movies} />
+          <Stack.Screen
+            name="ProfileStack"
+            component={ProfileStack}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color = '', size = 0}) => (
+                <Profile name="user-o" color={color} size={size} />
+              ),
+            }}
+          />
         </Tab.Navigator>
+        
       )}
     </NavigationContainer>
   );
