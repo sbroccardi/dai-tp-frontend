@@ -7,22 +7,22 @@ import {
   VStack,
   useToast,
 } from 'native-base';
-import React, {useContext} from 'react';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import React, { useContext } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
 import ky from 'ky';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonPrimary from '../../../components/ButtonPrimary';
-import {UserContext} from '../../../../UserContext';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Config} from 'react-native-config';
+import { UserContext } from '../../../../UserContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Config } from 'react-native-config';
 
 const LoginPrivateScreenUI = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
-  const [formData, setData] = React.useState({email: '', password: ''});
+  const [formData, setData] = React.useState({ email: '', password: '' });
   const [errors, setErrors] = React.useState({});
-  const {setUser} = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const validate = () => {
     setErrors({});
@@ -57,7 +57,7 @@ const LoginPrivateScreenUI = () => {
       return false;
     }
 
-    setUser({type: 'privado', ...formData});
+    setUser({ type: 'privado', ...formData });
     return true;
   };
 
@@ -78,10 +78,14 @@ const LoginPrivateScreenUI = () => {
   };
 
   const signIn = async () => {
+    const authToken = user.user.token;
     const response = await ky.post(
       `${Config.API_BASE_URL}/auths/loginPrivate`,
       {
-        json: {email: formData.email, password: formData.password},
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+        json: { email: formData.email, password: formData.password },
       },
     );
     const responseBody = await response.json();
@@ -110,7 +114,7 @@ const LoginPrivateScreenUI = () => {
         </Center>
         <Center w={'90%'}>
           <FormControl isRequired>
-            <FormControl.Label _text={{bold: true}}>
+            <FormControl.Label _text={{ bold: true }}>
               {I18n.t('email')}
             </FormControl.Label>
             <Input
@@ -118,14 +122,14 @@ const LoginPrivateScreenUI = () => {
               keyboardType="email-address"
               inputMode="email"
               placeholder={I18n.t('enterEmail')}
-              onChangeText={value => setData({...formData, email: value})}
+              onChangeText={value => setData({ ...formData, email: value })}
             />
-            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
               Error Email
             </FormControl.ErrorMessage>
           </FormControl>
           <FormControl isRequired pt={5}>
-            <FormControl.Label _text={{bold: true}}>
+            <FormControl.Label _text={{ bold: true }}>
               {I18n.t('password')}
             </FormControl.Label>
             <Input
@@ -133,9 +137,9 @@ const LoginPrivateScreenUI = () => {
               placeholder={I18n.t('enterPassword')}
               type="password"
               keyboardType="default"
-              onChangeText={value => setData({...formData, password: value})}
+              onChangeText={value => setData({ ...formData, password: value })}
             />
-            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
               Error Password
             </FormControl.ErrorMessage>
           </FormControl>

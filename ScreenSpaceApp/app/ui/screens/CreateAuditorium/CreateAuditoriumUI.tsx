@@ -1,15 +1,15 @@
-import {Center, FormControl, Image, Input, VStack, useToast} from 'native-base';
+import { Center, FormControl, Image, Input, VStack, useToast } from 'native-base';
 import React from 'react';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import I18n from '../../../assets/localization/I18n';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Config from 'react-native-config';
 import ky from 'ky';
-import {UserContext} from '../../../UserContext';
-import {useContext} from 'react';
+import { UserContext } from '../../../UserContext';
+import { useContext } from 'react';
 
 export default function CreateAuditoriumUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -24,7 +24,7 @@ export default function CreateAuditoriumUI() {
   const route = useRoute();
   const cineId = route.params.cinemaId;
   const cinemaName = route.params.cinemaName;
-
+  const user = useContext(UserContext);
   const [errors, setErrors] = React.useState({});
 
   const validate = () => {
@@ -71,9 +71,13 @@ export default function CreateAuditoriumUI() {
     if (datosValidos) {
       try {
         // Realizar la solicitud POST al backend utilizando ky
+        const authToken = user.user.token;
         const response = await ky.post(
           `${Config.API_BASE_URL}/cinemas/${cineId}/auditoriums`,
           {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
             json: {
               cinemaId: `${cinemaId}`,
               name: `${nombreAuditorio}`,
@@ -125,7 +129,7 @@ export default function CreateAuditoriumUI() {
         </Center>
         <Center w={'90%'}>
           <FormControl isRequired>
-            <FormControl.Label _text={{bold: true}}>
+            <FormControl.Label _text={{ bold: true }}>
               {I18n.t('nameAuditorium')}
             </FormControl.Label>
             <Input
@@ -134,15 +138,15 @@ export default function CreateAuditoriumUI() {
               inputMode="text"
               placeholder={I18n.t('enterNameAuditorium')}
               onChangeText={value =>
-                setData({...formData, nameAuditorium: value})
+                setData({ ...formData, nameAuditorium: value })
               }
             />
-            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
               Error Name
             </FormControl.ErrorMessage>
           </FormControl>
           <FormControl isRequired pt={5}>
-            <FormControl.Label _text={{bold: true}}>
+            <FormControl.Label _text={{ bold: true }}>
               {I18n.t('rows')}
             </FormControl.Label>
             <Input
@@ -150,14 +154,14 @@ export default function CreateAuditoriumUI() {
               placeholder={I18n.t('enterRows')}
               value={formData.rows}
               keyboardType="numeric"
-              onChangeText={value => setData({...formData, rows: value})}
+              onChangeText={value => setData({ ...formData, rows: value })}
             />
-            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
               Error Rows
             </FormControl.ErrorMessage>
           </FormControl>
           <FormControl isRequired pt={5}>
-            <FormControl.Label _text={{bold: true}}>
+            <FormControl.Label _text={{ bold: true }}>
               {I18n.t('seats')}
             </FormControl.Label>
             <Input
@@ -165,9 +169,9 @@ export default function CreateAuditoriumUI() {
               placeholder={I18n.t('enterSeats')}
               value={formData.seats}
               keyboardType="numeric"
-              onChangeText={value => setData({...formData, seats: value})}
+              onChangeText={value => setData({ ...formData, seats: value })}
             />
-            <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
+            <FormControl.ErrorMessage _text={{ fontSize: 'xs' }}>
               Error Seats
             </FormControl.ErrorMessage>
           </FormControl>

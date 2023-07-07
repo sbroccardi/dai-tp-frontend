@@ -1,8 +1,8 @@
-import {Center, FormControl, Input, VStack, useToast} from 'native-base';
-import React, {useContext} from 'react';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {View, Text} from 'react-native';
+import { Center, FormControl, Input, VStack, useToast } from 'native-base';
+import React, { useContext } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { View, Text } from 'react-native';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonLogout from '../../../components/ButtonLogout';
 import ButtonDanger from '../../../components/ButtonDanger';
@@ -10,18 +10,18 @@ import ButtonPrimary from '../../../components/ButtonPrimary';
 import ProfilePicture from '../../../components/ProfilePicture';
 import DocumentPicker from 'react-native-document-picker';
 import ky from 'ky';
-import {styles} from '../../../styles/theme';
-import {Config} from 'react-native-config';
-import {UserContext} from '../../../../UserContext';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { styles } from '../../../styles/theme';
+import { Config } from 'react-native-config';
+import { UserContext } from '../../../../UserContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RefreshControl } from 'react-native';
 
 
-const ProfilePrivateScreenUI = ({}) => {
+const ProfilePrivateScreenUI = ({ }) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
   const user = useContext(UserContext);
-  const {setUser} = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [refreshing, setRefreshing] = React.useState(false);
   const [formData, setData] = React.useState({
     email: '',
@@ -45,7 +45,11 @@ const ProfilePrivateScreenUI = ({}) => {
       const data = new FormData();
       data.append('name', 'Image Upload');
       data.append('file_attachment', res);
+      const authToken = user.user.token;
       const response = await ky.post(`${Config.API_BASE_URL}/uploadAvatar`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
         body: data,
       });
       console.log(response);
@@ -123,7 +127,7 @@ const ProfilePrivateScreenUI = ({}) => {
   }
 
   return (
-    <KeyboardAwareScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getData}/>}>
+    <KeyboardAwareScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getData} />}>
       <VStack
         space={8}
         alignItems="center"

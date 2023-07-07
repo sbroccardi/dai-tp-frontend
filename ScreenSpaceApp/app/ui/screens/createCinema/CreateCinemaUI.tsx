@@ -71,9 +71,13 @@ export default function CreateCinemaUI() {
     if (datosValidos) {
       try {
         // Realizar la solicitud POST al backend utilizando ky
+        const authToken = user.user.token;
         const response = await ky.post(
           `${Config.API_BASE_URL}/cinemas`,
           {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
             json: {
               userId: `${userId}`,
               name: `${nombreCine}`,

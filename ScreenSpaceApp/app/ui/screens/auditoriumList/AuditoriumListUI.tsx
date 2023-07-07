@@ -1,5 +1,5 @@
 import {Center, VStack, Text, ScrollView} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import CardAuditorium from '../../components/CardAuditorium';
 import ToolbarPrivateUser from '../../components/ToolbarPrivateUser';
 import SearchBar from '../../components/SearchBar';
@@ -9,6 +9,7 @@ import I18n from '../../../assets/localization/I18n';
 import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Config from 'react-native-config';
+import { UserContext } from '../../../UserContext';
 
 export default function AuditoriumListUI() {
   const [auditoriumsData, setAuditoriumsData] = useState([
@@ -25,7 +26,7 @@ export default function AuditoriumListUI() {
   const route = useRoute();
   const cinemaId = route.params.cinemaId;
   const cinemaName = route.params.cinemaName;
-
+  const user = useContext(UserContext);
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [flag, setFlag] = React.useState(0);
 

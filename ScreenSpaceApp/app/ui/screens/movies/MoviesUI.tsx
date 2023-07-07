@@ -35,6 +35,11 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
       //const cinemaId = user.user.id;
       const response = await ky.get(
         `${Config.API_BASE_URL}/movies`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
       );
       const responseBody = await response.json();
       console.log(responseBody);

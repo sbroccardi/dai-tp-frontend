@@ -32,7 +32,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
   const getCinemas = async () => {
     setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
-      const authToken = user.user.token;''
+      const authToken = user.user.token;
       console.log('token: ',authToken);
       const userId = user.user.id;
       console.log('UserId:' + userId)
