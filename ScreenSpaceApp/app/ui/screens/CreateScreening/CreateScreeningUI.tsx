@@ -42,14 +42,22 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   }])
   const [moviesData, setMoviesData] = React.useState([{
     _id: '',
-    name:''
+    name: ''
   }])
 
   useEffect(() => {
     const fetchCinemaOptions = async () => {
       try {
+        const authToken = user.user.token;
         const userId = user.user.id;
-        const response = await ky.get('https://screenspace.azurewebsites.net/cinemas');
+        const response = await ky.get(
+          'https://screenspace.azurewebsites.net/cinemas',
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
         const responseObject = await response.json();
         const names = responseObject
           .filter((document: { userId: any }) => document.userId == userId)
@@ -79,8 +87,14 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
 
     const fetchMovieOptions = async () => {
       try {
+        const authToken = user.user.token;
         const response = await ky.get(
-          `${Config.API_BASE_URL}/movies`
+          `${Config.API_BASE_URL}/movies`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
         );
         const responseObject = await response.json();
         const movieNames = responseObject
@@ -92,10 +106,10 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
         setMoviesIds(moviesIds)
 
         const moviesData = responseObject
-        .map((movie:{_id:any; name:any})=>({
-          _id: movie._id,
-          name: movie.name
-        }))
+          .map((movie: { _id: any; name: any }) => ({
+            _id: movie._id,
+            name: movie.name
+          }))
         setMoviesData(moviesData);
 
       } catch (error) {
@@ -114,8 +128,14 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
     setSelectedAuditorium(''); // Reseteamos el valor del siguiente dropdown
     setSelectedMovie(''); // Reseteamos el valor del siguiente dropdown
     try {
+      const authToken = user.user.token;
       const response = await ky.get(
-        `${Config.API_BASE_URL}/cinemas/${value}/auditoriums`
+        `${Config.API_BASE_URL}/cinemas/${value}/auditoriums`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
       );
       const responseObject = await response.json();
       //
@@ -184,23 +204,26 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
 
   const createScreening = async (auditoriumId: string, movieId: string, datetime: string) => {
     try {
-      // Realizar la solicitud POST al backend utilizando ky
+      const authToken = user.user.token;
       const response = await ky.post(
         `${Config.API_BASE_URL}/movies/${movieId}/screenings`,
         {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
           json: {
             movieId: `${movieId}`,
             auditoriumId: `${auditoriumId}`,
             datetime: `${datetime}`,
-          },
-        },
+          }
+        }
       );
       const responseBody = await response.json();
       console.log('Funcion creada:', responseBody);
       //getMovieName
       const selectedMovieName = moviesData.find(movie => movie._id == movieId)?.name;
 
-      navigation.replace('ScreeningList', { movieID: selectedMovie, movieName: selectedMovieName})
+      navigation.replace('ScreeningList', { movieID: selectedMovie, movieName: selectedMovieName })
     } catch (error) {
       console.error('Error al crear la funcion:', error);
     }
@@ -208,13 +231,13 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
 
   const handleCreateScreening = async () => {
     if (validate()) {
-      createScreening(selectedAuditorium,selectedMovie,selectedDay)
+      createScreening(selectedAuditorium, selectedMovie, selectedDay)
       toast.show({
         title: 'Funcion creada',
         duration: 3000,
-        placement: 'top',        
+        placement: 'top',
       })
-      
+
     }
     else {
       toast.show({

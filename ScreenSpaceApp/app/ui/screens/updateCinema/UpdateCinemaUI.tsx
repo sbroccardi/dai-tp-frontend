@@ -37,9 +37,7 @@ const UpdateCinemaUI = ({}) => {
     name: '',
     address: '',
   });
-  const user = useContext(UserContext);
-  const userId = user.user.id;
-
+ 
   const openMaps = () => {
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
       address,
@@ -47,10 +45,18 @@ const UpdateCinemaUI = ({}) => {
     console.log(url);
     Linking.openURL(url);
   };
+  const user = useContext(UserContext);
+
 
   const traerDatos = async () => {
+    const authToken = user.user.token;
     const respuesta = await ky.get(
       `${Config.API_BASE_URL}/cinemas/${cinemaId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
     );
     const responseBody = await respuesta.json();
     console.log(responseBody);

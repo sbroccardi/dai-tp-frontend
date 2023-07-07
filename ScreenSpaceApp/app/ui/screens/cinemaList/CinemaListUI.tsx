@@ -32,10 +32,17 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
   const getCinemas = async () => {
     setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
+      const authToken = user.user.token;''
+      console.log('token: ',authToken);
       const userId = user.user.id;
       console.log('UserId:' + userId)
       const response = await ky.get(
         `${Config.API_BASE_URL}/cinemas`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
       );
       const responseBody = await response.json();
       const cinemasData = responseBody
@@ -44,6 +51,11 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
           console.log('cinemaId del map:'+document._id)
           const auditoriumsResponse = await ky.get(
             `${Config.API_BASE_URL}/cinemas/${document._id}/auditoriums`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
           );
           const auditoriumsData = await auditoriumsResponse.json();
           console.log('JSON auditorios de un cine:'+auditoriumsData)
