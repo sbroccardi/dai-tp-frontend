@@ -1,11 +1,11 @@
-import {Center, Image, ScrollView, VStack} from 'native-base';
+import { Center, Image, ScrollView, VStack } from 'native-base';
 import React, { useContext, useEffect } from 'react';
 import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import CardScreeningPrivate from '../../components/CardScreeningPrivate';
 import DropdownMenu from '../../components/DropdownMenu';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/native';
 import ky from 'ky';
 import { UserContext } from '../../../UserContext';
 import { typesAreEqual } from 'react-native-document-picker/lib/typescript/fileTypes';
@@ -17,7 +17,7 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-export default function ListScreeningUIPrivate({route, navigation}) {
+export default function ListScreeningUIPrivate({ route, navigation }) {
   const movieID = route.params.movieId;
   const movieName = route.params.movieName;
   const user = useContext(UserContext);
@@ -31,22 +31,29 @@ export default function ListScreeningUIPrivate({route, navigation}) {
   }]);
 
   const handleCinemaChange = (value: any) => {
-    console.log('Cinema id en listScreening: '+value);
+    console.log('Cinema id en listScreening: ' + value);
     setSelectedCinema(value);
     //traer funciones del cine
-    try{
+    try {
 
     }
-    catch(err){
-      console.error('Error retrievign cinema screens'+err);
+    catch (err) {
+      console.error('Error retrieving cinema screens' + err);
     }
   };
   //{JSON.stringify(movieID)}
   useEffect(() => {
     const fetchCinemaOptions = async () => {
       try {
+        const authToken = user.user.token;
         const userId = user.user.id;
-        const response = await ky.get('https://screenspace.azurewebsites.net/cinemas');
+        const response = await ky.get('https://screenspace.azurewebsites.net/cinemas',
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
         const responseObject = await response.json();
         const names = responseObject
           .filter((document: { userId: any }) => document.userId == userId)
@@ -65,13 +72,20 @@ export default function ListScreeningUIPrivate({route, navigation}) {
     fetchCinemaOptions();
 
     const fetchScreenings = async () => {
-      try{
-        const response = await ky.get(`${Config.API_BASE_URL}/cinemas/${movieID}/screenings`)
+      try {
+        const authToken = user.user.token;
+        const response = await ky.get(`${Config.API_BASE_URL}/cinemas/${movieID}/screenings`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        )
         const responseObject = await response.json();
-        console.log('screenings de la pelicula: '+responseObject);
+        console.log('screenings de la pelicula: ' + responseObject);
       }
-      catch(err){
-        console.error('Error retrieving screenings'+err)
+      catch (err) {
+        console.error('Error retrieving screenings' + err)
       }
     };
     fetchScreenings();
