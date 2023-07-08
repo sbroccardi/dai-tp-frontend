@@ -1,5 +1,5 @@
 import {Center, FormControl, Input, VStack, useToast} from 'native-base';
-import React from 'react';
+import React, {useContext} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {View, Text} from 'react-native';
@@ -10,10 +10,23 @@ import DocumentPicker from 'react-native-document-picker';
 import ky from 'ky';
 import {Config} from 'react-native-config';
 import {styles} from '../../../styles/theme';
+import {UserContext} from '../../../../UserContext';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ButtonDanger from '../../../components/ButtonDanger';
+import { RefreshControl } from 'react-native/Libraries/Components/RefreshControl/RefreshControl';
+import ButtonLogout from '../../../components/ButtonLogout';
 
 const ProfilePublicScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const toast = useToast();
+  const user = useContext(UserContext);
+  const {setUser} = useContext(UserContext);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [formData, setData] = React.useState({
+    username: '',
+    img: ' ',
+  });
+  const [username, setUsername] = React.useState('');
   const selectFile = async () => {
     //Opening Document Picker for selection of one file
     try {
@@ -60,41 +73,118 @@ const ProfilePublicScreenUI = ({}) => {
       });
     }
   };
+  const getData = async () => {
+    const authToken = user.user.token;
+    const respuesta = await ky.get(
+      `${Config.API_BASE_URL}/users/${user.user.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
+    const responseBody = await respuesta.json();
+    setData({
+      ...formData,
+      username: responseBody.fullname,
+      img: responseBody.avatar,
+    });
+  };
+  const updateData = async () => {
+    let data = {
+      fullname: username,
+    };
+    if (username === '') {
+      data = {
+        fullname: formData.username
+      };
+    }
+    if (username !== '') {
+      data = {
+        fullname: username
+      };
+    }
+    const authToken = user.user.token;
+    const respuesta = await ky.put(
+      `${Config.API_BASE_URL}/users`,
+      {
+        json: data,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
+    getData();
+  };
+  if (formData.username === '') {
+    getData();
+  }
+  const exit = () => {
+    setUser(null);
+  };
 
   return (
-    <VStack
-      space={4}
-      alignItems="center"
-      justifyContent="space-around"
-      height="100%">
-      <Text style={styles.headerText}> Avatar </Text>
-      <ProfilePicture
-        title={I18n.t('uploadPortraitPhoto')}
-        onPress={selectFile}
-      />
-      <Center w={'90%'}>
-        <FormControl isRequired>
-          <FormControl.Label _text={{bold: true}}>
-            {I18n.t('fullname')}
-          </FormControl.Label>
-          <Input
-            size="md"
-            keyboardType="email-address"
-            inputMode="email"
-            placeholder={I18n.t('fullname')}
-          />
-        </FormControl>
-      </Center>
-      <Center w={'50%'}>
-        <View>
-          <ButtonPrimary
-            onPress={() => navigation.navigate('Login')}
-            title={I18n.t('save')}
-            width="300%"
-          />
-        </View>
-      </Center>
-    </VStack>
+    
+      <VStack
+        space={8}
+        alignItems="center"
+        justifyContent="space-around"
+        height="100%">
+        <Text style={styles.headerText}> Avatar </Text>
+        <ProfilePicture
+          title={I18n.t('uploadPortraitPhoto')}
+          onPress={selectFile}
+          imgUrl={formData.img}
+        />
+        <Center w={'90%'}>
+          <FormControl isRequired>
+            {I18n.t('username')}
+            {username === '' && (
+              <Input
+                size="md"
+                keyboardType="email-address"
+                inputMode="email"
+                placeholder={formData.username}
+                backgroundColor={'#21242D'}
+                onChangeText={value => setUsername(value)}
+              />
+            )}
+            {username !== '' && (
+              <Input
+                size="md"
+                keyboardType="email-address"
+                inputMode="email"
+                placeholder={formData.username}
+                backgroundColor={'#21242D'}
+                onChangeText={value => setUsername(value)}
+              />
+            )}
+            {'\n'}
+            
+          </FormControl>
+        </Center>
+      <ButtonPrimary
+           onPress={() => navigation.navigate('Previous Purchase')}
+          title={'Previous Purchase'}
+          width="90%"
+        />
+        <ButtonPrimary
+          onPress={updateData}
+          title={I18n.t('save')}
+          width="90%"
+        />
+        <Center w={'50%'}>
+          <View style={styles.buttonsContainer}>
+            <ButtonDanger
+              onPress={() => navigation.navigate('ConfirmDelete')}
+              title={I18n.t('delete')}
+              width="65%"
+            />
+            <ButtonLogout onPress={exit} title={I18n.t('logout')} />
+          </View>
+        </Center>
+      
+      </VStack>
   );
 };
 

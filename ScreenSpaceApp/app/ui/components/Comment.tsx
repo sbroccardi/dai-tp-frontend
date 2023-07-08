@@ -44,7 +44,7 @@ const Comment = (props: {
           <Text style={styles.commentText}>{commentContent}</Text>
         </Stack>
         <Stack>
-          <StarRating rating={5} style={{}} onChange={() => {}} />
+          <StarRating rating={5} style={{}} onChange={() => {}} starSize={20} />
         </Stack>
       </Pressable>
     </View>
