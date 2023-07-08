@@ -187,7 +187,10 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-        <Stack.Screen name="CreateAuditorium" component={CreateAuditoriumUI} />
+        <Stack.Screen name="CreateAuditorium" component={CreateAuditoriumUI} options={{
+            headerTitle: I18n.t('createAuditorium'),
+            headerTitleAlign: 'center',
+          }}/>
         <Stack.Screen
           name="UpdateAuditorium"
           component={UpdateAuditoriumUI}

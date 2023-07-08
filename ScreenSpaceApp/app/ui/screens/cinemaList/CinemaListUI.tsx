@@ -35,7 +35,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       const authToken = user.user.token;
       console.log('token: ',authToken);
       const userId = user.user.id;
-      console.log('UserId:' + userId)
+      console.log('UserId: ' + userId)
       const response = await ky.get(
         `${Config.API_BASE_URL}/cinemas`,
         {

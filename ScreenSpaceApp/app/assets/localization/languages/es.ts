@@ -99,13 +99,13 @@ export default {
 
   privacy: 'Política de privacidad',
 
-  createAuditoriums: 'Crear sala',
+  createAuditorium: 'Crear sala',
 
   auditoriums: 'Salas',
 
   createScreening: 'Crear funcion',
 
   screenings: 'Funciones',
-  
-  cancel:'Cancelar'
+
+  cancel: 'Cancelar'
 };

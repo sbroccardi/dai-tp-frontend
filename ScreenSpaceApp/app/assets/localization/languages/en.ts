@@ -115,12 +115,13 @@ export default {
 
   privacy: 'Privacy Policy',
 
-  createAuditoriums: 'Create auditoriums',
+  createAuditorium: 'Create auditorium',
 
   auditoriums: 'Auditoriums',
 
   createScreening: 'Create screening',
 
   screenings: 'Screenings',
+  
   cancel:'Cancel'
 };

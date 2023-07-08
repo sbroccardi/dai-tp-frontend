@@ -12,14 +12,15 @@ import { UserContext } from '../../../../UserContext';
 export default function ConfirmDeleteAuditoriumUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
-  const params = route.params;
+  const auditoriumId = route.params.auditoriumId;
+  const cinemaId = route.params.cinemaId
   const authToken = user.user.token;
   const user = useContext(UserContext);
 
   const borrar = async () => {
     try {
       const respuesta = await ky.delete(
-        `${Config.API_BASE_URL}/cinemas/${params.cinemaID}/auditoriums/${params.id}`,
+        `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums/${auditoriumId}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,

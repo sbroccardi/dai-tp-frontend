@@ -78,13 +78,10 @@ const LoginPrivateScreenUI = () => {
   };
 
   const signIn = async () => {
-    const authToken = user.user.token;
     const response = await ky.post(
       `${Config.API_BASE_URL}/auths/loginPrivate`,
       {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        
         json: { email: formData.email, password: formData.password },
       },
     );

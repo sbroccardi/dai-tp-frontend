@@ -82,7 +82,7 @@ export default function AuditoriumListUI() {
             auditoriumSize={`${auditorium.rows} rows of ${auditorium.seatsPerRow} seats`}
             auditoriumAvailability="Disponible"
             onPressCard={() =>
-              navigation.navigate('UpdateAuditorium', {
+              navigation.replace('UpdateAuditorium', {
                 auditoriumName: auditorium.name,
                 rows: auditorium.rows,
                 seats: auditorium.seatsPerRow,
@@ -115,7 +115,7 @@ export default function AuditoriumListUI() {
       </Center>
       <Center width="100%">
         <ButtonPrimary
-          title={I18n.t('createAuditoriums')}
+          title={I18n.t('createAuditorium')}
           onPress={() =>
             navigation.replace('CreateAuditorium', {cinemaId: cinemaId, cinemaName: cinemaName})
           }
