@@ -1,4 +1,4 @@
-import { Center, Image, ScrollView, VStack } from 'native-base';
+import { Center, Image, ScrollView, Text, VStack } from 'native-base';
 import React, { useContext, useEffect } from 'react';
 import HomeToolbarPrivateUser from '../../components/HomeToolbarPrivateUser';
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -10,6 +10,7 @@ import ky from 'ky';
 import { UserContext } from '../../../UserContext';
 import { typesAreEqual } from 'react-native-document-picker/lib/typescript/fileTypes';
 import Config from 'react-native-config';
+import { styles } from '../../styles/theme';
 
 type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -35,7 +36,7 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
     setSelectedCinema(value);
     //traer funciones del cine
     try {
-
+      
     }
     catch (err) {
       console.error('Error retrieving cinema screens' + err);
@@ -43,6 +44,9 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
   };
   //{JSON.stringify(movieID)}
   useEffect(() => {
+    navigation.setOptions({
+      headerTitle:route.params.movieName
+  })
     const fetchCinemaOptions = async () => {
       try {
         const authToken = user.user.token;
@@ -66,7 +70,7 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
         setCinemaIds(ids)
         //
       } catch (error) {
-        console.error('Error retrieving cinema options:', error);
+        console.error('Error retrieving cinema options: ', error);
       }
     };
     fetchCinemaOptions();
@@ -85,7 +89,7 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
         console.log('screenings de la pelicula: ' + responseObject);
       }
       catch (err) {
-        console.error('Error retrieving screenings' + err)
+        console.error('Error retrieving screenings ', err)
       }
     };
     fetchScreenings();

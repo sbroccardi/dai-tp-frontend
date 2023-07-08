@@ -1,4 +1,4 @@
-import { Center, ScrollView, Text, VStack } from 'native-base';
+import { Center, ScrollView, Text, VStack, Spinner } from 'native-base';
 import React, { useContext, useEffect } from 'react';
 import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
@@ -14,18 +14,27 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
+const LoadingScreen = () => {
+  return (
+    <Center>
+      <Spinner accessibilityLabel="Loading" color="white"s/>
+    </Center>
+  );
+};
 
 const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
-  //const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  //const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();]
+  const [isLoading, setIsLoading] = React.useState(true);
   const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState<string[]>([])
   const [moviesData, setMoviesData] = React.useState([]);
   const user = useContext(UserContext);
   const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; }[]>([]);
+  const authToken = user.user.token;
+
 
   useEffect(() => {
     const fetchMovieIdsThatHaveScreenings = async () => {
       try {
-        const authToken = user.user.token;
         const response = await ky.get(`${Config.API_BASE_URL}/movies`,
           {
             headers: {
@@ -45,21 +54,24 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
             },
           });
           const screeningsData = await screeningsResponse.json();
-
+          
           if (Array.isArray(screeningsData) && screeningsData.length > 0) {
             movieIdsWithScreenings.push(movieId);
           }
         }
         console.log('moviesWithScreenings: ', movieIdsWithScreenings);
         setMovieIdsThatHaveScreenings(movieIdsWithScreenings);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error retrieving screenings:', error);
+        setIsLoading(false);
       }
-    }; fetchMovieIdsThatHaveScreenings()
+    }; fetchMovieIdsThatHaveScreenings();
+  }, [])
 
+  useEffect(() => {
     const fetchMoviesData = async () => {
       try {
-        const authToken = user.user.token;
         const response = await ky.get(`${Config.API_BASE_URL}/movies`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -76,11 +88,10 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
         }
         setMoviesForm(filteredMovies);
       } catch (error) {
-        console.error(error);
+        console.error('error fetching movies data:', error);
       }
     }; fetchMoviesData()
-
-  }, [])
+  }, [movieIdsThatHaveScreenings])
 
   const renderMovies = () => {
     const elements = [];
@@ -88,12 +99,13 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
       const movie = moviesForm[count];
       console.log('element: ', movie)
       elements.push(
-        <Center marginBottom="4">
+        <Center marginBottom="4" key={movie._id}>
           <CardMovie
             movieID={movie._id}
             movieName={movie.name}
             movieAge={movie.age}
             movieRating={movie.rating}
+            onPress={()=>navigation.navigate('ScreeningList', {movieName:movie.name, movieId: movie._id})}
           />
         </Center>,
       );
@@ -104,12 +116,17 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
   return (
     <VStack space={3} alignItems="center" height="100%">
       <Center>
-        <SearchBar />
+        <SearchBar/>
       </Center>
       <Center>
         <ScrollView maxH="500">
           <VStack space={3} alignItems="center" height="100%">
-            {renderMovies()}
+            {
+              isLoading ? 
+              <LoadingScreen/>
+              :
+              renderMovies()
+            }
           </VStack>
         </ScrollView>
       </Center>
