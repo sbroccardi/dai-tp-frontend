@@ -194,7 +194,7 @@ export const styles = StyleSheet.create({
   commentCard: {
     //CAMBIAR ESTO SEGUN CONVENGA
     width: 367,
-    height: 181,
+    height: 171,
     padding: 5,
     backgroundColor: palette.blackLight,
     justifyContent: 'flex-start',
