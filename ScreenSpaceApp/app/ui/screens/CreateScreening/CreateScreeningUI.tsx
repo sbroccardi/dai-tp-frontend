@@ -48,10 +48,10 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const fetchCinemaOptions = async () => {
       try {
-        const authToken = user.user.token;
-        const userId = user.user.id;
+        const authToken = user.user?.tokens.accessToken;
+        const userId = user.user?.id;
         const response = await ky.get(
-          'https://screenspace.azurewebsites.net/cinemas',
+          `${Config.API_BASE_URL}/cinemas`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -87,7 +87,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
 
     const fetchMovieOptions = async () => {
       try {
-        const authToken = user.user.token;
+        const authToken = user.user?.tokens.accessToken;
         const response = await ky.get(
           `${Config.API_BASE_URL}/movies`,
           {
@@ -128,14 +128,14 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
     setSelectedAuditorium(''); // Reseteamos el valor del siguiente dropdown
     setSelectedMovie(''); // Reseteamos el valor del siguiente dropdown
     try {
-      const authToken = user.user.token;
+      const authToken = user.user?.tokens.accessToken;
       const response = await ky.get(
         `${Config.API_BASE_URL}/cinemas/${value}/auditoriums`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
-        }
+        },
       );
       const responseObject = await response.json();
       //
@@ -204,7 +204,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
 
   const createScreening = async (auditoriumId: string, movieId: string, datetime: string) => {
     try {
-      const authToken = user.user.token;
+      const authToken = user.user?.tokens.accessToken;
       const response = await ky.post(
         `${Config.API_BASE_URL}/movies/${movieId}/screenings`,
         {
@@ -215,8 +215,8 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
             movieId: `${movieId}`,
             auditoriumId: `${auditoriumId}`,
             datetime: `${datetime}`,
-          }
-        }
+          },
+        },
       );
       const responseBody = await response.json();
       console.log('Funcion creada:', responseBody);

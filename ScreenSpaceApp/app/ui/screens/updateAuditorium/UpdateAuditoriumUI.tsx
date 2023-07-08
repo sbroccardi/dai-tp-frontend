@@ -52,7 +52,7 @@ const UpdateAuditoriumUI = ({ }) => {
     /*const fetchAuditoriumData = async () => {
       console.log('Aud cinemaId ', cinemaId);
       console.log('Aud auditoriumId ', auditoriumId);
-      const authToken = user.user.token;
+      const authToken = user.user?.tokens.accessToken;
       const respuesta = await ky.get(
         `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums/${auditoriumId}`,
         {
@@ -81,7 +81,7 @@ const UpdateAuditoriumUI = ({ }) => {
       available: formData.available,
     }
     try {
-      const authToken = user.user.token;
+      const authToken = user.user?.tokens.accessToken;
       const respuesta = await ky.put(
         `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums/${auditoriumId}`,
         {

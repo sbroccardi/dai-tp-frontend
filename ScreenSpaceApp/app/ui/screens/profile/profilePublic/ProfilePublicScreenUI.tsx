@@ -11,9 +11,9 @@ import ky from 'ky';
 import {Config} from 'react-native-config';
 import {styles} from '../../../styles/theme';
 import {UserContext} from '../../../../UserContext';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ButtonDanger from '../../../components/ButtonDanger';
-import { RefreshControl } from 'react-native/Libraries/Components/RefreshControl/RefreshControl';
+import {RefreshControl} from 'react-native/Libraries/Components/RefreshControl/RefreshControl';
 import ButtonLogout from '../../../components/ButtonLogout';
 
 const ProfilePublicScreenUI = ({}) => {
@@ -50,12 +50,9 @@ const ProfilePublicScreenUI = ({}) => {
       const data = new FormData();
       data.append('name', 'Image Upload');
       data.append('file_attachment', res);
-      const response = await ky.post(
-        `${Config.API_BASE_URL}/uploadAvatar`,
-        {
-          body: data,
-        },
-      );
+      const response = await ky.post(`${Config.API_BASE_URL}/uploadAvatar`, {
+        body: data,
+      });
       console.log(response);
     } catch (err) {
       //Handling any exception (If any)
@@ -74,9 +71,9 @@ const ProfilePublicScreenUI = ({}) => {
     }
   };
   const getData = async () => {
-    const authToken = user.user.token;
+    const authToken = user.user?.tokens.accessToken;
     const respuesta = await ky.get(
-      `${Config.API_BASE_URL}/users/${user.user.id}`,
+      `${Config.API_BASE_URL}/users/${user.user?.id}`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -96,24 +93,21 @@ const ProfilePublicScreenUI = ({}) => {
     };
     if (username === '') {
       data = {
-        fullname: formData.username
+        fullname: formData.username,
       };
     }
     if (username !== '') {
       data = {
-        fullname: username
+        fullname: username,
       };
     }
-    const authToken = user.user.token;
-    const respuesta = await ky.put(
-      `${Config.API_BASE_URL}/users`,
-      {
-        json: data,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+    const authToken = user.user?.tokens.accessToken;
+    const respuesta = await ky.put(`${Config.API_BASE_URL}/users`, {
+      json: data,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
       },
-    );
+    });
     getData();
   };
   if (formData.username === '') {
@@ -124,67 +118,60 @@ const ProfilePublicScreenUI = ({}) => {
   };
 
   return (
-    
-      <VStack
-        space={8}
-        alignItems="center"
-        justifyContent="space-around"
-        height="100%">
-        <Text style={styles.headerText}> Avatar </Text>
-        <ProfilePicture
-          title={I18n.t('uploadPortraitPhoto')}
-          onPress={selectFile}
-          imgUrl={formData.img}
-        />
-        <Center w={'90%'}>
-          <FormControl isRequired>
-            {I18n.t('username')}
-            {username === '' && (
-              <Input
-                size="md"
-                keyboardType="email-address"
-                inputMode="email"
-                placeholder={formData.username}
-                backgroundColor={'#21242D'}
-                onChangeText={value => setUsername(value)}
-              />
-            )}
-            {username !== '' && (
-              <Input
-                size="md"
-                keyboardType="email-address"
-                inputMode="email"
-                placeholder={formData.username}
-                backgroundColor={'#21242D'}
-                onChangeText={value => setUsername(value)}
-              />
-            )}
-            {'\n'}
-            
-          </FormControl>
-        </Center>
-      <ButtonPrimary
-           onPress={() => navigation.navigate('Previous Purchase')}
-          title={'Previous Purchase'}
-          width="90%"
-        />
-        <ButtonPrimary
-          onPress={updateData}
-          title={I18n.t('save')}
-          width="90%"
-        />
-        <Center w={'50%'}>
-          <View style={styles.buttonsContainer}>
-            <ButtonDanger
-              onPress={() => navigation.navigate('ConfirmDelete')}
-              title={I18n.t('delete')}
-              width="65%"
+    <VStack
+      space={8}
+      alignItems="center"
+      justifyContent="space-around"
+      height="100%">
+      <Text style={styles.headerText}> Avatar </Text>
+      <ProfilePicture
+        title={I18n.t('uploadPortraitPhoto')}
+        onPress={selectFile}
+        imgUrl={formData.img}
+      />
+      <Center w={'90%'}>
+        <FormControl isRequired>
+          {I18n.t('username')}
+          {username === '' && (
+            <Input
+              size="md"
+              keyboardType="email-address"
+              inputMode="email"
+              placeholder={formData.username}
+              backgroundColor={'#21242D'}
+              onChangeText={value => setUsername(value)}
             />
-            <ButtonLogout onPress={exit} title={I18n.t('logout')} />
-          </View>
-        </Center>
-      
-      </VStack>
+          )}
+          {username !== '' && (
+            <Input
+              size="md"
+              keyboardType="email-address"
+              inputMode="email"
+              placeholder={formData.username}
+              backgroundColor={'#21242D'}
+              onChangeText={value => setUsername(value)}
+            />
+          )}
+          {'\n'}
+        </FormControl>
+      </Center>
+      <ButtonPrimary
+        onPress={() => navigation.navigate('Previous Purchase')}
+        title={'Previous Purchase'}
+        width="90%"
+      />
+      <ButtonPrimary onPress={updateData} title={I18n.t('save')} width="90%" />
+      <Center w={'50%'}>
+        <View style={styles.buttonsContainer}>
+          <ButtonDanger
+            onPress={() => navigation.navigate('ConfirmDelete')}
+            title={I18n.t('delete')}
+            width="65%"
+          />
+          <ButtonLogout onPress={exit} title={I18n.t('logout')} />
+        </View>
+      </Center>
+    </VStack>
   );
 };
 

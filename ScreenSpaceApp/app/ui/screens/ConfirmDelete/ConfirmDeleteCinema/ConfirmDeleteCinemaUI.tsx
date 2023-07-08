@@ -13,9 +13,9 @@ export default function ConfirmDeleteCinemaUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
   const cinemaId = route.params.cinemaId;
-  const authToken = user.user.token;
   const user = useContext(UserContext);
-
+  const authToken = user.user?.tokens.accessToken;
+  
   const borrar = async () => {
     try {
       const respuesta = await ky.delete(

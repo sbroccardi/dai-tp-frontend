@@ -13,10 +13,10 @@ export default function ConfirmDeleteAuditoriumUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
   const auditoriumId = route.params.auditoriumId;
-  const cinemaId = route.params.cinemaId
-  const authToken = user.user.token;
+  const cinemaId = route.params.cinemaId;
   const user = useContext(UserContext);
-
+  const authToken = user.user?.tokens.accessToken;
+  
   const borrar = async () => {
     try {
       const respuesta = await ky.delete(

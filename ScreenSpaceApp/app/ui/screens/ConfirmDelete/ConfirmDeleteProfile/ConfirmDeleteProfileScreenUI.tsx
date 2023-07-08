@@ -15,15 +15,12 @@ export default function ConfirmDeleteProfileScreenUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const salir = async () => {
-    const authToken = user.user.token;
-    const respuesta = await ky.delete(
-      `${Config.API_BASE_URL}/users`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+    const authToken = user.user?.tokens.accessToken;
+    const respuesta = await ky.delete(`${Config.API_BASE_URL}/users`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
       },
-    );
+    });
     setUser(null);
   };
   return (

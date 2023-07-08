@@ -30,7 +30,7 @@ const PurchaseHistoryScreenUI = () => {
     },
   ];
   const getPurchases = async () => {
-    const authToken = user.user.token;
+    const authToken = user.user?.tokens.accessToken;
     const respuesta = await ky.get(
       `${Config.API_BASE_URL}/users/purchases`,
       {

@@ -8,7 +8,6 @@ import I18n from '../assets/localization/I18n';
 
 import LoginScreen from '../ui/screens/Login/LoginScreen';
 import LoginPrivateScreen from '../ui/screens/Login/LoginPrivate/LoginPrivateScreen';
-import LoginPublicScreen from '../ui/screens/Login/LoginPublic/LoginPublicScreen';
 import RecoverPasswordScreen from '../ui/screens/RecoverPassword/RecoverPasswordScreen';
 import SignUpScreen from '../ui/screens/SignUp/SignUpScreen';
 import EnterResetCodeScreen from '../ui/screens/RecoverPassword/EnterResetCodeScreen';
@@ -189,10 +188,14 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-        <Stack.Screen name="CreateAuditorium" component={CreateAuditoriumUI} options={{
+        <Stack.Screen
+          name="CreateAuditorium"
+          component={CreateAuditoriumUI}
+          options={{
             headerTitle: I18n.t('createAuditorium'),
             headerTitleAlign: 'center',
-          }}/>
+          }}
+        />
         <Stack.Screen
           name="UpdateAuditorium"
           component={UpdateAuditoriumUI}
@@ -235,56 +238,57 @@ function RootNavigator() {
 
   // eslint-disable-next-line react/no-unstable-nested-components
   function ProfileStack({navigation}) {
-    if (user.type === 'privado'){
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Profile"
-          component={ProfilePrivateScreenUI}
-          options={{
-            headerTitle: I18n.t('profile'),
-            headerTitleAlign: 'center',
-          }}
-        />
-        <Stack.Screen
-          name="ConfirmDelete"
-          component={ConfirmDeleteProfileScreenUI}
-          options={{
-            headerTitle: I18n.t('confirmDeleteAccount'),
-            headerTitleAlign: 'center',
-          }}
-        />
-      </Stack.Navigator>
-    
-    );
-        }
-      else{
-        return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Profile"
-          component={ProfilePublicScreenUI}
-          options={{
-            headerTitle: I18n.t('profile'),
-            headerTitleAlign: 'center',
-          }}
-        />
-        <Stack.Screen
-          name="ConfirmDelete"
-          component={ConfirmDeleteProfileScreenUI}
-          options={{
-            headerTitle: I18n.t('confirmDeleteAccount'),
-            headerTitleAlign: 'center',
-          }}
-        />
-      <Stack.Screen name="Previous Purchase" component={PurchaseHistoryScreenUI} options={{
-            headerTitle: 'Previous Purchase',
-            headerTitleAlign: 'center',
-          }}/>
-      </Stack.Navigator>
-        );
-
-      }
+    if (user.type === 'private') {
+      return (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Profile"
+            component={ProfilePrivateScreenUI}
+            options={{
+              headerTitle: I18n.t('profile'),
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="ConfirmDelete"
+            component={ConfirmDeleteProfileScreenUI}
+            options={{
+              headerTitle: I18n.t('confirmDeleteAccount'),
+              headerTitleAlign: 'center',
+            }}
+          />
+        </Stack.Navigator>
+      );
+    } else {
+      return (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Profile"
+            component={ProfilePublicScreenUI}
+            options={{
+              headerTitle: I18n.t('profile'),
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="ConfirmDelete"
+            component={ConfirmDeleteProfileScreenUI}
+            options={{
+              headerTitle: I18n.t('confirmDeleteAccount'),
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="Previous Purchase"
+            component={PurchaseHistoryScreenUI}
+            options={{
+              headerTitle: 'Previous Purchase',
+              headerTitleAlign: 'center',
+            }}
+          />
+        </Stack.Navigator>
+      );
+    }
   }
 
   return (
@@ -333,18 +337,8 @@ function RootNavigator() {
               options={{title: I18n.t('privacy')}}
             />
           </Stack.Group>
-          <Stack.Group>
-            <Stack.Screen
-              name="LoginPublic"
-              component={LoginPublicScreen}
-              options={{
-                title: I18n.t('loginButton'),
-                animationTypeForReplace: !user ? 'pop' : 'push',
-              }}
-            />
-          </Stack.Group>
         </Stack.Navigator>
-      ) : user.type === 'privado' ? (
+      ) : user.type === 'private' ? (
         <Tab.Navigator {...{screenOptions}}>
           <Stack.Screen
             options={{
@@ -425,7 +419,6 @@ function RootNavigator() {
             }}
           />
         </Tab.Navigator>
-        
       )}
     </NavigationContainer>
   );

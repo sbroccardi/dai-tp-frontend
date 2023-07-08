@@ -32,9 +32,9 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
   const getCinemas = async () => {
     setCinemasFlag(1); //este flag evita que la llamada se haga en loop
     try {
-      const authToken = user.user.token;
+      const authToken = user.user?.tokens.accessToken;
       console.log('token: ',authToken);
-      const userId = user.user.id;
+      const userId = user.user?.id;
       console.log('UserId: ' + userId)
       const response = await ky.get(
         `${Config.API_BASE_URL}/cinemas`,

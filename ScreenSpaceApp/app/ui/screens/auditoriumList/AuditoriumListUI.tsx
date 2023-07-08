@@ -33,7 +33,7 @@ export default function AuditoriumListUI() {
   const getAuditoriums = async () => {
     setFlag(1);
     try {
-      const authToken = user.user.token;
+      const authToken = user.user?.tokens.accessToken;
       //const cinemaId = user.user.id;
       const response = await ky.get(
         `${Config.API_BASE_URL}/cinemas/${cinemaId}/auditoriums`,

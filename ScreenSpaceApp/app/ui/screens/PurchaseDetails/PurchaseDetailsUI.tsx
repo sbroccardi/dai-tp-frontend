@@ -42,8 +42,8 @@ export default function PurchaseDetailsUI() {
   useEffect(() => {
     const fetchCinemaOptions = async () => {
       try {
-        const authToken = user.user.token;
-        const userId = user.user.id;
+        const authToken = user.user?.tokens.accessToken;
+        const userId = user.user?.id;
         const response = await ky.get('https://screenspace.azurewebsites.net/cinemas',
           {
             headers: {
@@ -70,7 +70,7 @@ export default function PurchaseDetailsUI() {
 
     const fetchScreenings = async () => {
       try {
-        const authToken = user.user.token;
+        const authToken = user.user?.tokens.accessToken;
         const response = await ky.get(`${Config.API_BASE_URL}/cinemas/${movieID}/screenings`,
           {
             headers: {

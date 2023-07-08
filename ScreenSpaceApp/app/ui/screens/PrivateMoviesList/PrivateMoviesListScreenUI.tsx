@@ -29,8 +29,7 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
   const [moviesData, setMoviesData] = React.useState([]);
   const user = useContext(UserContext);
   const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; }[]>([]);
-  const authToken = user.user.token;
-
+  const authToken = user.user?.tokens.accessToken;
 
   useEffect(() => {
     const fetchMovieIdsThatHaveScreenings = async () => {

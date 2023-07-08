@@ -49,14 +49,14 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
   })
     const fetchCinemaOptions = async () => {
       try {
-        const authToken = user.user.token;
-        const userId = user.user.id;
+        const authToken = user.user?.tokens.accessToken;
+        const userId = user.user?.id;
         const response = await ky.get('https://screenspace.azurewebsites.net/cinemas',
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
-          }
+          },
         );
         const responseObject = await response.json();
         const names = responseObject
@@ -77,19 +77,19 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
 
     const fetchScreenings = async () => {
       try {
-        const authToken = user.user.token;
+        const authToken = user.user?.tokens.accessToken;
         const response = await ky.get(`${Config.API_BASE_URL}/cinemas/${movieID}/screenings`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
-          }
-        )
+          },
+        );
         const responseObject = await response.json();
         console.log('screenings de la pelicula: ' + responseObject);
       }
       catch (err) {
-        console.error('Error retrieving screenings ', err)
+        console.error('Error retrieving screenings ', err);
       }
     };
     fetchScreenings();

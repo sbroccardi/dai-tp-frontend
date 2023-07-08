@@ -14,6 +14,7 @@ _Estas instrucciones permiten obtener una copia del proyecto en funcionamiento e
 * [ReactNative](https://reactnative.dev/)
 * [NativeBase](https://docs.nativebase.io/)
 * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+* [Google Sign-in for React Native](https://github.com/react-native-google-signin/google-signin)
 
 ### Creating a new application
 ```bash
@@ -81,6 +82,12 @@ Reinstalar Pods
 pod deintegrate
 
 pod install
+```
+
+[Try Sign-In for Android](https://developers.google.com/identity/sign-in/android/start#configure-a-google-api-project)
+[Authenticating Your Client](https://developers.google.com/android/guides/client-auth)
+```Bash
+./android/gradlew signingReport
 ```
 
 ## Ejecutando las pruebas ⚙️

@@ -1,5 +1,5 @@
 import {Center, ScrollView, Text, VStack} from 'native-base';
-import React from 'react';
+import React, { useContext } from 'react';
 import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -8,6 +8,7 @@ import {ParamListBase, useNavigation} from '@react-navigation/native';
 import ky from 'ky';
 import Config from 'react-native-config';
 import HomeToolbarPublicUser from '../../components/HomeToolbarPublicUser';
+import { UserContext } from '../../../UserContext';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -29,10 +30,12 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
   ]);
 
   const [flag, setFlag] = React.useState(0);
+  const user = useContext(UserContext);
   const getmovies = async () => {
     setFlag(1);
     try {
       //const cinemaId = user.user.id;
+      const authToken = user.user?.tokens.accessToken;
       const response = await ky.get(
         `${Config.API_BASE_URL}/movies`,
         {
