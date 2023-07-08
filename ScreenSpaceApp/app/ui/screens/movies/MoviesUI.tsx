@@ -1,5 +1,5 @@
-import {Center, ScrollView, Text, VStack} from 'native-base';
-import React, { useContext } from 'react';
+import {Center, ScrollView, Spinner, Text, VStack} from 'native-base';
+import React, { useContext, useEffect } from 'react';
 import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -16,68 +16,97 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
+const LoadingScreen = () => {
+  return (
+    <Center>
+      <Spinner accessibilityLabel="Loading" color="white"s/>
+    </Center>
+  );
+};
+
 const MoviesUI: React.FC<Props> = ({navigation}) => {
   //const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-
-  const [moviesData, setMoviesData] = React.useState([
-    {
-      id: '',
-      genre: '',
-      name: '',
-      age: '',
-      rating: '',
-    },
-  ]);
-
-  const [flag, setFlag] = React.useState(0);
   const user = useContext(UserContext);
-  const getmovies = async () => {
-    setFlag(1);
-    try {
-      //const cinemaId = user.user.id;
-      const authToken = user.user?.tokens.accessToken;
-      const response = await ky.get(
-        `${Config.API_BASE_URL}/movies`,
-        {
+  const authToken = user.user?.tokens.accessToken;
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState<string[]>([])
+  const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; }[]>([]);
+  const [moviesData, setMoviesData] = React.useState([]);
+
+  useEffect(() => {
+    const fetchMovieIdsThatHaveScreenings = async () => {
+      try {
+        const response = await ky.get(`${Config.API_BASE_URL}/movies`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          },
+        );
+        const responseObject = await response.json();
+        setMoviesData(responseObject)
+        const movieIds = responseObject.map((movie: { _id: any }) => movie._id)
+        const movieIdsWithScreenings = [];
+
+        for (const movieId of movieIds) {
+          const screeningsResponse = await ky.get(`${Config.API_BASE_URL}/movies/${movieId}/screenings`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+          const screeningsData = await screeningsResponse.json();
+          
+          if (Array.isArray(screeningsData) && screeningsData.length > 0) {
+            movieIdsWithScreenings.push(movieId);
+          }
+        }
+        console.log('moviesWithScreenings: ', movieIdsWithScreenings);
+        setMovieIdsThatHaveScreenings(movieIdsWithScreenings);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error retrieving screenings:', error);
+        setIsLoading(false);
+      }
+    }; fetchMovieIdsThatHaveScreenings();
+  }, []);
+
+  useEffect(() => {
+    const fetchMoviesData = async () => {
+      try {
+        const response = await ky.get(`${Config.API_BASE_URL}/movies`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
+        });
+        const movies = await response.json();
+        console.log('movies data: ', movies)
+        const filteredMovies = [];
+        for (const movieId of movieIdsThatHaveScreenings) {
+          const movie = movies.find((movie: { _id: string }) => movie._id === movieId);
+          if (movie) {
+            filteredMovies.push(movie);
+          }
         }
-      );
-      const responseBody = await response.json();
-      console.log(responseBody);
-      const moviesData = responseBody.map(
-        (document: {
-          id: string;
-          genre: string;
-          name: string;
-          rating: any;
-          age: string;
-        }) => ({
-          id: document.id,
-          genre: document.genre,
-          name: document.name,
-          rating: document.rating,
-          age: document.age,
-        }),
-      );
-      setMoviesData(moviesData);
-    } catch (err) {
-      console.error('error: ', err);
-    }
-  };
+        setMoviesForm(filteredMovies);
+      } catch (error) {
+        console.error('error fetching movies data:', error);
+      }
+    }; fetchMoviesData()
+  }, [movieIdsThatHaveScreenings])
 
   const renderMovies = () => {
     const elements = [];
-    for (let count = 0; count < moviesData.length; count++) {
-      const movie = moviesData[count];
+    for (let count = 0; count < moviesForm.length; count++) {
+      const movie = moviesForm[count];
+      console.log('element: ', movie)
       elements.push(
-        <Center marginBottom="4">
+        <Center marginBottom="4" key={movie._id}>
           <CardMovie
-            movieID={movie.id}
+            movieID={movie._id}
             movieName={movie.name}
             movieAge={movie.age}
             movieRating={movie.rating}
+            onPress={()=>navigation.navigate('MovieDetails', {movieName:movie.name, movieId: movie._id})}
           />
         </Center>,
       );
@@ -97,31 +126,13 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
       </Center>
       <Center>
         <ScrollView maxH="500">
-          <VStack space={3} alignItems="center" height="100%">
-            <Center marginBottom="4">
-              <CardMovie
-                movieID="1"
-                movieName="Oppenheimer"
-                movieAge="+16"
-                movieRating="5"
-              />
-            </Center>
-            <Center marginBottom="4">
-              <CardMovie
-                movieID="1"
-                movieName="Interstellar"
-                movieAge="+13"
-                movieRating="3"
-              />
-            </Center>
-            <Center marginBottom="4">
-              <CardMovie
-                movieID="1"
-                movieName="Inception"
-                movieAge="+13"
-                movieRating="5"
-              />
-            </Center>
+        <VStack space={3} alignItems="center" height="100%">
+            {
+              isLoading ? 
+              <LoadingScreen/>
+              :
+              renderMovies()
+            }
           </VStack>
         </ScrollView>
       </Center>

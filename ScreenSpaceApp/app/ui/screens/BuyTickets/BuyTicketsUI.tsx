@@ -144,7 +144,7 @@ export default function BuyTicketsUI() {
             </Box>
         </Box>
         <Box>
-            <ButtonPrimary onPress={undefined}/>
+            <ButtonPrimary title="Select seats" onPress={() => navigation.navigate("SeatSelection")}/>
         </Box>
     </VStack>
   );
