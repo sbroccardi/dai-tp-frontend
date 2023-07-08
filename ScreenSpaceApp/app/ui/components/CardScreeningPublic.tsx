@@ -9,6 +9,7 @@ const CardScreeningPublic = (props: {
   cinema: string;
   auditorium: string;
   date: string;
+  onPress: any;
 }) => {
   return (
     <Pressable>

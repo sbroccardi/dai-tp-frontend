@@ -46,6 +46,14 @@ import AuditoriumListUI from '../ui/screens/AuditoriumList/AuditoriumListUI';
 import Cinema from 'react-native-vector-icons/Feather';
 import Screening from 'react-native-vector-icons/MaterialCommunityIcons';
 import Profile from 'react-native-vector-icons/FontAwesome';
+import MoviesUI from '../ui/screens/Movies/MoviesUI';
+import FiltersScreenUI from '../ui/screens/Filters/FiltersScreenUI';
+import MovieDetailsUI from '../ui/screens/MovieDetails/MovieDetailsUI';
+import ListScreeningUIPublic from '../ui/screens/ListScreeningPublic/ListScreeningUIPublic';
+import BuyTicketsUI from '../ui/screens/BuyTickets/BuyTicketsUI';
+import SeatSelectionUI from '../ui/screens/SeatSelection/SeatSelectionUI';
+import CheckoutUI from '../ui/screens/Chekout/CheckoutUI';
+import PurchaseDetailsUI from '../ui/screens/PurchaseDetails/PurchaseDetailsUI';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -277,14 +285,88 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-      <Stack.Screen name="Previous Purchase" component={PurchaseHistoryScreenUI} options={{
+      <Stack.Screen 
+        name="Previous Purchase" 
+        component={PurchaseHistoryScreenUI} 
+        options={{
             headerTitle: 'Previous Purchase',
             headerTitleAlign: 'center',
           }}/>
+        <Stack.Screen
+          name="PurchaseDetails"
+          component={PurchaseDetailsUI}
+          options={{
+            headerTitle: I18n.t('confirmDeleteAccount'),
+            headerTitleAlign: 'center',
+          }}
+        />
       </Stack.Navigator>
         );
 
       }
+  }
+
+  function publicMovieStack({navigation}) {
+    return(
+      <Stack.Navigator initialRouteName='PublicListMovies'>
+      <Stack.Screen
+        name="PublicListMovies"
+        component={MoviesUI}
+        options={{
+          headerTitle: I18n.t('updateCinema'),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="Filters"
+        component={FiltersScreenUI}
+        options={{
+          headerTitle: I18n.t('updateCinema'),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="MovieDetails"
+        component={MovieDetailsUI}
+        options={{
+          headerTitle: I18n.t('updateCinema'),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="Showtimes"
+        component={ListScreeningUIPublic}
+        options={{
+          headerTitle: I18n.t('updateCinema'),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="BuyTickets"
+        component={BuyTicketsUI}
+        options={{
+          headerTitle: I18n.t('updateCinema'),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="SeatSelection"
+        component={SeatSelectionUI}
+        options={{
+          headerTitle: I18n.t('updateCinema'),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="Checkout"
+        component={CheckoutUI}
+        options={{
+          headerTitle: I18n.t('updateCinema'),
+          headerTitleAlign: 'center',
+        }}
+      />
+      </Stack.Navigator>
+    );
   }
 
   return (
@@ -413,7 +495,10 @@ function RootNavigator() {
         </Tab.Navigator>
       ) : (
         <Tab.Navigator>
-          <Stack.Screen name="PublicMovies" component={Movies} />
+          <Stack.Screen 
+            name="PublicMovies" 
+            component={publicMovieStack} 
+            />
           <Stack.Screen
             name="ProfileStack"
             component={ProfileStack}
