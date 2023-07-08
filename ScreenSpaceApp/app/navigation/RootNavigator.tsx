@@ -33,8 +33,8 @@ import ConfirmDeleteProfileScreenUI from '../ui/screens/ConfirmDelete/ConfirmDel
 import ConfirmDeleteCinemaUI from '../ui/screens/ConfirmDelete/ConfirmDeleteCinema/ConfirmDeleteCinemaUI';
 import CreateCinemaUI from '../ui/screens/CreateCinema/CreateCinemaUI';
 import CinemaListUI from '../ui/screens/CinemaList/CinemaListUI';
-import ProfilePrivateScreenUI from '../ui/screens/profile/profilePrivate/ProfilePrivateScreenUI';
-import ProfilePublicScreenUI from '../ui/screens/profile/profilePublic/ProfilePublicScreenUI';
+import ProfilePrivateScreenUI from '../ui/screens/Profile/ProfilePrivate/ProfilePrivateScreenUI';
+import ProfilePublicScreenUI from '../ui/screens/Profile/ProfilePublic/ProfilePublicScreenUI';
 import UpdateCinemaUI from '../ui/screens/UpdateCinema/UpdateCinemaUI';
 import PrivacyScreen from '../ui/screens/SignUp/PrivacyScreen';
 import TermsScreen from '../ui/screens/SignUp/TermsScreen';
