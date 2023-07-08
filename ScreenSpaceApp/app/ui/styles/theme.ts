@@ -200,6 +200,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     display: 'flex',
     flexDirection: 'column',
+    borderRadius: 12,
   },
   /*TEMP*/ cardContainer: {
     flex: 1,
