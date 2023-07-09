@@ -106,7 +106,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
             movieAge={movie.age}
             movieRating={movie.rating}
             imageUrl={movie.image}
-            onPress={()=>navigation.navigate('MovieDetails', {movieName:movie.name, movieId: movie._id})}
+            onPress={()=>navigation.navigate('MovieDetails', {movieId: movie._id, movieName:movie.name, movieRating: movie.rating, movieImage: movie.image})}
           />
         </Center>,
       );
