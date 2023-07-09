@@ -8,6 +8,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ParamListBase} from '@react-navigation/native';
 import CardScreeningPublic from '../../components/CardScreeningPublic';
 import ky from 'ky';
+import Config from 'react-native-config';
 
 type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -16,9 +17,16 @@ type Props = {
 };
 
 export default function ListScreeningUIPublic({route, navigation}) {
-  const {movieID} = route.params.movieId;
-  const cinemaOptions = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo'];
+  const movieID = route.params.movieId;
+  const movieName = route.params.movieName;
   const [selectedCinema, setSelectedCinema] = React.useState('');
+  const [cinemaOptions, setCinemaOptions] = React.useState([''])
+  const [cinemaIds, setCinemaIds] = React.useState([]);
+  const [cinemaScreenings, setCinemaScreeningsS] = React.useState([{
+    cinemaName: '',
+    auditoriumName: '',
+    datetime: ''
+  }]);
 
   const handleCinemaChange = (value: any) => {
     console.log('Cinema id en listScreening: ' + value);
@@ -48,14 +56,10 @@ export default function ListScreeningUIPublic({route, navigation}) {
           }
         );
         const responseObject = await response.json();
-        const names = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: any) => cinema.name);
+        const names = responseObject.map((cinema: any) => cinema.name);
         setCinemaOptions(names);
         //
-        const ids = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: { _id: any; }) => cinema._id)
+        const ids = responseObject.map((cinema: { _id: any; }) => cinema._id)
         setCinemaIds(ids)
         //
       } catch (error) {

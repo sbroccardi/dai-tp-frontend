@@ -1,4 +1,4 @@
-import {Center, ScrollView, Spinner, Text, VStack} from 'native-base';
+import {Button, Center, ScrollView, Spinner, Text, VStack} from 'native-base';
 import React, { useContext, useEffect } from 'react';
 import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
@@ -9,6 +9,8 @@ import ky from 'ky';
 import Config from 'react-native-config';
 import HomeToolbarPublicUser from '../../components/HomeToolbarPublicUser';
 import { UserContext } from '../../../UserContext';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { styles } from '../../styles/theme';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -19,7 +21,7 @@ type Props = {
 const LoadingScreen = () => {
   return (
     <Center>
-      <Spinner accessibilityLabel="Loading" color="white"s/>
+      <Spinner accessibilityLabel="Loading" color="white"/>
     </Center>
   );
 };
@@ -116,13 +118,18 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
 
   return (
     <VStack space={3} alignItems="center" height="100%">
-      <Center>
-          <HomeToolbarPublicUser onPressLeft={undefined} onPressRight={undefined} title='Movies'/>
-      </Center>
-      <Center>
+      <Center display="flex" flexDirection="row">
         <Text>
             Near you
         </Text>
+        <Button
+          style={styles.toolbarButtonContainer}
+          onPress={undefined}
+          variant="ghost"
+          colorScheme="white"
+          marginLeft="180">
+            <Icon name="filter" size={20} color="white" />
+      </Button>
       </Center>
       <Center>
         <ScrollView maxH="500">

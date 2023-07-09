@@ -12,7 +12,7 @@ const CardScreeningPublic = (props: {
   onPress: any;
 }) => {
   return (
-    <Pressable>
+    <Pressable onPress={props.onPress}>
       <Box alignItems="center" marginBottom={7}>
         <Box
           maxW="362"

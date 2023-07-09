@@ -107,5 +107,14 @@ export default {
 
   screenings: 'Funciones',
 
-  cancel: 'Cancelar'
+  cancel: 'Cancelar',
+
+  movieDetails: 'Detalles de la película',
+
+  chooseTickets: 'Elige los tickets',
+
+  seatSelection: 'Selección de butacas',
+
+  checkout: 'Chequeo',
+
 };

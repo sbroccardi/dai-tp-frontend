@@ -123,5 +123,13 @@ export default {
 
   screenings: 'Screenings',
   
-  cancel:'Cancel'
+  cancel:'Cancel',
+
+  movieDetails: 'Movie Details',
+
+  chooseTickets: 'Choose tickets',
+
+  seatSelection: 'Seat selection',
+
+  checkout: 'Checkout',
 };

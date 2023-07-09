@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PurchaseSummaryButton from '../../components/PurchaseSummaryButton';
 import {UserContext} from '../../../UserContext';
@@ -9,26 +9,11 @@ import Config from 'react-native-config';
 const PurchaseHistoryScreenUI = () => {
   const user = useContext(UserContext);
   const [refreshing, setRefreshing] = React.useState(false);
-  const purchases = [
-    { 
-      movieTitle: 'Avengers: Endgame',
-      moviePrice: 10.99,
-      date: '06/07/2023',
-      cinema: 'Cineplex',
-    },
-    { 
-      movieTitle: 'Jurassic Park',
-      moviePrice: 8.99,
-      date: '08/07/2023',
-      cinema: 'AMC Theaters',
-    },
-    { 
-      movieTitle: 'The Shawshank Redemption',
-      moviePrice: 9.99,
-      date: '10/07/2023',
-      cinema: 'Regal Cinemas',
-    },
-  ];
+  const [precio,setPrecio] = React.useState(10.99);
+  const [fecha, setFecha] = React.useState<string[]>([]);
+  const [titulo, setTitulo] = React.useState<string[]>([]);
+
+
   const getPurchases = async () => {
     const authToken = user.user?.tokens.accessToken;
     const respuesta = await ky.get(
@@ -40,35 +25,68 @@ const PurchaseHistoryScreenUI = () => {
       },
     );
     const responseBody = await respuesta.json();
-    console.log(responseBody)
+
+     const promises = responseBody.map(async (elemento) => {
+      const respuesta2 = await ky.get(
+        `${Config.API_BASE_URL}/movies/screenings/${elemento.screeningId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        },
+      );
+
+      const responseBody2 = await respuesta2.json();
+      const nuevaFecha = responseBody2.datetime;
+      setFecha((prevFecha) => [...prevFecha, nuevaFecha]);
+
+      const respuesta3 = await ky.get(
+        `${Config.API_BASE_URL}/movies/${responseBody2.movieId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        },
+      );
+      const responseBody3 = await respuesta3.json();
+      const nuevoTitulo = responseBody3.name;
+      setTitulo((prevTitulo) => [...prevTitulo, nuevoTitulo]);
+    });
+
+    await Promise.all(promises);
+
+
   };
-  if (refreshing == false){
+
+  
+
+  useEffect(() => {
     getPurchases();
-    setRefreshing(true)
-  }
+  }, []);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+    },
+  });
 
   return (
-    <View style={styles.container}>
-      {purchases.map((purchase, index) => (
-        <PurchaseSummaryButton
-          key={index}
-          movieTitle={purchase.movieTitle}
-          moviePrice={purchase.moviePrice}
-          date={purchase.date}
-          cinema={purchase.cinema}
-          onPress={() => {}}
-        />
-      ))}
-    </View>
-  );
-};
+  <View style={styles.container}>
+    {fecha.map((elemento, index) => (
+      <PurchaseSummaryButton
+        key={index}
+        movieTitle={titulo[index]}
+        moviePrice={precio}
+        date={elemento}
+        cinema={"hoytz"}
+        onPress={() => {}}
+      />
+    ))}
+  </View>
+);
 
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-});
+  }
 export default PurchaseHistoryScreenUI;
