@@ -104,6 +104,7 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
             movieName={movie.name}
             movieAge={movie.age}
             movieRating={movie.rating}
+            imageUrl={movie.image}
             onPress={()=>navigation.navigate('ScreeningList', {movieName:movie.name, movieId: movie._id})}
           />
         </Center>,

@@ -62,7 +62,6 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
             movieIdsWithScreenings.push(movieId);
           }
         }
-        console.log('moviesWithScreenings: ', movieIdsWithScreenings);
         setMovieIdsThatHaveScreenings(movieIdsWithScreenings);
         setIsLoading(false);
       } catch (error) {
@@ -81,7 +80,6 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
           },
         });
         const movies = await response.json();
-        console.log('movies data: ', movies)
         const filteredMovies = [];
         for (const movieId of movieIdsThatHaveScreenings) {
           const movie = movies.find((movie: { _id: string }) => movie._id === movieId);
@@ -100,7 +98,6 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
     const elements = [];
     for (let count = 0; count < moviesForm.length; count++) {
       const movie = moviesForm[count];
-      console.log('element: ', movie)
       elements.push(
         <Center marginBottom="4" key={movie._id}>
           <CardMovie
@@ -108,6 +105,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
             movieName={movie.name}
             movieAge={movie.age}
             movieRating={movie.rating}
+            imageUrl={movie.image}
             onPress={()=>navigation.navigate('MovieDetails', {movieName:movie.name, movieId: movie._id})}
           />
         </Center>,
