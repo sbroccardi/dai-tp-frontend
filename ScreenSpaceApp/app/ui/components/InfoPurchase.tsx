@@ -74,7 +74,7 @@ const InfoPurchase = (props: {
                     </Box>
                     <Box>
                         <Text style={styles.bodyText}>
-                            USD {props.price}
+                            USD {props.price},00$
                         </Text>
                     </Box>
                 </Box>
