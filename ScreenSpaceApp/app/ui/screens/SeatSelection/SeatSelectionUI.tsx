@@ -37,20 +37,20 @@ export default function SeatSelectionUI() {
           </Center>
       </VStack>
       <VStack space={5} alignItems="center" maxHeight="75%" minHeight="75%">
-        <Center maxW="100%" minW="100%" backgroundColor="black" position="absolute" minH="60%" marginTop="3">
+        <Center maxW="100%" minW="100%" backgroundColor="#16171D" position="absolute" minH="60%" marginTop="3">
             <SeatsLayout
                 row={9}
                 layout={{ columnOne: 0, columnTwo: 5 }}
                 selectedSeats={[
                 ]}
-                numberTextStyle={{ fontSize: 10 }}
+                numberTextStyle={{ fontSize: 13 }}
                 getBookedSeats={(seats) => {
                 console.log('getBookedSeats :: ', seats);
                 setSelectedSeats(seats);
                 }}
             />
         </Center>
-        <Center maxW="100%" minW="100%" backgroundColor="black" position="absolute">
+        <Center maxW="100%" minW="100%" backgroundColor="#16171D" position="absolute">
                 <Box display="flex" alignItems="center" paddingTop="12" marginTop="10" borderTopWidth={1} borderTopColor="white" minW="80%">
                     
                 </Box>
