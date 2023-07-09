@@ -168,7 +168,7 @@ const UpdateAuditoriumUI = ({ }) => {
           </View>
           <ButtonDanger
             onPress={() =>
-              navigation.replace('ConfirmDeleteAuditorium', {
+              navigation.navigate('ConfirmDeleteAuditorium', {
                 auditoriumId: auditoriumId,
                 cinemaid: cinemaId,
               })

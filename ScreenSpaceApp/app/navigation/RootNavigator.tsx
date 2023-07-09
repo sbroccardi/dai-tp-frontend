@@ -169,6 +169,14 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
+        <Stack.Screen
+          name="ConfirmDeleteAuditorium"
+          component={ConfirmDeleteAuditoriumUI}
+          options={{
+            headerTitle: I18n.t('confirmDeleteAuditorium'),
+            headerTitleAlign: 'center',
+          }}
+        />
 
         <Stack.Screen
           name="AuditoriumsStack"

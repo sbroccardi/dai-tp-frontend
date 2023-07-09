@@ -90,10 +90,14 @@ const UpdateCinemaUI = ({}) => {
         location: address,
       };
     }
+    const authToken = user.user?.tokens.accessToken;
     const respuesta = await ky.put(
       `${Config.API_BASE_URL}/cinemas/${cinemaId}`,
       {
         json: data,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
       },
     );
     navigation.replace('CinemasList');
