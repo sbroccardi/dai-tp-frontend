@@ -48,7 +48,7 @@ export default function BuyTicketsUI() {
 
 
   return (
-    <VStack space={6}>
+    <VStack space={6} display="flex" alignItems="center">
         <VStack space={10} marginBottom="20">
         <Box style={styles.cardAuditorium} display="flex" flexDirection="row">
             <Box minW="70%" maxW="70%" paddingLeft="7" paddingTop="5">
@@ -118,7 +118,7 @@ export default function BuyTicketsUI() {
         </Box>
         </VStack>
         <Box>
-            <Box display="flex" flexDirection="row" justifyContent="space-between" minW="100%" maxW="100%" borderBottomWidth="1" borderBottomColor="white" paddingTop="3" paddingBottom="3">
+            <Box display="flex" flexDirection="row" justifyContent="space-between" minW="90%" maxW="90%" borderBottomWidth="1" borderBottomColor="white" paddingTop="3" paddingBottom="3">
                     <Box>
                         <Text>
                             Total tickets
@@ -130,7 +130,7 @@ export default function BuyTicketsUI() {
                       </Text>
                     </Box>
             </Box>
-            <Box display="flex" flexDirection="row" justifyContent="space-between" minW="100%" maxW="100%" borderBottomWidth="1" borderBottomColor="white" paddingTop="3" paddingBottom="3">
+            <Box display="flex" flexDirection="row" justifyContent="space-between" minW="90%" maxW="90%" borderBottomWidth="1" borderBottomColor="white" paddingTop="3" paddingBottom="3">
                     <Box>
                         <Text>
                             Subtotal

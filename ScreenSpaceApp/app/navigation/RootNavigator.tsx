@@ -314,7 +314,7 @@ function RootNavigator() {
           name="PublicListMovies"
           component={MoviesUI}
           options={{
-            headerTitle: I18n.t('updateCinema'),
+            headerTitle: I18n.t('movies'),
             headerTitleAlign: 'center',
           }}
         />
@@ -322,7 +322,7 @@ function RootNavigator() {
           name="Filters"
           component={FiltersScreenUI}
           options={{
-            headerTitle: I18n.t('updateCinema'),
+            headerTitle: I18n.t('filters'),
             headerTitleAlign: 'center',
           }}
         />
@@ -330,7 +330,7 @@ function RootNavigator() {
           name="MovieDetails"
           component={MovieDetailsUI}
           options={{
-            headerTitle: I18n.t('updateCinema'),
+            headerTitle: I18n.t('movieDetails'),
             headerTitleAlign: 'center',
           }}
         />
@@ -338,7 +338,7 @@ function RootNavigator() {
           name="Showtimes"
           component={ListScreeningUIPublic}
           options={{
-            headerTitle: I18n.t('updateCinema'),
+            headerTitle: I18n.t('showtimes'),
             headerTitleAlign: 'center',
           }}
         />
@@ -346,7 +346,7 @@ function RootNavigator() {
           name="BuyTickets"
           component={BuyTicketsUI}
           options={{
-            headerTitle: I18n.t('updateCinema'),
+            headerTitle: I18n.t('chooseTickets'),
             headerTitleAlign: 'center',
           }}
         />
@@ -354,7 +354,7 @@ function RootNavigator() {
           name="SeatSelection"
           component={SeatSelectionUI}
           options={{
-            headerTitle: I18n.t('updateCinema'),
+            headerTitle: I18n.t('seatSelection'),
             headerTitleAlign: 'center',
           }}
         />
@@ -362,7 +362,7 @@ function RootNavigator() {
           name="Checkout"
           component={CheckoutUI}
           options={{
-            headerTitle: I18n.t('updateCinema'),
+            headerTitle: I18n.t('checkout'),
             headerTitleAlign: 'center',
           }}
         />
@@ -485,10 +485,19 @@ function RootNavigator() {
           /> */}
         </Tab.Navigator>
       ) : (
-        <Tab.Navigator>
-          <Stack.Screen name="PublicMovies" component={publicMovieStack} />
+        <Tab.Navigator {...{screenOptions}}>
+          <Stack.Screen 
+            name="Movies" 
+            component={publicMovieStack} 
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color = '', size = 0}) => (
+                <Screening name="movie-open-outline" color={color} size={size}/>
+              ),
+            }}
+          />
           <Stack.Screen
-            name="ProfileStack"
+            name="Profile"
             component={ProfileStack}
             options={{
               headerShown: false,

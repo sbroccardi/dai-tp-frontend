@@ -19,11 +19,11 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-export default function MovieDetailsUI({navigation, route}) {
+export default function MovieDetailsUI({route, navigation}) {
   /*const movieID = route.params.movieId;
   const movieName = route.params.movieName;*/
-  const movieId = route.params.movieId;
   const movieName = route.params.movieName;
+  const movieId = route.params.movieId;
   const user = useContext(UserContext);
   const [cinemaOptions, setCinemaOptions] = React.useState([''])
   const [cinemaIds, setCinemaIds] = React.useState([]);
@@ -136,7 +136,7 @@ export default function MovieDetailsUI({navigation, route}) {
       <Center w="100%">
         <ButtonPrimary
           title="Showtimes"
-          onPress={() => navigation.navigate('Showtimes', {movieId: movieId})}
+          onPress={() => navigation.navigate('Showtimes', {movieId: movieId, movieName: movieName})}
         />
       </Center>
     </VStack>

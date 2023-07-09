@@ -69,7 +69,7 @@ export default function SeatSelectionUI() {
         </Text>
       </Box>
       <Box>
-          <ButtonPrimary onPress={undefined} title="Chekcout"/>
+          <ButtonPrimary onPress={() => navigation.navigate('Checkout')} title="Checkout"/>
       </Box>
     </VStack>
     
