@@ -4,15 +4,20 @@ import PurchaseSummaryButton from '../../components/PurchaseSummaryButton';
 import {UserContext} from '../../../UserContext';
 import ky from 'ky';
 import Config from 'react-native-config';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 
 const PurchaseHistoryScreenUI = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const user = useContext(UserContext);
-  const [refreshing, setRefreshing] = React.useState(false);
   const [precio,setPrecio] = React.useState(10.99);
   const [fecha, setFecha] = React.useState<string[]>([]);
   const [titulo, setTitulo] = React.useState<string[]>([]);
   const [imagen, setImagen] = React.useState<string[]>([]);
+  const [asientos, setAsientos] = React.useState<string[]>([]);
+  const [movideID, setMovideID] = React.useState<string[]>([]);
+  const [purchaseid, setPurchaseID] = React.useState<string[]>([]);
 
   const getPurchases = async () => {
     const authToken = user.user?.tokens.accessToken;
@@ -27,6 +32,12 @@ const PurchaseHistoryScreenUI = () => {
     const responseBody = await respuesta.json();
 
      const promises = responseBody.map(async (elemento) => {
+      const nuevoAsiento = elemento.seats;
+      setAsientos((prevAsiento) => [...prevAsiento, nuevoAsiento]);
+
+      const nuevoId = elemento._id;
+      setPurchaseID((prevId) => [...prevId, nuevoId]);
+
       const respuesta2 = await ky.get(
         `${Config.API_BASE_URL}/movies/screenings/${elemento.screeningId}`,
         {
@@ -37,6 +48,10 @@ const PurchaseHistoryScreenUI = () => {
       );
 
       const responseBody2 = await respuesta2.json();
+
+      const nuevoMovieID = responseBody2.movieId;
+      setMovideID((prevMovieId) => [...prevMovieId, nuevoMovieID]);
+
       const nuevaFecha = responseBody2.datetime;
       setFecha((prevFecha) => [...prevFecha, nuevaFecha]);
 
@@ -85,7 +100,17 @@ const PurchaseHistoryScreenUI = () => {
         date={elemento}
         cinema={"hoytz"}
         imageUrl={imagen[index]}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('PurchaseDetails',{
+          movieTitle:titulo[index],
+          moviePrice:precio,
+          date:elemento,
+          cinema:'hoytz',
+          imageUrl:imagen[index],
+          asientos:asientos[index],
+          movideId: movideID[index],
+          purchaseId: purchaseid[index]
+        })
+      }
       />
     ))}
   </View>

@@ -132,4 +132,6 @@ export default {
   seatSelection: 'Seat selection',
 
   checkout: 'Checkout',
+
+  purchaseDetails : 'Purchase Details',
 };

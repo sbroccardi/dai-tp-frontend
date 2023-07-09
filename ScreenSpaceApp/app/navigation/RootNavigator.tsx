@@ -306,7 +306,7 @@ function RootNavigator() {
             name="PurchaseDetails"
             component={PurchaseDetailsUI}
             options={{
-              headerTitle: I18n.t('confirmDeleteAccount'),
+              headerTitle: I18n.t('purchaseDetails'),
               headerTitleAlign: 'center',
             }}
           />
