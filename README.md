@@ -84,7 +84,7 @@ pod deintegrate
 pod install
 ```
 
-[Try Sign-In for Android](https://developers.google.com/identity/sign-in/android/start#configure-a-google-api-project)
+[Start Integrating Google Sign-In into Your Android App](https://developers.google.com/identity/sign-in/android/start-integrating)
 [Authenticating Your Client](https://developers.google.com/android/guides/client-auth)
 ```Bash
 ./android/gradlew signingReport
