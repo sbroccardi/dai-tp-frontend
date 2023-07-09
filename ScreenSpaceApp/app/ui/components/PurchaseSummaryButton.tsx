@@ -1,27 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-const PurchaseSummaryButton = ({ movieTitle, moviePrice, date, cinema, onPress }) => {
+const PurchaseSummaryButton = ({ movieTitle, moviePrice, date, cinema, onPress,imageUrl }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <View>
-        <Text style={styles.movieTitle}>{movieTitle}</Text>
-        <Text style={styles.subtitle}>Fecha: {date}</Text>
-        <Text style={styles.subtitle}>Cine: {cinema}</Text>
+      <View style={styles.contentContainer}>
+        <View>
+          <Text style={styles.movieTitle}>{movieTitle}</Text>
+          <Text style={styles.subtitle}>Fecha: {date}</Text>
+          <Text style={styles.subtitle}>Cine: {cinema}</Text>
+          <Text style={styles.moviePrice}>${moviePrice}</Text>
+        </View>
+        <View>
+          <Image source={{ uri: imageUrl }} style={styles.image} />
+        </View>
       </View>
-      <Text style={styles.moviePrice}>${moviePrice}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom: 10,
+  },
+  contentContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
     backgroundColor: '#000',
-    marginBottom: 10,
   },
   movieTitle: {
     fontSize: 18,
@@ -37,7 +44,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFF',
   },
+  image: {
+    width: 150,
+    height: 100,
+  },
 });
+
+
+
+
+
+
+
+
 
 export default PurchaseSummaryButton;
 

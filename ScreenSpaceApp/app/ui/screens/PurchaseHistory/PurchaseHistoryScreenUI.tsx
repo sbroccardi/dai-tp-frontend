@@ -12,7 +12,7 @@ const PurchaseHistoryScreenUI = () => {
   const [precio,setPrecio] = React.useState(10.99);
   const [fecha, setFecha] = React.useState<string[]>([]);
   const [titulo, setTitulo] = React.useState<string[]>([]);
-
+  const [imagen, setImagen] = React.useState<string[]>([]);
 
   const getPurchases = async () => {
     const authToken = user.user?.tokens.accessToken;
@@ -49,8 +49,12 @@ const PurchaseHistoryScreenUI = () => {
         },
       );
       const responseBody3 = await respuesta3.json();
+      
       const nuevoTitulo = responseBody3.name;
       setTitulo((prevTitulo) => [...prevTitulo, nuevoTitulo]);
+
+      const nuevaImagen = responseBody3.image;
+      setImagen((prevImagen) => [...prevImagen, nuevaImagen]);
     });
 
     await Promise.all(promises);
@@ -80,6 +84,7 @@ const PurchaseHistoryScreenUI = () => {
         moviePrice={precio}
         date={elemento}
         cinema={"hoytz"}
+        imageUrl={imagen[index]}
         onPress={() => {}}
       />
     ))}
