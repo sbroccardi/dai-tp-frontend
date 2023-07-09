@@ -51,7 +51,7 @@ export default function PurchaseDetailsUI() {
         />
       </Center>
       <Center>
-          <InfoPurchase movie={parametros.movieTitle} date={parametros.datetime} cinema={parametros.cinema} auditorium={'Auditorio 3D'} location={'Lomas'} tickets={2} seats={parametros.asientos} price={parametros.moviePrice}/>
+          <InfoPurchase movie={parametros.movieTitle} date={parametros.date} cinema={parametros.cinema} auditorium={parametros.auditorio} location={parametros.ubicacion} tickets={parametros.asientos} seats={parametros.asientos} price={parametros.moviePrice}/>
       </Center>
       <Center>
       <FormControl width="95%">

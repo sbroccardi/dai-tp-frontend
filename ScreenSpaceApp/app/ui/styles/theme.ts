@@ -340,7 +340,9 @@ export const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     paddingHorizontal: 2,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    marginTop: 20,
   },
   switchcontainer: {
     flex: 1,
