@@ -18,10 +18,8 @@ import ButtonLogout from '../../../components/ButtonLogout';
 
 const ProfilePublicScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const toast = useToast();
   const user = useContext(UserContext);
   const {setUser} = useContext(UserContext);
-  const [refreshing, setRefreshing] = React.useState(false);
   const [formData, setData] = React.useState({
     username: '',
     img: ' ',
@@ -38,7 +36,6 @@ const ProfilePublicScreenUI = ({}) => {
       const results = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      console.log(`!! FILE PRELOAD ${JSON.stringify(results)}`);
       setImageFile(results);
       handleUploadImage(results);
     } catch (err) {
@@ -54,7 +51,6 @@ const ProfilePublicScreenUI = ({}) => {
 
   const handleUploadImage = async (newImage: DocumentPickerResponse[]) => {
     let image = newImage[0];
-    console.log('!! UPLOAD started ', image.uri);
     setImageIsLoading(true);
 
     const formData = new FormData();
@@ -70,12 +66,10 @@ const ProfilePublicScreenUI = ({}) => {
     );
 
     try {
-      console.log(`!! SUBMITING TO ${Config.CLOUDINARY_URL} => ${formData}`);
       const response = await ky.post(`${Config.CLOUDINARY_URL}`, {
         body: formData,
       });
       const data = await response.json();
-      console.log('!! UPLOAD success ', data);
       setImageUrl(data.url);
       let data2 = {
         avatar: data.url
@@ -89,7 +83,6 @@ const ProfilePublicScreenUI = ({}) => {
     });
     getData();
     } catch (error) {
-      console.error('!! UPLOAD failed ', error);
     } finally {
       setImageIsLoading(false);
     }
@@ -192,9 +185,23 @@ const ProfilePublicScreenUI = ({}) => {
             title={I18n.t('delete')}
             width="65%"
           />
-          
           <ButtonLogout onPress={exit} title={I18n.t('logout')} />
         </View>
+         
+        <View style={{ flexDirection: 'row' }}>
+        <Text
+            style={{ color: 'rgb(255, 255, 0)', marginRight: 10 }}
+            onPress={() => navigation.navigate('Terms')}>
+            {I18n.t('terms')}
+        </Text>
+        <Text style={{ color: 'rgb(255, 255, 0)'}}> {' & '} </Text>
+        <Text
+            style={{ color: 'rgb(255, 255, 0)', marginLeft: 10 }}
+            onPress={() => navigation.navigate('Privacy')}>
+            {I18n.t('privacy')}
+        </Text>
+      </View>
+        
       </Center>
     </VStack>
   );
