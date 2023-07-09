@@ -8,7 +8,7 @@ import ButtonLogout from '../../../components/ButtonLogout';
 import ButtonDanger from '../../../components/ButtonDanger';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ProfilePicture from '../../../components/ProfilePicture';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-picker';
 import ky from 'ky';
 import {styles} from '../../../styles/theme';
 import {Config} from 'react-native-config';
@@ -29,6 +29,11 @@ const ProfilePrivateScreenUI = ({}) => {
   });
   const [email, setEmail] = React.useState('');
   const [username, setUsername] = React.useState('');
+  const [imageIsLoading, setImageIsLoading] = React.useState({});
+  const [imageUrl, setImageUrl] = React.useState('');
+  const [imageFile, setImageFile] = React.useState<DocumentPickerResponse[]>(
+    [],
+  );
 
   const exit = () => {
     setUser(null);
@@ -36,33 +41,63 @@ const ProfilePrivateScreenUI = ({}) => {
 
   const selectFile = async () => {
     try {
-      const res = await DocumentPicker.pick({
+      const results = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      console.log('res : ' + JSON.stringify(res));
-
-      const data = new FormData();
-      data.append('name', 'Image Upload');
-      data.append('file_attachment', res);
-      const authToken = user.user?.tokens.accessToken;
-      const response = await ky.post(`${Config.API_BASE_URL}/uploadAvatar`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: data,
-      });
-      console.log(response);
+      console.log(`!! FILE PRELOAD ${JSON.stringify(results)}`);
+      setImageFile(results);
+      handleUploadImage(results);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
+       
+        setImageUrl('');
+        setImageFile([]);
       } else {
         throw err;
       }
-      toast.show({
-        description: JSON.stringify(err),
-        title: 'Unknown Error',
-        duration: 3000,
-        placement: 'top',
+    }
+  };
+
+  const handleUploadImage = async (newImage: DocumentPickerResponse[]) => {
+    let image = newImage[0];
+    console.log('!! UPLOAD started ', image.uri);
+    setImageIsLoading(true);
+
+    const formData = new FormData();
+    formData.append('file', {
+      uri: image.uri,
+      type: image.type,
+      name: image.name,
+    });
+    formData.append('upload_preset', 'default-unsigned-preset');
+    formData.append(
+      'public_id',
+      formData.email ? formData.email.replace('@', '_at_') : image.name?.split('.')[0],
+    );
+
+    try {
+      console.log(`!! SUBMITING TO ${Config.CLOUDINARY_URL} => ${formData}`);
+      const response = await ky.post(`${Config.CLOUDINARY_URL}`, {
+        body: formData,
       });
+      const data = await response.json();
+      console.log('!! UPLOAD success ', data);
+      setImageUrl(data.url);
+      let data2 = {
+        avatar: data.url
+      };
+      const authToken = user.user?.tokens.accessToken;
+      const respuesta = await ky.put(`${Config.API_BASE_URL}/users`, {
+      json: data2,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    getData();
+    } catch (error) {
+      console.error('!! UPLOAD failed ', error);
+    } finally {
+      setImageIsLoading(false);
     }
   };
 
