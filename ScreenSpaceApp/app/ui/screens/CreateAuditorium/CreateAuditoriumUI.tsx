@@ -57,8 +57,27 @@ export default function CreateAuditoriumUI() {
       return false;
     }
 
+    // Limitando cantidad de rows
+    if (parseInt(formData.rows) > 8) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        rows: 'Number of rows must be less than 9',
+      }));
+      return false;
+    }
+    
+    // Limitando cantidad de seats
+    if (parseInt(formData.seats) > 8) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        rows: 'Number of seats must be less than 9',
+      }));
+      return false;
+    }
+
     return true;
   };
+
 
   const crearAuditorio = async (
     cinemaId: string,
