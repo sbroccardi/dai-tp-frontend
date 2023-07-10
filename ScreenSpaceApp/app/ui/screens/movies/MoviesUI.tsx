@@ -119,7 +119,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
     let sortedMovies;
 
     if (route.params.filtro === 'Nombre'){
-       sortedMovies = moviesForm.sort((a, b) => b.name - a.name);
+       sortedMovies = moviesForm.sort((a, b) => a.name - b.name);
     }
     if (route.params.filtro === 'Edad'){
        sortedMovies = moviesForm.sort((a, b) => b.age - a.age);

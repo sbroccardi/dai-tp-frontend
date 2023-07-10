@@ -10,6 +10,7 @@ const Comment = (props: {
   commentDate: string;
   commentContent: string;
   rate: any;
+  imageUrl: string;
 }) => {
 
   return (
@@ -22,7 +23,7 @@ const Comment = (props: {
           <Box display="flex" flexDirection="row" flex={0.8}>
             <Image
               style={styles.iconExtraSmallImage}
-              source={require('../../assets/images/defaultAvatar.png')}
+              source={{uri: props.imageUrl}}
               alt="popcorn.png"
             />
             <Box style={styles.auditoriumNameContainer}>
