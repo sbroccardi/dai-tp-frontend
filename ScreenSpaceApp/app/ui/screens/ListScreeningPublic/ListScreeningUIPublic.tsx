@@ -110,7 +110,7 @@ export default function ListScreeningUIPublic({route, navigation}) {
                 cinema="Hoyts Belgrano"
                 auditorium="Sala 7"
                 date="Saturday, 21.07.23 - 16:00"
-                onPress={() => navigation.navigate("BuyTickets")}
+                onPress={() => navigation.navigate("BuyTickets", {movieName: movieName, movieId: movieID})}
               />
             </Center>
             <Center>

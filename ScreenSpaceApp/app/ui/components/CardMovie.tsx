@@ -20,7 +20,7 @@ const  CardMovie = (props: {
   movieAge: string;
   movieRating: any;
   onPress: any;
-  imgURL:any;
+  imageUrl: string;
 }) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
@@ -90,12 +90,13 @@ const  CardMovie = (props: {
                 </HStack>
               </Stack>
             </AspectRatio>
-            <AspectRatio w="40%" ratio={16 / 16} rounded="lg">
+            <AspectRatio w="40%" ratio={20 / 16} rounded="lg">
               <Image
                 source={{
-                  uri: props.imgURL,
+                  uri: props.imageUrl
                 }}
                 alt="image"
+                resizeMode="stretch"
               />
             </AspectRatio>
           </Box>

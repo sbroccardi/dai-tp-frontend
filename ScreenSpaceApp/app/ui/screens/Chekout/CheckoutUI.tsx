@@ -10,12 +10,17 @@ import DropdownMenu from '../../components/DropdownMenu';
 export default function CheckoutUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
-  const params = route.params;
+  const movieName = route.params.movieName;
+  const tickets = route.params.tickets;
+  const parcialPrice = route.params.parcialPrice;
+  const totalPrice = route.params.totalPrice;
+  const seats = route.params.seats;
+  const stringSeats = seats.join('-');
 
   return (
     <VStack>
         <Box>
-            <InfoPurchase movie={''} date={''} cinema={''} auditorium={''} location={''} tickets={undefined} seats={undefined} price={undefined} />
+            <InfoPurchase movie={movieName} date={''} cinema={''} auditorium={''} location={''} tickets={tickets} seats={stringSeats} price={totalPrice} />
         </Box>
         <Box>
             <VStack maxW="90%" minW="90%" marginLeft="5" space={5} marginTop="10">
@@ -27,7 +32,7 @@ export default function CheckoutUI() {
                     </Box>
                     <Box>
                       <Text>
-                          14,00$
+                          {parcialPrice},00$
                       </Text>
                     </Box>
                   </Box>
@@ -51,7 +56,7 @@ export default function CheckoutUI() {
                     </Box>
                     <Box>
                       <Text>
-                          20,00$
+                          {totalPrice},00$
                       </Text>
                     </Box>
                   </Box>

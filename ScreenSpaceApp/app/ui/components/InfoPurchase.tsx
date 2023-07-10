@@ -5,6 +5,7 @@ import {Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Entypo';
 import Delete from 'react-native-vector-icons/Feather';
+import { Float } from 'react-native/Libraries/Types/CodegenTypes';
 
 const InfoPurchase = (props: {
   movie: string;
@@ -14,7 +15,7 @@ const InfoPurchase = (props: {
   location : string,
   tickets: any,
   seats: any,
-  price: any,
+  price: Float,
 }) => {
   return (
       <Box alignItems="center" marginBottom={2}>
@@ -74,7 +75,7 @@ const InfoPurchase = (props: {
                     </Box>
                     <Box>
                         <Text style={styles.bodyText}>
-                            USD {props.price}
+                            USD  ${props.price}
                         </Text>
                     </Box>
                 </Box>

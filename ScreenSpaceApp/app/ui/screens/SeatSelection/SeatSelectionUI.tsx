@@ -1,23 +1,38 @@
 import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import {Box, Button, Center, Text, VStack} from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SeatsLayout from "@mindinventory/react-native-bus-seat-layout";
 import { styles } from '../../styles/theme';
 import ButtonPrimary from '../../components/ButtonPrimary';
+import Config from 'react-native-config';
+import ky from 'ky';
 
 export default function SeatSelectionUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
-  const params = route.params;
-  interface Seat{
-    id: string,
-    isSeatSeleced: boolean,
-    isStatusChange: boolean,
-    seatNo: any,
-    type: string
+  const movieId = route.params.movieId;
+  const movieName = route.params.movieName;
+  const parcialPrice = route.params.parcialPrice;
+  const tickets = route.params.tickets;
+
+  const occupiedSeats = [1,5,8];
+  const occupiedSeatsList = [];
+
+  occupiedSeats.forEach(seat => {
+      const occupiedSeat = { seatNumber: seat, seatType: 'booked' }
+      occupiedSeatsList.push(occupiedSeat);
+  })
+
+  
+  const bookingFee = 6;
+  const totalPrice = parcialPrice + bookingFee;
+
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  const handleSeatSelection = (seats: any) => {
+    setSelectedSeats(seats);
   }
-  const [selectedSeats, setSelectedSeats] = React.useState<Seat[]>([]);
 
   return (
     <VStack>
@@ -39,14 +54,14 @@ export default function SeatSelectionUI() {
       <VStack space={5} alignItems="center" maxHeight="75%" minHeight="75%">
         <Center maxW="100%" minW="100%" backgroundColor="#16171D" position="absolute" minH="60%" marginTop="3">
             <SeatsLayout
+                maxSeatToSelect={tickets}
                 row={9}
                 layout={{ columnOne: 0, columnTwo: 5 }}
-                selectedSeats={[
-                ]}
+                selectedSeats={occupiedSeatsList}
                 numberTextStyle={{ fontSize: 13 }}
                 getBookedSeats={(seats) => {
-                console.log('getBookedSeats :: ', seats);
-                setSelectedSeats(seats);
+                  const numbers = seats.map(seat => seat.seatNo);
+                  handleSeatSelection(numbers);
                 }}
             />
         </Center>
@@ -69,7 +84,7 @@ export default function SeatSelectionUI() {
         </Text>
       </Box>
       <Box>
-          <ButtonPrimary onPress={() => navigation.navigate('Checkout')} title="Checkout"/>
+          <ButtonPrimary onPress={() => navigation.navigate('Checkout', {movieId: movieId, seats: selectedSeats, movieName: movieName, tickets: tickets, parcialPrice: parcialPrice, totalPrice: totalPrice})} title="Checkout"/>
       </Box>
     </VStack>
     

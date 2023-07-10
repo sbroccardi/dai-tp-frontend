@@ -5,7 +5,7 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import CardScreeningPrivate from '../../components/CardScreeningPrivate';
 import DropdownMenu from '../../components/DropdownMenu';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase } from '@react-navigation/native';
+import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 import ky from 'ky';
 import { UserContext } from '../../../UserContext';
 import { typesAreEqual } from 'react-native-document-picker/lib/typescript/fileTypes';
@@ -17,76 +17,40 @@ import InfoPurchase from '../../components/InfoPurchase';
 import { styles } from '../../styles/theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
-
-type Props = {
-  navigation: ScreenNavigationProp;
-};
 
 export default function PurchaseDetailsUI() {
-  
+    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+    const route = useRoute();
+    const parametros = route.params;
+    const [comment, setComment] = React.useState('');
     const [starRating, setStarRating] = React.useState(0);
+    const user = useContext(UserContext);
 
-  /*const handleCinemaChange = (value: any) => {
-    console.log('Cinema id en listScreening: ' + value);
-    setSelectedCinema(value);
-    //traer funciones del cine
-    try {
 
-    }
-    catch (err) {
-      console.error('Error retrieving cinema screens' + err);
-    }
-  };
-  //{JSON.stringify(movieID)}
-  useEffect(() => {
-    const fetchCinemaOptions = async () => {
-      try {
-        const authToken = user.user?.tokens.accessToken;
-        const userId = user.user?.id;
-        const response = await ky.get('https://screenspace.azurewebsites.net/cinemas',
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-        const responseObject = await response.json();
-        const names = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: any) => cinema.name);
-        setCinemaOptions(names);
-        //
-        const ids = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: { _id: any; }) => cinema._id)
-        setCinemaIds(ids)
-        //
-      } catch (error) {
-        console.error('Error retrieving cinema options:', error);
-      }
+    const handleChange = (text) => {
+      setComment(text);
     };
-    fetchCinemaOptions();
+    
+    const comentaryvalorar = async () => {
+      let data = {
+        movieId: parametros.movideId,
+        purchaseId: parametros.purchaseId,
+        userId: parametros.usuario,
+        comment: comment,
+        rate: starRating,
+      };
 
-    const fetchScreenings = async () => {
-      try {
-        const authToken = user.user?.tokens.accessToken;
-        const response = await ky.get(`${Config.API_BASE_URL}/cinemas/${movieID}/screenings`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        )
-        const responseObject = await response.json();
-        console.log('screenings de la pelicula: ' + responseObject);
-      }
-      catch (err) {
-        console.error('Error retrieving screenings' + err)
-      }
+      const authToken = user.user?.tokens.accessToken;
+      const respuesta = await ky.post(`${Config.API_BASE_URL}/movies/${parametros.movideID}/comments`, {
+        json: data,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      ;
+      navigation.navigate('Previous Purchase');
     };
-    fetchScreenings();
-  }, []); */
+    
 
   return (
     <KeyboardAwareScrollView>
@@ -96,19 +60,19 @@ export default function PurchaseDetailsUI() {
           alt="ScreenSpace"
           borderRadius="12"
           source={{
-            uri: 'https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg',
+            uri: parametros.imageUrl,
           }}
           width={350}
           height={110}
         />
       </Center>
       <Center>
-          <InfoPurchase movie={''} date={''} cinema={''} auditorium={''} location={''} tickets={undefined} seats={undefined} price={undefined}/>
+          <InfoPurchase movie={parametros.movieTitle} date={parametros.date} cinema={parametros.cinema} auditorium={parametros.auditorio} location={parametros.ubicacion} tickets={parametros.asientos} seats={parametros.asientos} price={parametros.moviePrice}/>
       </Center>
       <Center>
       <FormControl width="95%">
         <FormControl.Label>Leave a comment</FormControl.Label>
-            <Input width="95%" height="100"/>
+            <Input width="95%" height={50} value={comment} onChangeText={handleChange} />
       </FormControl>
       </Center>
       <Center>
@@ -117,7 +81,7 @@ export default function PurchaseDetailsUI() {
       <Center w="100%">
         <ButtonPrimary
           title="Save"
-          onPress={() => navigation.navigate('CreateScreeningStack')}
+          onPress={() => {comentaryvalorar()}}
         />
       </Center>
     </VStack>
