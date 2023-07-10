@@ -135,8 +135,9 @@ const ProfilePublicScreenUI = ({}) => {
   };
 
   return (
+    
     <VStack
-      space={8}
+      space={1}
       alignItems="center"
       justifyContent="space-around"
       height="100%">
@@ -209,6 +210,7 @@ const ProfilePublicScreenUI = ({}) => {
         
       </Center>
     </VStack>
+   
   );
 };
 
