@@ -132,6 +132,10 @@ export default {
   seatSelection: 'Seat selection',
 
   checkout: 'Checkout',
+	
+  search: 'Search',
+  
+  purchaseDetails : 'Purchase Details',
 
   purchaseDetails: 'Purchase Details',
 

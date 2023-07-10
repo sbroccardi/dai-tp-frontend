@@ -5,7 +5,7 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import CardScreeningPrivate from '../../components/CardScreeningPrivate';
 import DropdownMenu from '../../components/DropdownMenu';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase } from '@react-navigation/native';
+import { ParamListBase, useRoute } from '@react-navigation/native';
 import ky from 'ky';
 import { UserContext } from '../../../UserContext';
 import { typesAreEqual } from 'react-native-document-picker/lib/typescript/fileTypes';
@@ -18,35 +18,34 @@ type Props = {
   navigation: ScreenNavigationProp;
 };
 
-export default function ListScreeningUIPrivate({ route, navigation }) {
+export default function ListScreeningUIPrivate({ navigation }) {
+  const route = useRoute();
   const movieID = route.params.movieId;
   const movieName = route.params.movieName;
   const user = useContext(UserContext);
   const [cinemaOptions, setCinemaOptions] = React.useState([''])
   const [cinemaIds, setCinemaIds] = React.useState([]);
+  const [cinemasData, setCinemasData] = React.useState([])
   const [selectedCinema, setSelectedCinema] = React.useState('');
-  const [cinemaScreenings, setCinemaScreeningsS] = React.useState([{
-    cinemaName: '',
-    auditoriumName: '',
-    datetime: ''
-  }]);
+  const [cinemaScreenings, setCinemaScreenings] = React.useState<{cinemaName: string; auditoriumName: string, datetime: string}[]>([]);
 
   const handleCinemaChange = (value: any) => {
     console.log('Cinema id en listScreening: ' + value);
     setSelectedCinema(value);
     //traer funciones del cine
     try {
-      
+      //New route `/auditoriums/${auditoriumId}` 
     }
     catch (err) {
       console.error('Error retrieving cinema screens' + err);
     }
   };
+
   //{JSON.stringify(movieID)}
   useEffect(() => {
     navigation.setOptions({
-      headerTitle:route.params.movieName
-  })
+      headerTitle: route.params.movieName,
+    })
     const fetchCinemaOptions = async () => {
       try {
         const authToken = user.user?.tokens.accessToken;
@@ -69,31 +68,78 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
           .map((cinema: { _id: any; }) => cinema._id)
         setCinemaIds(ids)
         //
+        setCinemasData(responseObject);
       } catch (error) {
         console.error('Error retrieving cinema options: ', error);
       }
     };
     fetchCinemaOptions();
 
-    const fetchScreenings = async () => {
+  }, []);
+
+  useEffect(() => {
+    const fetchCinemaScreenings = async () => {
       try {
         const authToken = user.user?.tokens.accessToken;
-        const response = await ky.get(`${Config.API_BASE_URL}/cinemas/${movieID}/screenings`,
+        const responseScreenings = await ky.get(
+          `${Config.API_BASE_URL}/movies/${movieID}/screenings`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
-          },
+          }
         );
-        const responseObject = await response.json();
-        console.log('screenings de la pelicula: ' + responseObject);
-      }
-      catch (err) {
-        console.error('Error retrieving screenings ', err);
+        const responseScreeningsObject = await responseScreenings.json();
+        const elements = []
+        for (const screening of responseScreeningsObject) {
+          const screeningDatetime = screening.datetime;
+          const screeningAuditoriumId = screening.auditoriumId;
+          const screeningCinemaId = screening.cinemaId
+          console.log('objeto armado ids: ', screeningDatetime, screeningCinemaId, screeningAuditoriumId)
+          const screeningAuditorium = await ky.get(`${Config.API_BASE_URL}/cinemas/auditoriums/${screeningAuditoriumId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            })
+          const screeningAuditoriumObject = await screeningAuditorium.json()
+          const screeningAuditoriumName = screeningAuditoriumObject.name;
+          const screeningCinemaName = cinemasData
+          .find((cine:{_id:string}) => cine._id == screeningCinemaId)?.name
+          console.log('screeningCinemaName: ', screeningCinemaName)
+          console.log(screeningAuditoriumName)
+          elements.push({
+            cinemaName: screeningCinemaName,
+            auditoriumName: screeningAuditoriumName,
+            datetime: screeningDatetime
+          })
+        }
+        setCinemaScreenings(elements)
+      } catch (error) {
+        console.error('Error retrieving cinema screenings:', error);
       }
     };
-    fetchScreenings();
-  }, []);
+
+    fetchCinemaScreenings();
+  }, [cinemasData, movieID]);
+
+  console.log('cinemaScreenings: ', cinemaScreenings)
+
+  const renderData = () => {
+    const elements = [];
+    console.log('cinemaScreeningslength: ', cinemaScreenings.length)
+    for (let count = 0; count < Object.keys(cinemaScreenings).length; count++) {
+      //console.log(auditoriumsAmount);
+      const screening = cinemaScreenings[count];
+      console.log('element renderData: ', screening)
+      elements.push(
+        <Center key={screening.cinemaName}>
+          <CardScreeningPrivate cinema={screening.cinemaName} auditorium={screening.auditoriumName} date={screening.datetime} />
+        </Center>,
+      );
+    }
+    return elements;
+  };
 
   return (
     <VStack space={4} alignItems="center" height="100%">
@@ -102,7 +148,7 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
           alt="ScreenSpace"
           borderRadius="12"
           source={{
-            uri: 'https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg',
+            uri: route.params.movieImgURL,
           }}
           width={350}
           height={110}
@@ -120,27 +166,7 @@ export default function ListScreeningUIPrivate({ route, navigation }) {
       <Center>
         <ScrollView maxH="350">
           <VStack>
-            <Center>
-              <CardScreeningPrivate
-                cinema="Hoyts Belgrano"
-                auditorium="Sala 7"
-                date="Saturday, 21.07.23 - 16:00"
-              />
-            </Center>
-            <Center>
-              <CardScreeningPrivate
-                cinema="Cinemark Palermo"
-                auditorium="Sala 3"
-                date="Sunday, 17.08.23 - 19:30"
-              />
-            </Center>
-            <Center>
-              <CardScreeningPrivate
-                cinema="Abasto"
-                auditorium="Sala 12"
-                date="Tuesday, 12.06.23 - 16:00"
-              />
-            </Center>
+            {renderData()}
           </VStack>
         </ScrollView>
       </Center>

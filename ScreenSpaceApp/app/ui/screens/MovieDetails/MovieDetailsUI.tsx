@@ -20,81 +20,14 @@ type Props = {
 };
 
 export default function MovieDetailsUI({route, navigation}) {
-  /*const movieID = route.params.movieId;
-  const movieName = route.params.movieName;*/
-  const movieName = route.params.movieName;
+
   const movieId = route.params.movieId;
+  const movieName = route.params.movieName;
+  const movieImage = route.params.movieImage;
+  const movieRating = route.params.movieRating;
+
   const user = useContext(UserContext);
-  const [cinemaOptions, setCinemaOptions] = React.useState([''])
-  const [cinemaIds, setCinemaIds] = React.useState([]);
-  const [selectedCinema, setSelectedCinema] = React.useState('');
-  const [cinemaScreenings, setCinemaScreeningsS] = React.useState([{
-    cinemaName: '',
-    auditoriumName: '',
-    datetime: ''
-  }]);
-
-  /*const handleCinemaChange = (value: any) => {
-    console.log('Cinema id en listScreening: ' + value);
-    setSelectedCinema(value);
-    //traer funciones del cine
-    try {
-
-    }
-    catch (err) {
-      console.error('Error retrieving cinema screens' + err);
-    }
-  };
-  //{JSON.stringify(movieID)}
-  useEffect(() => {
-    const fetchCinemaOptions = async () => {
-      try {
-        const authToken = user.user?.tokens.accessToken;
-        const userId = user.user?.id;
-        const response = await ky.get('https://screenspace.azurewebsites.net/cinemas',
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
-        const responseObject = await response.json();
-        const names = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: any) => cinema.name);
-        setCinemaOptions(names);
-        //
-        const ids = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: { _id: any; }) => cinema._id)
-        setCinemaIds(ids)
-        //
-      } catch (error) {
-        console.error('Error retrieving cinema options:', error);
-      }
-    };
-    fetchCinemaOptions();
-
-    const fetchScreenings = async () => {
-      try {
-        const authToken = user.user?.tokens.accessToken;
-        const response = await ky.get(`${Config.API_BASE_URL}/cinemas/${movieID}/screenings`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        )
-        const responseObject = await response.json();
-        console.log('screenings de la pelicula: ' + responseObject);
-      }
-      catch (err) {
-        console.error('Error retrieving screenings' + err)
-      }
-    };
-    fetchScreenings();
-  }, []); */
-
+  
   return (
     <VStack space={4} alignItems="center" height="100%">
       <Center w="100%" borderRadius="12">
@@ -102,7 +35,7 @@ export default function MovieDetailsUI({route, navigation}) {
           alt="ScreenSpace"
           borderRadius="12"
           source={{
-            uri: 'https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg',
+            uri: movieImage,
           }}
           width={350}
           height={110}
@@ -110,7 +43,7 @@ export default function MovieDetailsUI({route, navigation}) {
       </Center>
       <Center>
           <Box marginTop="2">
-                <StarRating rating={5} style={{}} onChange={() => {}} starSize={25} />
+                <StarRating rating={movieRating} style={{}} onChange={() => {}} starSize={25} />
           </Box>
           <Box marginTop="2" marginLeft="3">
                 <Text>

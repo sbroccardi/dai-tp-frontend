@@ -8,6 +8,9 @@ import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { UserContext } from '../../../UserContext';
 import ky from 'ky';
 import Config from 'react-native-config';
+import { RefreshControl } from 'react-native';
+import I18n from '../../../assets/localization/I18n';
+
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -17,7 +20,7 @@ type Props = {
 const LoadingScreen = () => {
   return (
     <Center>
-      <Spinner accessibilityLabel="Loading" color="white"s/>
+      <Spinner accessibilityLabel="Loading" color="white" />
     </Center>
   );
 };
@@ -28,8 +31,10 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
   const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState<string[]>([])
   const [moviesData, setMoviesData] = React.useState([]);
   const user = useContext(UserContext);
-  const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; }[]>([]);
+  const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; image:string}[]>([]);
   const authToken = user.user?.tokens.accessToken;
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [refresh, setRefresh] = React.useState(0)
 
   useEffect(() => {
     const fetchMovieIdsThatHaveScreenings = async () => {
@@ -53,20 +58,21 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
             },
           });
           const screeningsData = await screeningsResponse.json();
-          
+
           if (Array.isArray(screeningsData) && screeningsData.length > 0) {
             movieIdsWithScreenings.push(movieId);
           }
         }
         console.log('moviesWithScreenings: ', movieIdsWithScreenings);
         setMovieIdsThatHaveScreenings(movieIdsWithScreenings);
-        setIsLoading(false);
       } catch (error) {
         console.error('Error retrieving screenings:', error);
-        setIsLoading(false);
+      }
+      finally{
+        setRefresh(0)
       }
     }; fetchMovieIdsThatHaveScreenings();
-  }, [])
+  }, [refresh])
 
   useEffect(() => {
     const fetchMoviesData = async () => {
@@ -86,46 +92,74 @@ const PrivateMoviesScreenUI: React.FC<Props> = ({ navigation }) => {
           }
         }
         setMoviesForm(filteredMovies);
+        setIsLoading(false);
       } catch (error) {
         console.error('error fetching movies data:', error);
+        setIsLoading(false);
       }
     }; fetchMoviesData()
   }, [movieIdsThatHaveScreenings])
 
-  const renderMovies = () => {
-    const elements = [];
-    for (let count = 0; count < moviesForm.length; count++) {
-      const movie = moviesForm[count];
-      console.log('element: ', movie)
-      elements.push(
-        <Center marginBottom="4" key={movie._id}>
-          <CardMovie
-            movieID={movie._id}
-            movieName={movie.name}
-            movieAge={movie.age}
-            movieRating={movie.rating}
-            imageUrl={movie.image}
-            onPress={()=>navigation.navigate('ScreeningList', {movieName:movie.name, movieId: movie._id})}
-          />
-        </Center>,
+  const renderMovies = (searchQuery?: any) => {
+    if (searchQuery) {
+      const filteredMovies = moviesForm.filter((movie) =>
+        movie.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
+      console.log('filtered movies', filteredMovies)
+      const elements = [];
+      for (let count = 0; count < filteredMovies.length; count++) {
+        const movie = filteredMovies[count];
+        console.log('element: ', movie)
+        elements.push(
+          <Center marginBottom="4" key={movie._id}>
+            <CardMovie
+              movieID={movie._id}
+              movieName={movie.name}
+              movieAge={movie.age}
+              movieRating={movie.rating}
+              imageUrl={movie.image}
+              onPress={() => navigation.navigate('ScreeningList', { movieName: movie.name, movieId: movie._id })}
+            />
+          </Center>,
+        );
+      }
+      return elements;
     }
-    return elements;
+    else {
+      const elements = [];
+      for (let count = 0; count < moviesForm.length; count++) {
+        const movie = moviesForm[count];
+        console.log('element: ', movie)
+        elements.push(
+          <Center marginBottom="4" key={movie._id}>
+            <CardMovie
+              movieID={movie._id}
+              movieName={movie.name}
+              movieAge={movie.age}
+              movieRating={movie.rating}
+              imgURL={movie.image}
+              onPress={() => navigation.navigate('ScreeningList', { movieName: movie.name, movieId: movie._id, movieImgURL: movie.image })}
+            />
+          </Center>,
+        );
+      }
+      return elements;
+    }
   };
 
   return (
     <VStack space={3} alignItems="center" height="100%">
       <Center>
-        <SearchBar/>
+        <SearchBar placeholder={I18n.t('search')} onChangeText={setSearchQuery} value={searchQuery} onSubmitEditing={() => renderMovies(searchQuery)} />
       </Center>
       <Center>
-        <ScrollView maxH="500">
+        <ScrollView maxH="500" refreshControl={<RefreshControl refreshing={isLoading} onRefresh={()=>setRefresh(1)} />}>
           <VStack space={3} alignItems="center" height="100%">
             {
-              isLoading ? 
-              <LoadingScreen/>
-              :
-              renderMovies()
+              isLoading ?
+                <LoadingScreen />
+                :
+                renderMovies(searchQuery)
             }
           </VStack>
         </ScrollView>

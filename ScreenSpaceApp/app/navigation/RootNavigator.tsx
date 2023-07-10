@@ -319,12 +319,22 @@ function RootNavigator() {
               headerTitleAlign: 'center',
             }}
           />
+          <Stack.Screen
+              name="Terms"
+              component={TermsScreen}
+              options={{title: I18n.t('terms')}}
+            />
+            <Stack.Screen
+              name="Privacy"
+              component={PrivacyScreen}
+              options={{title: I18n.t('privacy')}}
+            />
         </Stack.Navigator>
       );
     }
   }
 
-  function publicMovieStack({navigation}) {
+  function PublicMovieStack({navigation}) {
     return (
       <Stack.Navigator initialRouteName="PublicListMovies">
         <Stack.Screen
@@ -505,7 +515,7 @@ function RootNavigator() {
         <Tab.Navigator {...{screenOptions}}>
           <Stack.Screen 
             name="Movies" 
-            component={publicMovieStack} 
+            component={PublicMovieStack} 
             options={{
               headerShown: false,
               tabBarIcon: ({color = '', size = 0}) => (

@@ -28,7 +28,8 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   const [selectedCinema, setSelectedCinema] = React.useState('');
   const [selectedAuditorium, setSelectedAuditorium] = React.useState('');
   const [selectedMovie, setSelectedMovie] = React.useState('');
-  const [cinemaOptions, setCinemaOptions] = React.useState([''])
+  const [selectedSchedule, setSelectedSchedule] = React.useState('');
+  const [cinemaOptions, setCinemaOptions] = React.useState(['']);
   const [cinemaIds, setCinemaIds] = React.useState([]);
   const [auditoriumIds, setAuditoriumIds] = React.useState([{
     _id: '',
@@ -44,6 +45,16 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
     _id: '',
     name: ''
   }])
+  const [schedule, setSchedule] = React.useState([
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+    '18:00',
+    '20:00',
+    '23:00',
+    '01:00'])
 
   useEffect(() => {
     const fetchCinemaOptions = async () => {
@@ -165,6 +176,11 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
     console.log('movie id value:' + value)
   };
 
+  const handleScheduleChange = (value:any) => {
+    setSelectedSchedule(value);
+    console.log('schedule value: ' + value);
+  }
+
   const validate = () => {
     setErrors({});
     // Name
@@ -195,14 +211,21 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
     if (!selectedDay) {
       setErrors(prevErrors => ({
         ...prevErrors,
-        movie: 'Movie is required',
+        day: 'Day is required',
+      }));
+      return false;
+    }
+    if (!selectedSchedule) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        schedule: 'Schedule is required',
       }));
       return false;
     }
     return true;
   };
 
-  const createScreening = async (auditoriumId: string, movieId: string, datetime: string) => {
+  const createScreening = async (auditoriumId: string, movieId: string, datetime: string, cinemaId:string) => {
     try {
       const authToken = user.user?.tokens.accessToken;
       const response = await ky.post(
@@ -214,6 +237,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
           json: {
             movieId: `${movieId}`,
             auditoriumId: `${auditoriumId}`,
+            cinemaId: `${cinemaId}`,
             datetime: `${datetime}`,
           },
         },
@@ -231,13 +255,13 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
 
   const handleCreateScreening = async () => {
     if (validate()) {
-      createScreening(selectedAuditorium, selectedMovie, selectedDay)
+      const datetime = selectedDay + ' ' + selectedSchedule;
+      createScreening(selectedAuditorium, selectedMovie, datetime, selectedCinema)
       toast.show({
         title: 'Funcion creada',
         duration: 3000,
         placement: 'top',
       })
-
     }
     else {
       toast.show({
@@ -298,8 +322,20 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
           markedDates={{
             [selectedDay]: { selected: true, disableTouchEvent: true },
           }}
+          disabled={!selectedMovie}
         />
       </Center>
+      <Center>
+        <DropdownMenu
+          data={schedule}
+          purpose={'schedule'}
+          disabled={!selectedDay}
+          options={schedule}
+          onChange={handleScheduleChange}
+          valueSelected = {selectedSchedule}
+        />
+      </Center>
+      <Center p="2"/>
       <Center width="100%">
         <ButtonPrimary title={I18n.t('createScreening')} onPress={handleCreateScreening} />
       </Center>

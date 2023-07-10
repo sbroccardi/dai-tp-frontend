@@ -6,7 +6,7 @@ import {View, Text} from 'react-native';
 import I18n from '../../../../assets/localization/I18n';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ProfilePicture from '../../../components/ProfilePicture';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-picker';
 import ky from 'ky';
 import {Config} from 'react-native-config';
 import {styles} from '../../../styles/theme';
@@ -18,56 +18,73 @@ import ButtonLogout from '../../../components/ButtonLogout';
 
 const ProfilePublicScreenUI = ({}) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const toast = useToast();
   const user = useContext(UserContext);
   const {setUser} = useContext(UserContext);
-  const [refreshing, setRefreshing] = React.useState(false);
   const [formData, setData] = React.useState({
     username: '',
     img: ' ',
   });
   const [username, setUsername] = React.useState('');
+  const [imageIsLoading, setImageIsLoading] = React.useState({});
+  const [imageUrl, setImageUrl] = React.useState('');
+  const [imageFile, setImageFile] = React.useState<DocumentPickerResponse[]>(
+    [],
+  );
+
   const selectFile = async () => {
-    //Opening Document Picker for selection of one file
     try {
-      const res = await DocumentPicker.pick({
+      const results = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
-        //There can me more options as well
-        // DocumentPicker.types.allFiles
-        // DocumentPicker.types.images
-        // DocumentPicker.types.plainText
-        // DocumentPicker.types.audio
-        // DocumentPicker.types.pdf
       });
-      //Printing the log realted to the file
-      console.log('res : ' + JSON.stringify(res));
-      // console.log('URI : ' + res.uri);
-      // console.log('Type : ' + res.type);
-      // console.log('File Name : ' + res.name);
-      // console.log('File Size : ' + res.size);
-      //Setting the state to show single file attributes
-      //setSingleFile(res);
-      const data = new FormData();
-      data.append('name', 'Image Upload');
-      data.append('file_attachment', res);
-      const response = await ky.post(`${Config.API_BASE_URL}/uploadAvatar`, {
-        body: data,
-      });
-      console.log(response);
+      setImageFile(results);
+      handleUploadImage(results);
     } catch (err) {
-      //Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
-        //If user canceled the document selection
+       
+        setImageUrl('');
+        setImageFile([]);
       } else {
-        //For Unknown Error
         throw err;
       }
-      toast.show({
-        description: JSON.stringify(err),
-        title: 'Unknown Error',
-        duration: 3000,
-        placement: 'top',
+    }
+  };
+
+  const handleUploadImage = async (newImage: DocumentPickerResponse[]) => {
+    let image = newImage[0];
+    setImageIsLoading(true);
+
+    const formData = new FormData();
+    formData.append('file', {
+      uri: image.uri,
+      type: image.type,
+      name: image.name,
+    });
+    formData.append('upload_preset', 'default-unsigned-preset');
+    formData.append(
+      'public_id',
+      formData.email ? formData.email.replace('@', '_at_') : image.name?.split('.')[0],
+    );
+
+    try {
+      const response = await ky.post(`${Config.CLOUDINARY_URL}`, {
+        body: formData,
       });
+      const data = await response.json();
+      setImageUrl(data.url);
+      let data2 = {
+        avatar: data.url
+      };
+      const authToken = user.user?.tokens.accessToken;
+      const respuesta = await ky.put(`${Config.API_BASE_URL}/users`, {
+      json: data2,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    getData();
+    } catch (error) {
+    } finally {
+      setImageIsLoading(false);
     }
   };
   const getData = async () => {
@@ -175,6 +192,21 @@ const ProfilePublicScreenUI = ({}) => {
           />
           <ButtonLogout onPress={exit} title={I18n.t('logout')} />
         </View>
+         
+        <View style={{ flexDirection: 'row' }}>
+        <Text
+            style={{ color: 'rgb(255, 255, 0)', marginRight: 10 }}
+            onPress={() => navigation.navigate('Terms')}>
+            {I18n.t('terms')}
+        </Text>
+        <Text style={{ color: 'rgb(255, 255, 0)'}}> {' & '} </Text>
+        <Text
+            style={{ color: 'rgb(255, 255, 0)', marginLeft: 10 }}
+            onPress={() => navigation.navigate('Privacy')}>
+            {I18n.t('privacy')}
+        </Text>
+      </View>
+        
       </Center>
     </VStack>
   );

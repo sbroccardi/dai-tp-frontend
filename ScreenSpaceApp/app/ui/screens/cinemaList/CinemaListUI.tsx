@@ -94,7 +94,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       const cine = formData[count];
       //console.log(auditoriumsAmount);
       elements.push(
-        <Center>
+        <Center key={cine.id}>
           <CardCinema
             cinemaName={cine.name}
             cinemaAuditoriumsAmount={cine.auditoriumsAmount}

@@ -5,13 +5,25 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SeatsLayout from "@mindinventory/react-native-bus-seat-layout";
 import { styles } from '../../styles/theme';
 import ButtonPrimary from '../../components/ButtonPrimary';
+import Config from 'react-native-config';
+import ky from 'ky';
 
 export default function SeatSelectionUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
+  const movieId = route.params.movieId;
   const movieName = route.params.movieName;
   const parcialPrice = route.params.parcialPrice;
   const tickets = route.params.tickets;
+
+  const occupiedSeats = [1,5,8];
+  const occupiedSeatsList = [];
+
+  occupiedSeats.forEach(seat => {
+      const occupiedSeat = { seatNumber: seat, seatType: 'booked' }
+      occupiedSeatsList.push(occupiedSeat);
+  })
+
   
   const bookingFee = 6;
   const totalPrice = parcialPrice + bookingFee;
@@ -45,8 +57,7 @@ export default function SeatSelectionUI() {
                 maxSeatToSelect={tickets}
                 row={9}
                 layout={{ columnOne: 0, columnTwo: 5 }}
-                selectedSeats={[
-                ]}
+                selectedSeats={occupiedSeatsList}
                 numberTextStyle={{ fontSize: 13 }}
                 getBookedSeats={(seats) => {
                   const numbers = seats.map(seat => seat.seatNo);
@@ -73,7 +84,7 @@ export default function SeatSelectionUI() {
         </Text>
       </Box>
       <Box>
-          <ButtonPrimary onPress={() => navigation.navigate('Checkout', {seats: selectedSeats, movieName: movieName, tickets: tickets, parcialPrice: parcialPrice, totalPrice: totalPrice})} title="Checkout"/>
+          <ButtonPrimary onPress={() => navigation.navigate('Checkout', {movieId: movieId, seats: selectedSeats, movieName: movieName, tickets: tickets, parcialPrice: parcialPrice, totalPrice: totalPrice})} title="Checkout"/>
       </Box>
     </VStack>
     

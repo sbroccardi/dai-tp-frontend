@@ -32,7 +32,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
   const authToken = user.user?.tokens.accessToken;
   const [isLoading, setIsLoading] = React.useState(true);
   const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState<string[]>([])
-  const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; }[]>([]);
+  const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; image:string;}[]>([]);
   const [moviesData, setMoviesData] = React.useState([]);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
             movieAge={movie.age}
             movieRating={movie.rating}
             imageUrl={movie.image}
-            onPress={()=>navigation.navigate('MovieDetails', {movieName:movie.name, movieId: movie._id})}
+            onPress={()=>navigation.navigate('MovieDetails', {movieId: movie._id, movieName:movie.name, movieRating: movie.rating, movieImage: movie.image})}
           />
         </Center>,
       );

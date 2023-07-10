@@ -117,5 +117,7 @@ export default {
 
   checkout: 'Chequeo',
 
+  search: 'Buscar'
+
   location: 'Ubicación actual',
 };
