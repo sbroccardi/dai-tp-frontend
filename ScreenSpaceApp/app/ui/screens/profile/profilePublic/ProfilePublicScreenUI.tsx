@@ -156,6 +156,11 @@ const ProfilePublicScreenUI = ({}) => {
         </FormControl>
       </Center>
       <ButtonPrimary
+        onPress={() => navigation.navigate('ProfileMap')}
+        title={'Location'}
+        width="90%"
+      />
+      <ButtonPrimary
         onPress={() => navigation.navigate('Previous Purchase')}
         title={'Previous Purchase'}
         width="90%"

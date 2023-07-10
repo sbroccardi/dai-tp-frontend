@@ -144,7 +144,7 @@ export default function CreateCinemaUI() {
           </FormControl>
           <FormControl isRequired pt={5}>
             <FormControl.Label _text={{bold: true}}>
-              {I18n.t('adress')}
+              {I18n.t('address')}
             </FormControl.Label>
             <Input
               size="md"
@@ -159,7 +159,7 @@ export default function CreateCinemaUI() {
               }
             />
             <FormControl.ErrorMessage _text={{fontSize: 'xs'}}>
-              Error Adress
+              Error Address
             </FormControl.ErrorMessage>
           </FormControl>
         </Center>

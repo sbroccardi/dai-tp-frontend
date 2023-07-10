@@ -13,7 +13,7 @@ export default {
 
   email: 'Email',
 
-  adress: 'Adress',
+  address: 'Address',
 
   nameAuditorium: 'Auditorium name',
 
@@ -122,8 +122,8 @@ export default {
   createScreening: 'Create screening',
 
   screenings: 'Screenings',
-  
-  cancel:'Cancel',
+
+  cancel: 'Cancel',
 
   movieDetails: 'Movie Details',
 
@@ -133,5 +133,7 @@ export default {
 
   checkout: 'Checkout',
 
-  purchaseDetails : 'Purchase Details',
+  purchaseDetails: 'Purchase Details',
+
+  location: 'Actual location',
 };

@@ -4,6 +4,9 @@ import {NativeBaseProvider} from 'native-base';
 import RootNavigator from './navigation/RootNavigator';
 import {nativeBaseTheme} from './ui/styles/theme';
 import {UserProvider} from './UserContext';
+import {enableLatestRenderer} from 'react-native-maps';
+
+enableLatestRenderer();
 
 function App(): JSX.Element {
   // Disable hardware back button

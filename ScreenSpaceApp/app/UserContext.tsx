@@ -2,7 +2,7 @@ import React, {createContext, useState} from 'react';
 
 interface UserContextType {
   user: User | null;
-  setUser: (user: User | null) => void;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 interface UserProviderProps {

@@ -90,6 +90,8 @@ const LoginPrivateScreenUI = () => {
       fullName: responseBody.fullName,
       id: responseBody.id,
       avatar: responseBody.avatar,
+      lat: responseBody.lat ?? -34.6037177671002,
+      lng: responseBody.lng ?? -58.381571528206365,
     });
   };
 

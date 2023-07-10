@@ -53,6 +53,7 @@ import BuyTicketsUI from '../ui/screens/BuyTickets/BuyTicketsUI';
 import SeatSelectionUI from '../ui/screens/SeatSelection/SeatSelectionUI';
 import CheckoutUI from '../ui/screens/Chekout/CheckoutUI';
 import PurchaseDetailsUI from '../ui/screens/PurchaseDetails/PurchaseDetailsUI';
+import ProfileMapPublicScreen from '../ui/screens/Profile/ProfilePublic/ProfileMapPublicScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -283,6 +284,14 @@ function RootNavigator() {
             component={ProfilePublicScreenUI}
             options={{
               headerTitle: I18n.t('profile'),
+              headerTitleAlign: 'center',
+            }}
+          />
+          <Stack.Screen
+            name="ProfileMap"
+            component={ProfileMapPublicScreen}
+            options={{
+              headerTitle: I18n.t('location'),
               headerTitleAlign: 'center',
             }}
           />

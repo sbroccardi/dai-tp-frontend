@@ -59,6 +59,8 @@ const LoginScreenUI = ({}) => {
         avatar: responseBody.avatar,
         fullName: responseBody.fullName,
         id: responseBody.id,
+        lat: responseBody.lat ?? -34.6037177671002,
+        lng: responseBody.lng ?? -58.381571528206365,
       });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

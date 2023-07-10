@@ -73,7 +73,7 @@ export default {
 
   usuario: 'Usuario',
 
-  adress: 'Direccion',
+  address: 'Dirección',
 
   cinemas: 'Mis cines',
 
@@ -117,4 +117,5 @@ export default {
 
   checkout: 'Chequeo',
 
+  location: 'Ubicación actual',
 };
