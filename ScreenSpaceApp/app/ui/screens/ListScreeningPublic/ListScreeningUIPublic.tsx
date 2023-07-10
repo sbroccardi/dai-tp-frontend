@@ -151,7 +151,7 @@ export default function ListScreeningUIPublic({navigation}) {
         />
       </Center>
       <Center>
-        <ScrollView maxH="350">
+        <ScrollView maxH="500">
           <VStack>
           {
             searchQuery ?

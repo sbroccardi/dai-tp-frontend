@@ -107,7 +107,6 @@ export default function CreateCinemaUI() {
 
   const handleCrearCine = () => {
     crearCine(formData.name, formData.location, userId);
-    navigation.replace('CinemasList', {userId: userId});
   };
 
   return (
@@ -166,6 +165,12 @@ export default function CreateCinemaUI() {
         <Center w={'100%'}>
           <ButtonPrimary onPress={handleCrearCine} title={I18n.t('save')} />
         </Center>
+        <Center w={'100%'}>
+        <ButtonPrimary
+          onPress={() => navigation.replace('CinemasList')}
+          title={I18n.t('cancel')}
+        />
+      </Center>
       </VStack>
     </KeyboardAwareScrollView>
   );

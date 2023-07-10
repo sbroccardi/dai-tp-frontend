@@ -123,7 +123,7 @@ const CinemaListUI: React.FC<Props> = ({ navigation }) => {
       </Center>
       <Center w={'100%'}>
         <ButtonPrimary
-          onPress={() => navigation.navigate('CreateCinemaStack')}
+          onPress={() => navigation.replace('CreateCinemaStack')}
           title={I18n.t('createCinema')}
         />
       </Center>
