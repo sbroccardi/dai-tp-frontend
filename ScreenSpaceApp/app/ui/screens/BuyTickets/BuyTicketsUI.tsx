@@ -17,6 +17,7 @@ import ButtonDangerExtraSmall from '../../components/ButtonDangerExtraSmall';
 export default function BuyTicketsUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route = useRoute();
+  const movieId = route.params.movieId;
   const movieName = route.params.movieName;
 
   const precioAdulto = 7;
@@ -146,7 +147,7 @@ export default function BuyTicketsUI() {
             </Box>
         </Box>
         <Box>
-            <ButtonPrimary title="Select seats" onPress={() => navigation.navigate("SeatSelection", {movieName: movieName, parcialPrice: totalPrice, tickets: totalTickets})}/>
+            <ButtonPrimary title="Select seats" onPress={() => navigation.navigate("SeatSelection", {movieName: movieName, movieId: movieId, parcialPrice: totalPrice, tickets: totalTickets})}/>
         </Box>
     </VStack>
   );
