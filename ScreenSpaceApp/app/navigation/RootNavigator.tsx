@@ -54,6 +54,8 @@ import SeatSelectionUI from '../ui/screens/SeatSelection/SeatSelectionUI';
 import CheckoutUI from '../ui/screens/Chekout/CheckoutUI';
 import PurchaseDetailsUI from '../ui/screens/PurchaseDetails/PurchaseDetailsUI';
 import ProfileMapPublicScreen from '../ui/screens/Profile/ProfilePublic/ProfileMapPublicScreen';
+import ConfirmDeleteScreeningScreen from '../ui/screens/ConfirmDelete/ConfirmDeleteScreening/ConfirmDeleteScreeningScreen';
+import ConfirmDeleteScreeningScreenUI from '../ui/screens/ConfirmDelete/ConfirmDeleteScreening/ConfirmDeleteScreeningScreenUI';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -87,6 +89,14 @@ function RootNavigator() {
         <Stack.Screen
           name="ScreeningList"
           component={ListScreeningUIPrivate}
+          options={{
+            headerTitle: I18n.t('screenings'),
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="ConfirmDeleteScreening"
+          component={ConfirmDeleteScreeningScreenUI}
           options={{
             headerTitle: I18n.t('screenings'),
             headerTitleAlign: 'center',
@@ -161,7 +171,13 @@ function RootNavigator() {
             headerTitleAlign: 'center',
           }}
         />
-        <Stack.Screen name="CreateAuditorium" component={CreateAuditoriumUI} />
+        <Stack.Screen name="CreateAuditorium" 
+        component={CreateAuditoriumUI} 
+        options={{
+          headerTitle: I18n.t('createAuditorium'),
+          headerTitleAlign: 'center',
+        }}
+        />
         <Stack.Screen
           name="UpdateAuditorium"
           component={UpdateAuditoriumUI}

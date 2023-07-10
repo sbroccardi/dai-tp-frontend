@@ -140,4 +140,6 @@ export default {
   purchaseDetails: 'Purchase Details',
 
   location: 'Actual location',
+
+  confirmDeleteScreening: 'Confirm delete screening'
 };

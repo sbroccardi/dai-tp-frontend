@@ -247,8 +247,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
       console.log('Funcion creada:', responseBody);
       //getMovieName
       const selectedMovieName = moviesData.find(movie => movie._id == movieId)?.name;
-
-      navigation.replace('ScreeningList', { movieID: selectedMovie, movieName: selectedMovieName })
+      navigation.replace('ScreeningList', { movieId: movieId, movieName: selectedMovieName })
     } catch (error) {
       console.error('Error al crear la funcion:', error);
     }

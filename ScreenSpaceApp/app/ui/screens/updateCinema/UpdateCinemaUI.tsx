@@ -156,7 +156,7 @@ const UpdateCinemaUI = ({}) => {
         </Center>
         <Center w={'100%'}>
           <ButtonDanger
-            onPress={() => navigation.navigate('ConfirmDeleteCinema', {cinemaId: cinemaId})}
+            onPress={() => navigation.replace('ConfirmDeleteCinema', {cinemaId: cinemaId})}
             title={I18n.t('delete')}
             width="150px"
           />

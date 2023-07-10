@@ -76,7 +76,7 @@ export default function AuditoriumListUI() {
     for (let count = 0; count < auditoriumsData.length; count++) {
       const auditorium = auditoriumsData[count];
       elements.push(
-        <Center marginBottom="4">
+        <Center marginBottom="4" key={count}>
           <CardAuditorium
             auditoriumName={auditorium.name}
             auditoriumSize={`${auditorium.rows} rows of ${auditorium.seatsPerRow} seats`}

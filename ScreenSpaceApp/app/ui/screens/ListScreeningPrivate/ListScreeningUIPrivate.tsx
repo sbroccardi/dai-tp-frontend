@@ -5,7 +5,7 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import CardScreeningPrivate from '../../components/CardScreeningPrivate';
 import DropdownMenu from '../../components/DropdownMenu';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase, useRoute } from '@react-navigation/native';
+import { NavigationHelpersContext, ParamListBase, useRoute } from '@react-navigation/native';
 import ky from 'ky';
 import { UserContext } from '../../../UserContext';
 import { typesAreEqual } from 'react-native-document-picker/lib/typescript/fileTypes';
@@ -27,9 +27,11 @@ export default function ListScreeningUIPrivate({ navigation }) {
   const [cinemaIds, setCinemaIds] = React.useState([]);
   const [cinemasData, setCinemasData] = React.useState([])
   const [selectedCinema, setSelectedCinema] = React.useState('');
-  const [cinemaScreenings, setCinemaScreenings] = React.useState<{cinemaName: string; auditoriumName: string, datetime: string}[]>([]);
+  const [cinemaScreenings, setCinemaScreenings] = React.useState<{ _id: any; cinemaName: string; cinemaId: string; auditoriumName: string; datetime: string }[]>([]);
+  const [searchQuery, setSearchQuery] = React.useState('')
 
   const handleCinemaChange = (value: any) => {
+    setSearchQuery(value)
     console.log('Cinema id en listScreening: ' + value);
     setSelectedCinema(value);
     //traer funciones del cine
@@ -44,7 +46,7 @@ export default function ListScreeningUIPrivate({ navigation }) {
   //{JSON.stringify(movieID)}
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: route.params.movieName,
+      headerTitle: movieName,
     })
     const fetchCinemaOptions = async () => {
       try {
@@ -92,6 +94,7 @@ export default function ListScreeningUIPrivate({ navigation }) {
         const responseScreeningsObject = await responseScreenings.json();
         const elements = []
         for (const screening of responseScreeningsObject) {
+          const screeningId = screening._id;
           const screeningDatetime = screening.datetime;
           const screeningAuditoriumId = screening.auditoriumId;
           const screeningCinemaId = screening.cinemaId
@@ -105,11 +108,13 @@ export default function ListScreeningUIPrivate({ navigation }) {
           const screeningAuditoriumObject = await screeningAuditorium.json()
           const screeningAuditoriumName = screeningAuditoriumObject.name;
           const screeningCinemaName = cinemasData
-          .find((cine:{_id:string}) => cine._id == screeningCinemaId)?.name
+            .find((cine: { _id: string }) => cine._id == screeningCinemaId)?.name
           console.log('screeningCinemaName: ', screeningCinemaName)
           console.log(screeningAuditoriumName)
           elements.push({
+            _id: screeningId,
             cinemaName: screeningCinemaName,
+            cinemaId: screeningCinemaId,
             auditoriumName: screeningAuditoriumName,
             datetime: screeningDatetime
           })
@@ -125,20 +130,47 @@ export default function ListScreeningUIPrivate({ navigation }) {
 
   console.log('cinemaScreenings: ', cinemaScreenings)
 
-  const renderData = () => {
-    const elements = [];
-    console.log('cinemaScreeningslength: ', cinemaScreenings.length)
-    for (let count = 0; count < Object.keys(cinemaScreenings).length; count++) {
-      //console.log(auditoriumsAmount);
-      const screening = cinemaScreenings[count];
-      console.log('element renderData: ', screening)
-      elements.push(
-        <Center key={screening.cinemaName}>
-          <CardScreeningPrivate cinema={screening.cinemaName} auditorium={screening.auditoriumName} date={screening.datetime} />
-        </Center>,
+  const renderData = (searchQuery?:string) => {
+    if (searchQuery) {
+      const filteredScreenings = cinemaScreenings.filter((screening) =>
+        screening.cinemaName === searchQuery
       );
+      const elements = [];
+      for (let count = 0; count < Object.keys(filteredScreenings).length; count++) {
+        //console.log(auditoriumsAmount);
+        const screening = filteredScreenings[count];
+        console.log('element filteredRenderData: ', screening)
+        elements.push(
+          <Center key={count}>
+            <CardScreeningPrivate
+              cinema={screening.cinemaName}
+              auditorium={screening.auditoriumName}
+              date={screening.datetime}
+              onPress={() => navigation.replace('ConfirmDeleteScreening', { movieId: movieID, movieName: movieName, screeningId: screening._id })} />
+          </Center>,
+        );
+        return elements;
+      }
     }
-    return elements;
+    else {
+      const elements = [];
+      console.log('cinemaScreeningslength: ', cinemaScreenings.length)
+      for (let count = 0; count < Object.keys(cinemaScreenings).length; count++) {
+        //console.log(auditoriumsAmount);
+        const screening = cinemaScreenings[count];
+        console.log('element renderData: ', screening)
+        elements.push(
+          <Center key={count}>
+            <CardScreeningPrivate
+              cinema={screening.cinemaName}
+              auditorium={screening.auditoriumName}
+              date={screening.datetime}
+              onPress={() => navigation.replace('ConfirmDeleteScreening', { movieId: movieID, movieName: movieName, screeningId: screening._id })} />
+          </Center>,
+        );
+      }
+      return elements;
+    }
   };
 
   return (
@@ -158,15 +190,21 @@ export default function ListScreeningUIPrivate({ navigation }) {
         <DropdownMenu
           purpose={'Cinema'}
           disabled={undefined}
-          data={cinemaIds}
+          data={cinemaOptions}
           options={cinemaOptions}
+          valueSelected={selectedCinema}
           onChange={handleCinemaChange}
         />
       </Center>
       <Center>
         <ScrollView maxH="350">
           <VStack>
-            {renderData()}
+            {
+            searchQuery ?
+            renderData(searchQuery)
+            :
+            renderData()
+            }
           </VStack>
         </ScrollView>
       </Center>

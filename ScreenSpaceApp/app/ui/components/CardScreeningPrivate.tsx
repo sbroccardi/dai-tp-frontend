@@ -10,6 +10,7 @@ const CardScreeningPrivate = (props: {
   cinema: string;
   auditorium: string;
   date: string;
+  onPress: any;
 }) => {
   return (
     <Pressable>
@@ -53,7 +54,7 @@ const CardScreeningPrivate = (props: {
                 </Text>
               </Box>
               <Box marginRight="5">
-                <Pressable>
+                <Pressable onPress={props.onPress}>
                   <Delete name="trash" size={25} color="#FFFFFF" />
                 </Pressable>
               </Box>

@@ -120,4 +120,7 @@ export default {
   search: 'Buscar',
 
   location: 'Ubicación actual',
+
+  confirmDeleteScreening: 'Confirmar eliminar función'
+
 };

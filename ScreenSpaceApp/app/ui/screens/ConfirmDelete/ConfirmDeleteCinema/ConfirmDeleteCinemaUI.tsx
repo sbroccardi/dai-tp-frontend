@@ -16,7 +16,7 @@ export default function ConfirmDeleteCinemaUI() {
   const user = useContext(UserContext);
   const authToken = user.user?.tokens.accessToken;
   
-  const borrar = async () => {
+  const deleteCinema = async () => {
     try {
       const respuesta = await ky.delete(
         `${Config.API_BASE_URL}/cinemas/${cinemaId}`,
@@ -38,7 +38,7 @@ export default function ConfirmDeleteCinemaUI() {
         <WarningMessage component="Cinema" />
       </Center>
       <Center w="100%" marginBottom="1">
-        <ButtonDanger onPress={borrar} title="Delete" />
+        <ButtonDanger onPress={deleteCinema} title="Delete" />
       </Center>
       <Center w="100%">
         <ButtonPrimary

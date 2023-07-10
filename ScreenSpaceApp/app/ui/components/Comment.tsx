@@ -6,17 +6,11 @@ import {HStack, Pressable, Stack} from 'native-base';
 import StarRating from 'react-native-star-rating-widget';
 
 const Comment = (props: {
-  userName?: string | undefined;
-  commentDate?: string | undefined;
-  commentContent?: any | undefined;
+  userName: string;
+  commentDate: string;
+  commentContent: string;
   rate: any;
 }) => {
-  const {
-    userName = 'undefined',
-    commentContent = 'undefined',
-    commentDate = 'undefined',
-    rate = '0',
-  } = props;
 
   return (
     <View style={{margin: 0, borderRadius: 10}}>
@@ -32,19 +26,18 @@ const Comment = (props: {
               alt="popcorn.png"
             />
             <Box style={styles.auditoriumNameContainer}>
-              <Text style={styles.labelText}>{userName}</Text>
+              <Text style={styles.labelText}>{props.userName}</Text>
             </Box>
           </Box>
           <Box style={styles.commentDateContainer}>
-            <Text style={styles.labelText}>{commentDate}</Text>
+            <Text style={styles.labelText}>{props.commentDate}</Text>
           </Box>
         </HStack>
-
         <Stack m={4} space={30} style={{display: 'flex', flex: 3}}>
-          <Text style={styles.commentText}>{commentContent}</Text>
+          <Text style={styles.commentText}>{props.commentContent}</Text>
         </Stack>
         <Stack>
-          <StarRating rating={5} style={{}} onChange={() => {}} starSize={20} />
+          <StarRating rating={props.rate} style={{}} onChange={() => {}} starSize={20} />
         </Stack>
       </Pressable>
     </View>

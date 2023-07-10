@@ -42,7 +42,7 @@ export default function ConfirmDeleteAuditoriumUI() {
       </Center>
       <Center w="100%">
         <ButtonPrimary
-          onPress={() => navigation.navigate('UpdateAuditorium')}
+          onPress={() => navigation.replace('UpdateAuditorium')}
           title="Cancel"
         />
       </Center>
