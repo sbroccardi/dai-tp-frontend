@@ -26,34 +26,43 @@ export default function MovieDetailsUI({ navigation }) {
   const movieImage = route.params.movieImage;
   const movieRating = route.params.movieRating;
   const user = useContext(UserContext);
-  const [formData, setFormData] = React.useState<{ comment: string; userId: string; rate: string }[]>([]); //CAMBIAR ESTO 
+  const [formData, setFormData] = React.useState<{ comment: string; name: any; rate: string ;imageUrl: string; }[]>([]); //CAMBIAR ESTO 
   const authToken = user.user?.tokens.accessToken;
 
   useEffect(() => {
     const fetchComments = async () => {
-      const responseComments = await ky.get(`${Config.API_BASE_URL}/movies/${movieId}/comments`,
-        {
+      const responseComments = await ky.get(`${Config.API_BASE_URL}/movies/${movieId}/comments`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      const responseCommentsObject = await responseComments.json();
+  
+      const dataPromises = responseCommentsObject.map(async (comment) => {
+        const responseUser = await ky.get(`${Config.API_BASE_URL}/users/${comment.userId}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
-        }
-      )
-      const responseCommentsObject = await responseComments.json()
-      console.log('responseCommentsObject: ', responseCommentsObject)
-      const data = responseCommentsObject
-        .map((comment: { comment: string, userId: string, rate: any }) => {
-          return {
-            comment: comment.comment,
-            userId: comment.userId,
-            rate: comment.rate
-          }
-        })
-      setFormData(data)
-    }; 
-    fetchComments()
-  }, [])
+        });
+        const responseUserNombre = await responseUser.json();
+  
+        return {
+          comment: comment.comment,
+          name: responseUserNombre.fullname,
+          rate: comment.rate,
+          imageUrl: responseUserNombre.avatar,
+        };
+      });
+  
+      // Esperar a que todas las promesas se resuelvan
+      const data = await Promise.all(dataPromises);
+      setFormData(data);
+    };
+  
+    fetchComments();
+  }, []);
+  
 
-  console.log('comentarios: ', formData )
 
   const renderComments = () => {
     const elements = [];
@@ -61,7 +70,7 @@ export default function MovieDetailsUI({ navigation }) {
       const comment = formData[count];
       elements.push(
         <Center marginBottom="4" key={count}>
-          <Comment userName={'usuario ' + [count]} commentDate={'10/10/2023'} commentContent={comment.comment} rate={comment.rate} />
+          <Comment userName={comment.name}  commentContent={comment.comment} rate={comment.rate} imageUrl={comment.imageUrl} />
         </Center>,
       );
     }
@@ -86,9 +95,6 @@ export default function MovieDetailsUI({ navigation }) {
           <StarRating rating={movieRating} style={{}} onChange={() => { }} starSize={25} />
         </Box>
         <Box marginTop="2" marginLeft="3">
-          <Text>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi velit soluta exercitationem dolor!
-          </Text>
         </Box>
       </Center>
       <Center>
