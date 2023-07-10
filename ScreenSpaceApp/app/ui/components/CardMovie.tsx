@@ -20,6 +20,7 @@ const  CardMovie = (props: {
   movieAge: string;
   movieRating: any;
   onPress: any;
+  imgURL:any;
 }) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
@@ -45,7 +46,7 @@ const  CardMovie = (props: {
           }}>
           <Box display="flex" flexDirection="row">
             <AspectRatio w="60%" ratio={16 / 10} rounded="lg">
-              <Stack p="4" space={3}>
+              <Stack p="3" space={3}>
                 <Stack space={2} marginBottom="1">
                   <Heading size="md" color="#FFFFFF" marginBottom="2" ml="-1">
                     <Text style={styles.bodyText}>{props.movieName}</Text>
@@ -92,7 +93,7 @@ const  CardMovie = (props: {
             <AspectRatio w="40%" ratio={16 / 16} rounded="lg">
               <Image
                 source={{
-                  uri: 'https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg',
+                  uri: props.imgURL,
                 }}
                 alt="image"
               />

@@ -117,4 +117,6 @@ export default {
 
   checkout: 'Chequeo',
 
+  search: 'Buscar'
+
 };

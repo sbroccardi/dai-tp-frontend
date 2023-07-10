@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Input, SearchIcon} from 'native-base';
 
-const SearchBar = () => {
+const SearchBar = (props:{placeholder:string, onChangeText:any, value:string, onSubmitEditing:any}) => {
   return (
     <Box>
       <Input
@@ -10,6 +10,9 @@ const SearchBar = () => {
         placeholder="Search"
         variant="rounded"
         paddingLeft="3"
+        onChangeText={props.onChangeText}
+        onSubmitEditing={props.onSubmitEditing}
+        value={props.value}
       />
     </Box>
   );
