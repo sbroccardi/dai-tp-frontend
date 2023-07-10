@@ -32,7 +32,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
   const authToken = user.user?.tokens.accessToken;
   const [isLoading, setIsLoading] = React.useState(true);
   const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState<string[]>([])
-  const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; }[]>([]);
+  const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; image:string;}[]>([]);
   const [moviesData, setMoviesData] = React.useState([]);
 
   useEffect(() => {
