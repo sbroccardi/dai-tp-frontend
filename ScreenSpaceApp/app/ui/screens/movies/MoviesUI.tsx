@@ -4,7 +4,7 @@ import CardMovie from '../../components/CardMovie';
 import SearchBar from '../../components/SearchBar';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {ParamListBase, useNavigation,useRoute} from '@react-navigation/native';
 import ky from 'ky';
 import Config from 'react-native-config';
 import HomeToolbarPublicUser from '../../components/HomeToolbarPublicUser';
@@ -34,6 +34,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
   const [movieIdsThatHaveScreenings, setMovieIdsThatHaveScreenings] = React.useState<string[]>([])
   const [moviesForm, setMoviesForm] = React.useState<{ _id: string; name: string; age: string; rating: string; image:string;}[]>([]);
   const [moviesData, setMoviesData] = React.useState([]);
+  const route = useRoute();
 
   useEffect(() => {
     const fetchMovieIdsThatHaveScreenings = async () => {
@@ -96,8 +97,40 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
 
   const renderMovies = () => {
     const elements = [];
-    for (let count = 0; count < moviesForm.length; count++) {
-      const movie = moviesForm[count];
+    // Ordenar las películas por edad
+    if (route.params === undefined){
+      for (let count = 0; count < moviesForm.length; count++) {
+        const movie = moviesForm[count];
+        elements.push(
+          <Center marginBottom="4" key={movie._id}>
+            <CardMovie
+              movieID={movie._id}
+              movieName={movie.name}
+              movieAge={movie.age}
+              movieRating={movie.rating}
+              imageUrl={movie.image}
+              onPress={()=>navigation.navigate('MovieDetails', {movieId: movie._id, movieName:movie.name, movieRating: movie.rating, movieImage: movie.image})}
+            />
+          </Center>,
+        );
+      }
+  }
+  else{
+    let sortedMovies;
+
+    if (route.params.filtro === 'Nombre'){
+       sortedMovies = moviesForm.sort((a, b) => b.name - a.name);
+    }
+    if (route.params.filtro === 'Edad'){
+       sortedMovies = moviesForm.sort((a, b) => b.age - a.age);
+    }
+    if (route.params.filtro === 'Calificacion'){
+       sortedMovies = moviesForm.sort((a, b) => b.rating - a.rating);
+    }
+    
+    
+    for (let count = 0; count < sortedMovies.length; count++) {
+      const movie = sortedMovies[count];
       elements.push(
         <Center marginBottom="4" key={movie._id}>
           <CardMovie
@@ -106,13 +139,23 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
             movieAge={movie.age}
             movieRating={movie.rating}
             imageUrl={movie.image}
-            onPress={()=>navigation.navigate('MovieDetails', {movieId: movie._id, movieName:movie.name, movieRating: movie.rating, movieImage: movie.image})}
+            onPress={() =>
+              navigation.navigate('MovieDetails', {
+                movieId: movie._id,
+                movieName: movie.name,
+                movieRating: movie.rating,
+                movieImage: movie.image,
+              })
+            }
           />
-        </Center>,
+        </Center>
       );
     }
-    return elements;
+
+  }
+  return elements;
   };
+  
 
   return (
     <VStack space={3} alignItems="center" height="100%">
@@ -122,7 +165,7 @@ const MoviesUI: React.FC<Props> = ({navigation}) => {
         </Text>
         <Button
           style={styles.toolbarButtonContainer}
-          onPress={undefined}
+          onPress={()=>navigation.navigate('Filters')}
           variant="ghost"
           colorScheme="white"
           marginLeft="180">

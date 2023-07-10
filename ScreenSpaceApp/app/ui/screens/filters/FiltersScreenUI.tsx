@@ -6,15 +6,17 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import DropdownMenu from '../../components/DropdownMenu';
 import { styles } from '../../styles/theme';
 import I18n from '../../../assets/localization/I18n';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/native';
 
+type HomeScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
-const FiltersScreenUI = ({}) => {
-  const genreOptions = ['Terror', 'Comedia', 'Suspenso'];
-  const ageAllowed = ['ATP','+13','+16','+18'];
-  const rating = [' 1', '2', '3', '4','5','6','7','8','9','10'];
-  const distance = ['1KM', '3KM', '5KM', '10KM'];
-  const cinema = ['Hoyts Belgrano', 'Abasto', 'Cinemark Palermo'];
-  const filtros = ['Genero','Edad','Calificacion','Distancia','Cinema'];
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
+
+const FiltersScreenUI: React.FC<Props> = ({navigation}) => {
+  const filtros = ['Nombre','Edad','Calificacion'];
   const [SelectedFilter, setSelectedFilter] = React.useState(' ');
   const [SelectedMenu, setSelectedMenu] = React.useState(0);
   const [Values, setValues] = React.useState([' ']);
@@ -23,29 +25,7 @@ const FiltersScreenUI = ({}) => {
   const handleFilterChange = (value: string) => {
     setSelectedFilter(value);
   
-    if (value === 'Edad') {
-      setValues(ageAllowed);
-      setSelectedMenu(1);
-
-    } else if (value === 'Genero') {
-      setValues(genreOptions);
-      setSelectedMenu(1);
-
-    } else if (value === 'Calificacion') {
-      setValues(rating);
-      setSelectedMenu(1);
-
-    } else if (value === 'Distancia') {
-      setValues(distance);
-      setSelectedMenu(1);
-      
-    } else if (value === 'Cinema') {
-      setValues(cinema);
-      setSelectedMenu(1);;
-    }
-  };
-  const handleOptions = (value: any) => {
-    setOpcion(value)
+   
   };
   
   return (
@@ -56,6 +36,7 @@ const FiltersScreenUI = ({}) => {
       height="70%">
      <Center>
         <DropdownMenu
+          data={filtros}
           purpose={'filter'}
           disabled={false}
           options={filtros}
@@ -63,24 +44,15 @@ const FiltersScreenUI = ({}) => {
           valueSelected={SelectedFilter}
         />
       </Center>
-      <Center>
-      {SelectedMenu == 1 && (
-        <DropdownMenu
-          purpose={SelectedFilter}
-          disabled={false}
-          options={Values}
-          onChange={handleOptions}
-          valueSelected={Opcion}
-        />
-        )}
-        </Center>
         
         <ButtonPrimary
-          onPress={() =>  console.log("guardar")}
+          onPress={() =>  navigation.navigate('PublicListMovies', {
+            filtro: SelectedFilter
+          })}
           title={I18n.t('save')}
           width= "35%"
           />
-        <ButtonDanger onPress={ () => console.log(" no guardar")} title={'Go Back'} width= "35%" />
+        <ButtonDanger onPress={ () =>navigation.navigate('PublicListMovies')} title={'Go Back'} width= "35%" />
           
 
     </VStack>
