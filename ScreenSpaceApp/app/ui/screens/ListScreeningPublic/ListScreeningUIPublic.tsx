@@ -26,56 +26,15 @@ export default function ListScreeningUIPublic({navigation}) {
   const [cinemaOptions, setCinemaOptions] = React.useState([''])
   const [cinemaIds, setCinemaIds] = React.useState([]);
   const [cinemaScreenings, setCinemaScreenings] = React.useState<{ _id: any; cinemaName: string; cinemaId: string; auditoriumName: string; datetime: string }[]>([]);
-  const [cinemasData, setCinemasData] = React.useState([])
-
+  const [searchQuery, setSearchQuery] = React.useState('')
 
   const handleCinemaChange = (value: any) => {
+    setSearchQuery(value)
     console.log('Cinema id en listScreening: ' + value);
     setSelectedCinema(value);
     //traer funciones del cine
-    try {
-      
-    }
-    catch (err) {
-      console.error('Error retrieving cinema screens' + err);
-    }
   };
   //{JSON.stringify(movieID)}
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: movieName,
-    })
-    const fetchCinemaOptions = async () => {
-      try {
-        const authToken = user.user?.tokens.accessToken;
-        const userId = user.user?.id;
-        const response = await ky.get('https://screenspace.azurewebsites.net/cinemas',
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          },
-        );
-        const responseObject = await response.json();
-        const names = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: any) => cinema.name);
-        setCinemaOptions(names);
-        //
-        const ids = responseObject
-          .filter((document: { userId: any }) => document.userId == userId)
-          .map((cinema: { _id: any; }) => cinema._id)
-        setCinemaIds(ids)
-        //
-        setCinemasData(responseObject);
-      } catch (error) {
-        console.error('Error retrieving cinema options: ', error);
-      }
-    };
-    fetchCinemaOptions();
-
-  }, []);
-
   useEffect(() => {
     const fetchCinemaScreenings = async () => {
       try {
@@ -90,6 +49,7 @@ export default function ListScreeningUIPublic({navigation}) {
         );
         const responseScreeningsObject = await responseScreenings.json();
         const elements = []
+        const cinemaNames = []
         for (const screening of responseScreeningsObject) {
           const screeningId = screening._id;
           const screeningDatetime = screening.datetime;
@@ -104,10 +64,18 @@ export default function ListScreeningUIPublic({navigation}) {
             })
           const screeningAuditoriumObject = await screeningAuditorium.json()
           const screeningAuditoriumName = screeningAuditoriumObject.name;
-          const screeningCinemaName = cinemasData
-            .find((cine: { _id: string }) => cine._id == screeningCinemaId)?.name
-          console.log('screeningCinemaName: ', screeningCinemaName)
           console.log(screeningAuditoriumName)
+          const screeningCinema = await ky.get(`${Config.API_BASE_URL}/cinemas/${screeningCinemaId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            })
+          const screeningCinemaObject = await screeningCinema.json();  
+          const screeningCinemaName = screeningCinemaObject.name;
+          if(!cinemaNames.includes(screeningCinemaName)){
+            cinemaNames.push(screeningCinemaName)
+          }
           elements.push({
             _id: screeningId,
             cinemaName: screeningCinemaName,
@@ -116,6 +84,7 @@ export default function ListScreeningUIPublic({navigation}) {
             datetime: screeningDatetime
           })
         }
+        setCinemaOptions(cinemaNames)
         setCinemaScreenings(elements)
       } catch (error) {
         console.error('Error retrieving cinema screenings:', error);
@@ -123,7 +92,7 @@ export default function ListScreeningUIPublic({navigation}) {
     };
 
     fetchCinemaScreenings();
-  }, [cinemasData, movieID]);
+  }, []);
 
   console.log('cinemaScreenings: ', cinemaScreenings)
 
@@ -139,7 +108,7 @@ export default function ListScreeningUIPublic({navigation}) {
         console.log('element filteredRenderData: ', screening)
         elements.push(
           <Center key={count}>
-            <CardScreeningPrivate
+            <CardScreeningPublic
               cinema={screening.cinemaName}
               auditorium={screening.auditoriumName}
               date={screening.datetime}
@@ -176,7 +145,7 @@ export default function ListScreeningUIPublic({navigation}) {
       <DropdownMenu
           purpose={'Cinema'}
           disabled={undefined}
-          data={cinemaIds}
+          data={cinemaOptions}
           options={cinemaOptions}
           onChange={handleCinemaChange}
         />
@@ -184,29 +153,12 @@ export default function ListScreeningUIPublic({navigation}) {
       <Center>
         <ScrollView maxH="350">
           <VStack>
-            <Center>
-              <CardScreeningPublic
-                cinema="Hoyts Belgrano"
-                auditorium="Sala 7"
-                date="Saturday, 21.07.23 - 16:00"
-                onPress={() => navigation.navigate("BuyTickets", {movieName: movieName, movieId: movieID})}
-              />
-            </Center>
-            <Center>
-              <CardScreeningPublic
-                cinema="Cinemark Palermo"
-                auditorium="Sala 3"
-                date="Sunday, 17.08.23 - 19:30" 
-                onPress={undefined} />
-            </Center>
-            <Center>
-              <CardScreeningPublic
-                cinema="Abasto"
-                auditorium="Sala 12"
-                date="Tuesday, 12.06.23 - 16:00"
-                onPress={undefined}
-              />
-            </Center>
+          {
+            searchQuery ?
+            renderData(searchQuery)
+            :
+            renderData()
+            }
           </VStack>
         </ScrollView>
       </Center>

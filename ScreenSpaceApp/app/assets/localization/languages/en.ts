@@ -91,8 +91,6 @@ export default {
 
   updateCinema: 'Update cinema',
 
-  address: 'Address',
-
   cinemas: 'My cinemas',
 
   createCinema: 'Create cinema',
@@ -137,9 +135,10 @@ export default {
   
   purchaseDetails : 'Purchase Details',
 
-  purchaseDetails: 'Purchase Details',
-
   location: 'Actual location',
 
-  confirmDeleteScreening: 'Confirm delete screening'
+  confirmDeleteScreening: 'Confirm delete screening',
+
+  showtimes: 'Showtimes'
+
 };

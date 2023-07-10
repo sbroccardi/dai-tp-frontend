@@ -121,6 +121,8 @@ export default {
 
   location: 'Ubicación actual',
 
-  confirmDeleteScreening: 'Confirmar eliminar función'
+  confirmDeleteScreening: 'Confirmar eliminar función',
+
+  showtimes: 'Funciones'
 
 };
