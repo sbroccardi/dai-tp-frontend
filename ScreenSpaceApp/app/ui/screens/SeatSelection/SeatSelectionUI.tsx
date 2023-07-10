@@ -1,12 +1,13 @@
 import {ParamListBase, useNavigation, useRoute} from '@react-navigation/native';
 import {Box, Button, Center, Text, VStack} from 'native-base';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SeatsLayout from "@mindinventory/react-native-bus-seat-layout";
 import { styles } from '../../styles/theme';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Config from 'react-native-config';
 import ky from 'ky';
+import {UserContext} from '../../../UserContext';
 
 export default function SeatSelectionUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -15,13 +16,20 @@ export default function SeatSelectionUI() {
   const movieName = route.params.movieName;
   const parcialPrice = route.params.parcialPrice;
   const tickets = route.params.tickets;
-
-  const occupiedSeats = [1,5,8];
+  const seats = route.params.seats;
+  const datetime = route.params.datetime;
+  const auditoriumName = route.params.auditoriumName;
+  const screeningId = route.params.screeningId;
+  const cinemaName = route.params.cinemaName;
+  const user = useContext(UserContext);
   const occupiedSeatsList = [];
-
-  occupiedSeats.forEach(seat => {
-      const occupiedSeat = { seatNumber: seat, seatType: 'booked' }
-      occupiedSeatsList.push(occupiedSeat);
+  console.log(user.user);
+  seats.forEach(seat => {
+      if (seat.isReserved == true){
+        const occupiedSeat = { seatNumber: seat.index, seatType: 'booked' }
+        occupiedSeatsList.push(occupiedSeat);
+      }
+      
   })
 
   
@@ -40,13 +48,13 @@ export default function SeatSelectionUI() {
           <Center>
               <Box display="flex" alignItems="center">
                 <Text style={styles.headerText}>
-                  Oppenheimer
+                  {movieName}
                 </Text>
                 <Text style={styles.bodyText}>
-                  Monday, 5/01/2024 - 16:00
+                  {datetime}
                 </Text>
                 <Text style={styles.bodyText}>
-                  Sala 7
+                  {auditoriumName}
                 </Text>
               </Box>
           </Center>
@@ -84,7 +92,7 @@ export default function SeatSelectionUI() {
         </Text>
       </Box>
       <Box>
-          <ButtonPrimary onPress={() => navigation.navigate('Checkout', {movieId: movieId, seats: selectedSeats, movieName: movieName, tickets: tickets, parcialPrice: parcialPrice, totalPrice: totalPrice})} title="Checkout"/>
+          <ButtonPrimary onPress={() => navigation.navigate('Checkout', {movieId: movieId, seats: selectedSeats, movieName: movieName, tickets: tickets, parcialPrice: parcialPrice, totalPrice: totalPrice, auditoriumName: auditoriumName, datetime: datetime, userId: user.user.id, screeningId: screeningId, cinemaName: cinemaName, token: user.user.tokens.accessToken})} title="Checkout"/>
       </Box>
     </VStack>
     

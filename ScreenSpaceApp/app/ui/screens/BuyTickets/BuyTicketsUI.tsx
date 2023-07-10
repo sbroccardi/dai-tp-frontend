@@ -19,6 +19,12 @@ export default function BuyTicketsUI() {
   const route = useRoute();
   const movieId = route.params.movieId;
   const movieName = route.params.movieName;
+  const seats = route.params.seats;
+  const datetime = route.params.datetime;
+  const auditoriumName = route.params.auditoriumName;
+  const screeningId = route.params.screeningId;
+  const cinemaName = route.params.cinemaName;
+  console.log(route.params);
 
   const precioAdulto = 7;
   const precioChild = 3;
@@ -147,7 +153,7 @@ export default function BuyTicketsUI() {
             </Box>
         </Box>
         <Box>
-            <ButtonPrimary title="Select seats" onPress={() => navigation.navigate("SeatSelection", {movieName: movieName, movieId: movieId, parcialPrice: totalPrice, tickets: totalTickets})}/>
+            <ButtonPrimary title="Select seats" onPress={() => navigation.navigate("SeatSelection", {movieName: movieName, movieId: movieId, parcialPrice: totalPrice, tickets: totalTickets, seats: seats, auditoriumName: auditoriumName, datetime: datetime, screeningId: screeningId, cinemaName: cinemaName})}/>
         </Box>
     </VStack>
   );

@@ -25,7 +25,7 @@ export default function ListScreeningUIPublic({navigation}) {
   const [selectedCinema, setSelectedCinema] = React.useState('');
   const [cinemaOptions, setCinemaOptions] = React.useState([''])
   const [cinemaIds, setCinemaIds] = React.useState([]);
-  const [cinemaScreenings, setCinemaScreenings] = React.useState<{ _id: any; cinemaName: string; cinemaId: string; auditoriumName: string; datetime: string }[]>([]);
+  const [cinemaScreenings, setCinemaScreenings] = React.useState<{ _id: any; cinemaName: string; cinemaId: string; auditoriumName: string; datetime: string; seats: any}[]>([]);
   const [searchQuery, setSearchQuery] = React.useState('')
 
   const handleCinemaChange = (value: any) => {
@@ -52,9 +52,10 @@ export default function ListScreeningUIPublic({navigation}) {
         const cinemaNames = []
         for (const screening of responseScreeningsObject) {
           const screeningId = screening._id;
+          const screeningSeats = screening.seats;
           const screeningDatetime = screening.datetime;
           const screeningAuditoriumId = screening.auditoriumId;
-          const screeningCinemaId = screening.cinemaId
+          const screeningCinemaId = screening.cinemaId;
           console.log('objeto armado ids: ', screeningDatetime, screeningCinemaId, screeningAuditoriumId)
           const screeningAuditorium = await ky.get(`${Config.API_BASE_URL}/cinemas/auditoriums/${screeningAuditoriumId}`,
             {
@@ -81,7 +82,8 @@ export default function ListScreeningUIPublic({navigation}) {
             cinemaName: screeningCinemaName,
             cinemaId: screeningCinemaId,
             auditoriumName: screeningAuditoriumName,
-            datetime: screeningDatetime
+            datetime: screeningDatetime,
+            seats: screeningSeats,
           })
         }
         setCinemaOptions(cinemaNames)
@@ -112,7 +114,7 @@ export default function ListScreeningUIPublic({navigation}) {
               cinema={screening.cinemaName}
               auditorium={screening.auditoriumName}
               date={screening.datetime}
-              onPress={() => navigation.replace('ConfirmDeleteScreening', { movieId: movieID, movieName: movieName, screeningId: screening._id })} />
+              onPress={() => navigation.navigate('BuyTickets', { movieId: movieID, movieName: movieName, screeningId: screening._id, seats: screening.seats, auditoriumName: screening.auditoriumName, datetime: screening.datetime, cinemaName: screening.cinemaName })} />
           </Center>,
         );
         return elements;
@@ -127,11 +129,11 @@ export default function ListScreeningUIPublic({navigation}) {
         console.log('element renderData: ', screening)
         elements.push(
           <Center key={count}>
-            <CardScreeningPrivate
+            <CardScreeningPublic
               cinema={screening.cinemaName}
               auditorium={screening.auditoriumName}
               date={screening.datetime}
-              onPress={() => navigation.replace('ConfirmDeleteScreening', { movieId: movieID, movieName: movieName, screeningId: screening._id })} />
+              onPress={() => navigation.navigate('BuyTickets', { movieId: movieID, movieName: movieName, screeningId: screening._id, seats: screening.seats, auditoriumName: screening.auditoriumName, datetime: screening.datetime, cinemaName: screening.cinemaName })} />
           </Center>,
         );
       }
@@ -151,7 +153,7 @@ export default function ListScreeningUIPublic({navigation}) {
         />
       </Center>
       <Center>
-        <ScrollView maxH="350">
+        <ScrollView maxH="500">
           <VStack>
           {
             searchQuery ?

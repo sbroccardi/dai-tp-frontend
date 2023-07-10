@@ -6,6 +6,7 @@ import ky from 'ky';
 import InfoPurchase from '../../components/InfoPurchase';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import DropdownMenu from '../../components/DropdownMenu';
+import Config from 'react-native-config';
 
 export default function CheckoutUI() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -15,12 +16,49 @@ export default function CheckoutUI() {
   const parcialPrice = route.params.parcialPrice;
   const totalPrice = route.params.totalPrice;
   const seats = route.params.seats;
+  const screeningId = route.params.screeningId;
+  const userId = route.params.userId;
+  const auditoriumName = route.params.auditoriumName;
+  const datetime = route.params.datetime;
+  const cinemaName = route.params.cinemaName;
+  const token = route.params.token;
   const stringSeats = seats.join('-');
+
+  const postData = async () => {
+    const body = {
+      userId: userId,
+      screeningId: screeningId,
+      seats: seats.toString(),
+      totalPrice: parcialPrice + 6
+    };
+   
+    console.log(body)
+    try {
+      const response = await ky.post(`${Config.API_BASE_URL}/checkouts`, {
+        json: body,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+   
+  
+      if (response.ok) {
+        console.log('POST request successful');
+        // Puedes manejar la respuesta aquí si es necesario
+      } else {
+        console.log('POST request failed');
+      }
+    } catch (error) {
+      console.log('Error:', error.message);
+    }
+    navigation.navigate('PublicListMovies');
+  };
 
   return (
     <VStack>
         <Box>
-            <InfoPurchase movie={movieName} date={''} cinema={''} auditorium={''} location={''} tickets={tickets} seats={stringSeats} price={totalPrice} />
+            <InfoPurchase movie={movieName} date={datetime} cinema={cinemaName} auditorium={auditoriumName} tickets={tickets} seats={stringSeats} price={totalPrice} location={''} />
         </Box>
         <Box>
             <VStack maxW="90%" minW="90%" marginLeft="5" space={5} marginTop="10">
@@ -61,10 +99,10 @@ export default function CheckoutUI() {
                     </Box>
                   </Box>
                   <Box>
-                    <DropdownMenu purpose={'Payment Method'} disabled={undefined} options={[]} onChange={undefined}/>
+                    
                   </Box>
                   <Box>
-                     <ButtonPrimary onPress={undefined} title='Confirm' />
+                     <ButtonPrimary onPress={() => postData()} title='Confirm' />
                   </Box>
             </VStack>
         </Box>
