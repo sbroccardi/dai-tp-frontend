@@ -36,6 +36,7 @@ const PurchaseHistoryScreenUI = () => {
     );
     const responseBody = await respuesta.json();
 
+
      const promises = responseBody.map(async (elemento) => {
 
       const nuevoAsiento = elemento.seats;
@@ -57,6 +58,7 @@ const PurchaseHistoryScreenUI = () => {
       );
 
       const responseBody2 = await respuesta2.json();
+      
 
       const nuevoMovieID = responseBody2.movieId;
       setMovideID((prevMovieId) => [...prevMovieId, nuevoMovieID]);

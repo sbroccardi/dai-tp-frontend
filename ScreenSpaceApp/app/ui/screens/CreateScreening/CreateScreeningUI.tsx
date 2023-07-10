@@ -10,6 +10,7 @@ import I18n from '../../../assets/localization/I18n';
 import ky from 'ky';
 import { UserContext } from '../../../UserContext';
 import Config from 'react-native-config';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
 
@@ -274,6 +275,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
   };
 
   return (
+    <KeyboardAwareScrollView>
     <VStack space={3} alignItems="center">
       <Center>
         <DropdownMenu
@@ -340,6 +342,7 @@ const CreateScreeningUI: React.FC<Props> = ({ navigation }) => {
         <ButtonPrimary title={I18n.t('createScreening')} onPress={handleCreateScreening} />
       </Center>
     </VStack>
+    </KeyboardAwareScrollView>
   );
 };
 
