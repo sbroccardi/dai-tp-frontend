@@ -23,6 +23,7 @@ const PurchaseHistoryScreenUI = () => {
   const [cinema, setCinema] = React.useState<string[]>([]);
   const [ubicacion, setUbicacion] = React.useState<string[]>([]);
 
+  
   const getPurchases = async () => {
     const authToken = user.user?.tokens.accessToken;
     const respuesta = await ky.get(
@@ -149,7 +150,9 @@ const PurchaseHistoryScreenUI = () => {
           movideId: movideID[index],
           purchaseId: purchaseid[index],
           auditorio: auditorio[index],
-          ubicacion: ubicacion[index]
+          ubicacion: ubicacion[index],
+          usuario: user.user.id
+          
         })
       }
       />

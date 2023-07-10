@@ -5,7 +5,7 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import CardScreeningPrivate from '../../components/CardScreeningPrivate';
 import DropdownMenu from '../../components/DropdownMenu';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase, useRoute } from '@react-navigation/native';
+import { ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 import ky from 'ky';
 import { UserContext } from '../../../UserContext';
 import { typesAreEqual } from 'react-native-document-picker/lib/typescript/fileTypes';
@@ -17,23 +17,39 @@ import InfoPurchase from '../../components/InfoPurchase';
 import { styles } from '../../styles/theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-type ScreenNavigationProp = NativeStackNavigationProp<ParamListBase>;
-
-type Props = {
-  navigation: ScreenNavigationProp;
-};
 
 export default function PurchaseDetailsUI() {
+    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
     const route = useRoute();
     const parametros = route.params;
     const [comment, setComment] = React.useState('');
     const [starRating, setStarRating] = React.useState(0);
-    console.log(parametros)
+    const user = useContext(UserContext);
+
 
     const handleChange = (text) => {
       setComment(text);
     };
-  
+    
+    const comentaryvalorar = async () => {
+      let data = {
+        movieId: parametros.movideId,
+        purchaseId: parametros.purchaseId,
+        userId: parametros.usuario,
+        comment: comment,
+        rate: starRating,
+      };
+
+      const authToken = user.user?.tokens.accessToken;
+      const respuesta = await ky.post(`${Config.API_BASE_URL}/movies/${parametros.movideID}/comments`, {
+        json: data,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      ;
+      navigation.navigate('Previous Purchase');
+    };
     
 
   return (
@@ -65,7 +81,7 @@ export default function PurchaseDetailsUI() {
       <Center w="100%">
         <ButtonPrimary
           title="Save"
-          onPress={() => {console.log(comment + " " + starRating)}}
+          onPress={() => {comentaryvalorar()}}
         />
       </Center>
     </VStack>
